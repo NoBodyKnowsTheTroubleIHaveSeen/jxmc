@@ -1,0 +1,106 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<style>
+.frontFrom input, .frontFrom select {
+	border: 1px solid #ddd;
+	padding: 5px 0 5px 15px;
+	width: 150px;
+}
+
+.frontFrom button {
+	border-radius: 4px;
+	background-color: #5bb75b;
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	border: medium none;
+	color: #fff;
+	cursor: pointer;
+	padding: 5px 15px;
+	height: 31px;
+	text-align: left;
+}
+</style>
+<script src="js/common/jquery-2.1.4.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+	$(function() {
+		var contactType = $(".copyType").val();
+		var id = $("input[name='id']").val();
+		var param = {
+			id : id,
+			contactType : contactType
+		};
+		$.post("getContactInfo", param, function(data) {
+			$("input[name='number']").val(data);
+		})
+		$(".copyType").unbind("change").change(function() {
+			var contactType = $(this).val();
+			var id = $("input[name='id']").val();
+			var param = {
+				id : id,
+				contactType : contactType
+			};
+			$.post("getContactInfo", param, function(data) {
+				$("input[name='number']").val(data);
+			})
+		})
+		$(".cancel").unbind("click").click(function() {
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		});
+		$(".confirm").unbind("click").click(
+				function() {
+					$.post("doUpdateAddStatus", $("#doUpdateAddStatusForm")
+							.serialize(), function(message) {
+						layer.msg(message.message,
+								function() {
+									var index = parent.layer
+											.getFrameIndex(window.name);
+									parent.layer.close(index);
+								});
+					})
+					return false;
+				});
+	})
+</script>
+<form action="doUpdateAddStatus" id="doUpdateAddStatusForm"
+	class="frontFrom">
+	<input type="hidden" name="id" th:value="${id}" />
+	<table>
+		<tr>
+			<td width="120">新建联系方式</td>
+			<td class="right" width="180"><select style="float: right"
+				name="addType">
+					<option value="1">微信</option>
+					<option value="2">qq</option>
+					<option value="3">手机</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td>从此号码复制</td>
+			<td class="right" width="200"><select class="copyType"
+				style="float: right">
+					<option value="2">qq</option>
+					<option value="1">微信</option>
+					<option value="3">手机</option>
+			</select></td>
+		</tr>
+		<tr>
+			<td>号码</td>
+			<td><input style="float: right" placeholder="请输入号码"
+				name="number" /></td>
+		</tr>
+		<tr>
+			<td>添加人</td>
+			<td><input name="addBy" style="float: right"
+				th:value="${user.name}" /></td>
+		</tr>
+		<tr>
+			<td><button class="confirm">确定</button></td>
+			<td><button class="cancel" style="float: right">取消</button></td>
+		</tr>
+		<tr>
+			<td colspan="2">备注:如果号码已存在则不用填写</td>
+		</tr>
+	</table>
+</form>
+</html>

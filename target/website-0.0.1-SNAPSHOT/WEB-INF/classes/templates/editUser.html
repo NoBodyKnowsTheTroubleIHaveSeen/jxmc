@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>用户页面</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>用户页面</h1>
+	<form name="form">
+		id: <input name="id" th:value="${user.id}"></input><br />
+		<br /> 用户名:<input name="name" th:value="${user.name}"></input><br />
+		<br /> 密码:<input name="password" th:value="${user.password}"></input><br />
+		<br />
+		<button id="update" onClick="updateClick()">保存</button>
+		&nbsp;&nbsp;&nbsp;
+		<button id="delete" onClick="deleteClick()">删除</button>
+	</form>
+	<script>
+		function deleteClick() {
+			alert("deleteClick");
+			document.form.action = "deleteUser";
+			form.submit();
+		}
+		function updateClick() {
+			alert("updateClick");
+			document.form.action = "updateUser";
+			document.form.submit();
+		}
+	</script>
+</body>
+</html>

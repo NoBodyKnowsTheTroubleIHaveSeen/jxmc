@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from AppService WSDL service -->
+
+  <service name="App" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://netty.whh.org"/>
+      <parameter name="wsdlServiceElement" value="AppService"/>
+      <parameter name="schemaQualified" value="http://netty.whh.org"/>
+      <parameter name="wsdlServicePort" value="App"/>
+      <parameter name="className" value="org.whh.netty.App"/>
+      <parameter name="wsdlPortType" value="App"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://netty.whh.org" xmlns:retNS="http://netty.whh.org" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="add" qname="operNS:add" returnQName="retNS:addReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://netty.whh.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:num1" type="tns:int"/>
+        <parameter xmlns:pns="http://netty.whh.org" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:num2" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="add"/>
+
+  </service>
+</deployment>

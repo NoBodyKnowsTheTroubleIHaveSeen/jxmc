@@ -1,0 +1,120 @@
+<style>
+body {
+	color: #666;
+}
+
+html, body {
+	color: #666;
+	font: 12px "Microsoft YaHei", "Helvetica Neue", Arial, 宋体,
+		"Liberation Sans", FreeSans, sans-serif;
+}
+
+table.form input, table.form select {
+	width: 250px;
+	height: 25px;
+}
+
+.prov, .city {
+	width: 120px !important;
+	height: 25px !important;
+}
+
+.city {
+	margin-left: 10px;
+}
+
+table.form {
+	width: 100%;
+}
+
+table.form td {
+	padding: 6px;
+	width: 300px;
+}
+
+table.form td.label {
+	font-size: 14px;
+	text-align: right;
+	height: 70px;
+	width: 100px;
+}
+
+table.form td label {
+	font-family: "宋体";
+	margin-left: 10px;
+	vertical-align: sub;
+}
+
+table.form td .btn {
+	background: #00a2ca none repeat scroll 0 0;
+	border: 1px solid #00a2ca;
+	border-radius: 3px;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 14px;
+	height: auto;
+	line-height: 24px;
+	overflow: hidden;
+	width: 80px;
+	margin-left: 170px;
+}
+</style>
+<script src="js/common/jquery-2.1.4.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.min.js"></script>
+<script src="js/common/jquery-ui-timepicker-addon.js"></script>
+<script src="js/common/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript" src="js/email/sendEmail.js"></script>
+<script src="layer/layer.js"></script>
+<script src="js/common/jquery.cityselect.js"></script>
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.9.1/themes/smoothness/jquery-ui.css" />
+<link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css" />
+<form id="doSendEmailForm" action="doSendEmail" class="messageForm">
+	<div class="queryDiv">
+		<table class="form">
+			<tbody>
+				<tr>
+					<td class="label">发送截止时间</td>
+					<td><input name="stopTime" placeholder="输入发送邮件的截止时间"
+						id="stopTime" /></td>
+				</tr>
+				<tr>
+					<td class="label">发送频率</td>
+					<td><input type="number" min="0"
+						placeholder="发送邮件的频率，单位为秒，默认60" id="sender" name="sendFrenquent"
+						step="5" /></td>
+				</tr>
+				<tr>
+					<td class="label">发送总条数</td>
+					<td><input type="number" placeholder="输入发送邮件的总条数，默认400"
+						name="totalSend" min="0" step="10" /></td>
+				</tr>
+				<tr>
+					<td class="label">省市过滤</td>
+					<td>
+						<div id="city">
+							<select name="province" class="prov"></select><select name="city"
+								class="city fright" disabled="disabled"></select>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td class="label">消费等级</td>
+					<td><select name="consumeLevel">
+							<option value="">全部</option>
+							<option value="100">初级</option>
+							<option value="200">中级</option>
+							<option value="300">中高</option>
+							<option value="400">高级</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="tc" colspan="1"><input type="submit"
+						id="doSendEmail" class="btn" value="发送" /></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</form>

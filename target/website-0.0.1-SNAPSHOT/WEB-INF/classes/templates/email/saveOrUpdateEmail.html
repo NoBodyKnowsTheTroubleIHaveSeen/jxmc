@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div>
+	<div class="clear"></div>
+	<form action="doSaveOrUpdateEmail" class="ajaxSubmit">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> 邮件发送管理
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>邮箱</td>
+						<td style="width: 50px"></td>
+						<td><input type="email" name="sender" placeholder="输入邮件地址" th:value="${email.sender}" required="required"/></td>
+					</tr>
+					<tr>
+						<td>密码</td>
+						<td></td>
+						<td><input type="password" name="password" placeholder="输入密码" th:value="${email.password}" required="required"/></td>
+
+					</tr>
+					<tr>
+						<td>服务器地址</td>
+						<td></td>
+						<td><input name="serverAddress" placeholder="输入邮件地址" th:value="${email.serverAddress}" required="required"/></td>
+					</tr>
+					<tr>
+						<td>服务器端口</td>
+						<td></td>
+						<td><input type="number" min="1" max="65535" name="serverPort" placeholder="输入邮件服务器端口" th:value="${email.serverPort}" required="required"/></td>
+					</tr>
+					<tr>
+						<td><button class="ajaxLoad" data-url="email">返回</button></td>
+						<td></td>
+						<td>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+		<input type="hidden" name="id" th:value="${email.id}"/>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

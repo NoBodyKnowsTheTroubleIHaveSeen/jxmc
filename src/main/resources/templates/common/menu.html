@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<div class="menu_outside">
+	<header class="headers">
+		<div class="fleft">
+			<img class="logo" width="130" height="60" src="images/logo.png" />
+		</div>
+		<div style="float: right; margin-top: -30px;">
+			<span th:text="${'欢迎,'+name}"></span> <a class="logOut"
+				href="/logOut">退出</a>
+		</div>
+		<div class="nav fleft">
+			<ul>
+				<!-- <li class="nav_i r_ind_nav"><span><a
+						href="javascript:void(0);" data-url="/customer"
+						class="ajaxLoad main">客户信息管理</a></span></li>
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/partner" class="ajaxLoad">合作者管理</a></span></li>
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/goods" class="ajaxLoad">商品管理</a></span></li>
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/finance" class="ajaxLoad">财务管理</a></span></li>
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/email" class="ajaxLoad">邮件管理</a></span></li> 
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/flush" class="ajaxLoad">微店浏览</a></span></li>-->
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/order" class="ajaxLoad main">订单管理</a></span></li>
+				<li class="nav_i"><span><a href="javascript:void(0);"
+						data-url="/syncManage" class="ajaxLoad">同步管理</a></span></li>
+			</ul>
+		</div>
+	</header>
+</div>
+<script type="text/javascript">
+	$(".nav .nav_i").hover(function() {
+		$(".nav .nav_i").removeClass("r_ind_nav");
+		$(this).addClass("r_ind_nav");
+	});
+</script>
+</html>

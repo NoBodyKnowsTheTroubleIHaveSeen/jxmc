@@ -1,0 +1,117 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div>
+	<div class="clear"></div>
+	<form action="doSaveOrUpdatePartner" class="ajaxSubmit">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> 合作用户信息管理
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv editDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>姓名</td>
+						<td style="width: 50px"></td>
+						<td><input name="name" placeholder="输入姓名"
+							th:value="${partner.name}" /></td>
+					</tr>
+					<tr>
+                        <td>合作级别</td>
+                        <td></td>
+                        <td><select name="partnerLevel">
+                                <option th:each="code:${partnerLevel}"
+                                    th:value="${code.codeKey}" th:text="${code.codeValue}"></option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td>提成百分比</td>
+                        <td></td>
+                        <td><input type="number" name="deductPercentage" placeholder="输入提成百分比,数值为1-50"
+                            th:value="${partner.deductPercentage}" min="0" max="50"/></td>
+                    </tr>
+                    <tr>
+                        <td>总销售额</td>
+                        <td></td>
+                        <td><input  type="number" name="totalSell" placeholder="输入总销售额"
+                            th:value="${partner.totalSell}" min="0" /></td>
+                    </tr>
+					<tr>
+						<td>qq</td>
+						<td style="width: 50px"></td>
+						<td><input name="qq" placeholder="输入qq号码"
+							th:value="${partner.qq}" /></td>
+					</tr>
+					<tr>
+						<td>微信</td>
+						<td></td>
+						<td><input name="weiXin" placeholder="输入微信号码"
+							th:value="${partner.weiXin}" /></td>
+
+					</tr>
+					<tr>
+						<td>手机</td>
+						<td></td>
+						<td><input name="phone" placeholder="输入手机号码"
+							th:value="${partner.phone}" /></td>
+					</tr>
+					<tr>
+						<td>标签</td>
+						<td></td>
+						<td><input name="tag" placeholder="输入标签"
+							th:value="${partner.tag}" /></td>
+					</tr>
+					<tr>
+						<td>省</td>
+						<td></td>
+						<td><input name="province" placeholder="输入省"
+							th:value="${partner.province}" /></td>
+					</tr>
+					<tr>
+						<td>市</td>
+						<td></td>
+						<td><input name="city" placeholder="输入市"
+							th:value="${partner.city}" /></td>
+					</tr>
+					
+					<tr>
+						<td>邮件</td>
+						<td></td>
+						<td><input type="email" name="email" placeholder="输入邮件"
+							th:value="${partner.email}" /></td>
+					</tr>
+					<tr>
+						<td>性别</td>
+						<td></td>
+						<td><select name="sex">
+                                <option th:each="code:${sex}"
+                                    th:value="${code.codeKey}" th:text="${code.codeValue}"></option>
+                        </select></td>
+					</tr>
+					<tr>
+						<td>年龄</td>
+						<td></td>
+						<td><input name="age" placeholder="输入年龄"
+							th:value="${partner.age}" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<button class="ajaxLoad fleft" data-url="partner">返回</button>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+		<input type="hidden" name="id" th:value="${partner.id}" />
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

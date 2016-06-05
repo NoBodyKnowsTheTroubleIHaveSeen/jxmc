@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/email/email.js"></script>
+<div>
+	<div class="clear"></div>
+	<form action="getEmail" class="ajaxTable" id="getEmail">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> 邮件发送管理
+			</div>
+			<div class="fright">
+				<a class="ajaxLoad" data-url="/saveOrUpdateEmail"
+					href="javascript:void(0);"><span>添加&nbsp;&nbsp;</span><img
+					src="images/ic_group_add_grey600_36dp.png" /></a>
+					&nbsp;&nbsp;
+					<a id="refreshQuery"
+                    href="javascript:void(0);"><span>刷新&nbsp;&nbsp;</span><img
+                    src="images/ic_refresh_grey600_24dp.png" /></a>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv">
+			<table>
+				<tbody>
+					<tr>
+						<td>邮箱号码&nbsp;&nbsp; <input type="text" id="sender"
+							name="email.sender" placeholder="输入邮箱号码查询" /></td>
+						<td style="width: 20px"></td>
+						<td>日期查询&nbsp;&nbsp; <input name="startTime"
+							placeholder="开始时间" id="startTime" /> ~ <input
+							name="endTime" placeholder="结束时间" id="endTime" /></td>
+						<td style="width: 20px"></td>
+						<td>
+							<button type="submit" id="querySubmit">查询</button>
+						</td>
+						<td style="width: 20px"></td>
+						<td>
+							<button id="sendEmailBtn">发送邮件</button>
+						</td>
+						<td style="width: 20px"></td>
+						<td>
+							<button class="messageLoad" data-url="doStopSendEmail">停止发送</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+		<table class="commonTable">
+			<thead>
+				<tr>
+					<th class="th_back" colspan="13">详细信息列表</th>
+				</tr>
+				<tr>
+					<th class="title" id="sender">邮件地址</th>
+					<th class="title" id="serverAddress">服务器地址</th>
+					<th class="title" id="serverPort">服务器端口</th>
+					<th class="title" id="state">状态</th>
+					<th class="title" id="operate">操作</th>
+				</tr>
+			</thead>
+			<tbody id="tableContent"></tbody>
+		</table>
+		<div class="margin_top_10 fright">
+			<div th:replace="common/tablePage"></div>
+		</div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

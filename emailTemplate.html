@@ -1,0 +1,187 @@
+<style class="fox_global_style">
+div.fox_html_content {
+	line-height: 1.5;
+} /* 一些默认样式 */
+blockquote {
+	margin-Top: 0px;
+	margin-Bottom: 0px;
+	margin-Left: 0.5em
+}
+
+ol, ul {
+	margin-Top: 0px;
+	margin-Bottom: 0px;
+	list-style-position: inside;
+}
+
+p {
+	margin-Top: 0px;
+	margin-Bottom: 0px
+}
+</style>
+<div>
+	<span></span>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="color: rgb(102, 102, 102); line-height: 24px; width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); margin: 15px auto 0px; position: relative;">
+			<span
+				style="font-size: 10.5pt; font-family: ''; background-color: window;"><span
+				style="font-size: 19px;"><b>互联网时代，茶香也怕巷子深<br></b></span><br></span><span
+				style="font-size: 10.5pt; background-color: window;">又是年末时，大部分人们又在忙碌中度过了一年，其中可能有辛苦也有收获。一年里经历了股市的跌宕起伏（千股涨跌停，不知你是否还记得速效救心丸），为在天津塘沽爆炸中逝去的年轻的消防官兵感到惋惜，也观看了抗战胜利70周年大阅兵的盛况，等等。</span>
+		</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">今年发生了不少大事件，或许我们最关心的还是与生活和工作中相关的各种事件或者与生活、工作相关的各种琐碎。如三大运营商的“流量和套餐”是每个人都比较关注的问题，身在京津冀和广大北方人们则关注雾霾并且期盼雾霾早日消散。</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1451999995.jpg"
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1451999995.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">人们也总会关注与自己相关的事情，这也是十分自然之事。关心自己的家人、朋友、自己的健康等都是这其中最重要之事。现在春节假期也将至，家人们都会回到家中，享受团聚之乐。春节时送上自己的礼物或祝福也是在平常不过的事情了。</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">在我们的传统中，很多人都会送给自己的父母或长辈等自己挑选的礼物代表一份心意。那么问题来了，今年过节送什么？脑白金？？
+			o(╯□╰)o</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452001381.jpg" 
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452001381.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">送什么，似乎是个头疼问题。在我看来这问题很简单。什么好就送什么，什么健康实惠就送什么。没错，那就是标题里提到的柴米油盐酱醋茶中的"茶"，铁观音。送茶叶不仅上档次，更是送健康，与朋友或家人饮茶，更能促进情感交流，也可表达出自己的心意，一举多得。中国的茶饮文化深厚，送茶送健康的观念也由来已久。铁观音更是中国十大名茶之一，其品牌价值也是茶叶之中最高的。</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452000266.jpg"
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452000266.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">当然茶叶绝不仅限于送礼，茶叶作为天然珍贵的保健饮品，我们推荐您空闲时间也多喝茶。与朋友喝茶可调节生活情趣，增进交流。尤其是在如今快节奏的生活节奏下，有时候慢下来也是一种享受。而且铁观音茶叶有提神益思，清热去火，消食去油腻，防癌抗癌等功效，何乐而不为呢。坐下来喝点茶，静一静，调节情绪，这便是一种慢的，健康自然的生活。</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1451925085.jpg"
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1451925085.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">在互联网时代，茶香也怕巷子深。这里我将介绍本店的情况，本店所有产品均来自我的家乡铁观音源产地福建省安溪县。源产地最大的优势就是第一手、最正宗的产品。最好的质量和便宜实惠的价格。正值本店开业，开业期间优惠巨大，茶叶质量上乘，价格公道。错过开店期就没有这么多优惠啦。在这提醒您付款前记得点优惠券哦，欢迎广大朋友前来观看购买。			地址：http://weidian.com/?userid=839209114</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452173976.jpg"
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452173976.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+	   <div ng-repeat="note_content in note_contents"
+        ng-switch="note_content.type" class="ng-scope"
+        style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+        <div ng-switch-when="3" class="goods-model-wrapper ng-scope"
+            ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+            style="width: 370px; height: 100px; padding: 10px; margin: 20px auto 0px; border: 1px solid rgb(237, 237, 237); position: relative;">
+            <div class="goods-picture fl"
+                style="float: left; width: 70px; height: 70px;">
+                <img
+                    src="http://wd.geilicdn.com/vshop839209114-1450601133274-48217-s1.jpg?w=110&amp;h=110&amp;cp=1"
+                    ng-src="http://wd.geilicdn.com/vshop839209114-1450601133274-48217-s1.jpg?w=110&amp;h=110&amp;cp=1"
+                    style="border: none; vertical-align: bottom; width: 70px;">
+            </div>
+            <div class="goods-news fl ng-binding"
+                style="text-decoration: none; float: left; width: 176px; line-height: 22px; padding-left: 10px; font-size: 12px; color: rgb(133, 133, 133);">
+                <a href="http://weidian.com/item.html?itemID=1690133402"
+                    style="text-decoration: none;">精品安溪铁观音秋茶 清香型与浓香型
+                    口味清淡者可选择清香型铁观音，口味偏重者可选择浓香型铁观音。</a>
+                <p class="ng-binding"
+                    style="margin: 0px; padding: 0px; list-style: none; color: rgb(0, 0, 0); font-family: 'Microsoft Yahei';">
+                    <a href="http://weidian.com/item.html?itemID=1690133402"
+                        style="text-decoration: none;">￥250.00</a>
+                </p>
+            </div>
+            <div class="clear" style="clear: both;"></div>
+        </div>
+    </div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="1" class="text-model-wrapper ng-binding ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 350px; padding: 20px; min-height: 90px; border: 1px solid rgb(238, 238, 238); line-height: 24px; margin: 15px auto 0px; font-size: 14px; color: rgb(102, 102, 102); position: relative;">！！！友情提示：今年2月7号就是除夕啦。
+			！！！根据以往经验，快递一般只能到1月25号左右。 再晚的不能保证过年前可以收到了，春节前后没有快递发货。
+			准备送礼的，自己用的，都赶紧动手啦！！！！</div>
+	</div>
+	<div ng-repeat="note_content in note_contents"
+		ng-switch="note_content.type" class="ng-scope"
+		style="color: rgb(67, 67, 67); font-family: 'PingFang SC', 'Lantinghei SC', 'Microsoft Yahei', 'Hiragino Sans GB', 'Microsoft Sans Serif', 'WenQuanYi Micro Hei', sans; font-size: 16px; line-height: 28px; widows: 1;">
+		<div ng-switch-when="2" class="image-model-wrapper ng-scope"
+			ng-mouseover="ope_show($index)" ng-mouseleave="ope_hide($index)"
+			style="width: 390px; min-height: 84px; margin: 20px auto 0px; position: relative;">
+			<img
+				ng-src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452172749.jpg"
+				src="http://wd.geilicdn.com/vshop839209114-wholesale-apply-1452172749.jpg"
+				style="border: none; vertical-align: bottom; width: 390px;">
+		</div>
+	</div>
+</div>

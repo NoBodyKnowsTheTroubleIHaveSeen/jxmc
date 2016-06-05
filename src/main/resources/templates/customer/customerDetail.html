@@ -1,0 +1,128 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<style>
+tr td:first-child, tr td:nth-child(4) {
+	text-align: right
+}
+
+.detailInfo button {
+	border-radius: 4px;
+	background-color: #5bb75b;
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	border: medium none;
+	color: #fff;
+	cursor: pointer;
+	padding: 5px 15px;
+	height: 31px;
+	text-align: left;
+}
+</style>
+<script src="js/common/jquery-2.1.4.js"></script>
+<script src="layer/layer.js"></script>
+<script>
+	$(function() {
+		$("#name").focus();
+		$(".udpateName").unbind("click").click(function() {
+			var id = $("#name").data("id");
+			var name = $("#name").val();
+			var param = {id:id,name:name};
+			$.post("updateCustomerName",param, function(data) {
+				var index = parent.layer.getFrameIndex(window.name);
+	            parent.layer.close(index);
+			})
+		})
+		$(".updateStatus").unbind("click").click(function() {
+			$.post($(this).data("url"), function(data) {
+				layer.msg(data.message);
+			})
+		})
+		$(".back").unbind("click").click(function() {
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index);
+		});
+		$(document).keydown(function(event) {
+			// 回车事件
+			if (event.keyCode == 13) {
+				$(".udpateName").click();
+			}
+		});
+	})
+</script>
+<table class="detailInfo">
+	<tr>
+		<td>姓名：</td>
+		<td>
+		<input style="width: 120px"  id="name" name="name" th:value="${customer.name}" th:attr="data-id=@{${customer.id}}"/></td>
+		<td style="width: 30px"></td>
+		<td>qq:</td>
+		<td><div th:text="${customer.qq}"></div></td>
+	</tr>
+	<tr>
+		<td>微信：</td>
+		<td><div th:text="${customer.weiXin}"></div></td>
+		<td></td>
+		<td>手机:</td>
+		<td><div th:text="${customer.phone}"></div></td>
+	</tr>
+	<tr>
+		<td>标签：</td>
+		<td><div th:text="${customer.tag}"></div></td>
+		<td></td>
+		<td>qq号=微信号:</td>
+		<td><div th:text="${customer.qqIsWeiXin}?'是':'否'"></div></td>
+	</tr>
+	<tr>
+		<td>省份：</td>
+		<td><div th:text="${customer.province}"></div></td>
+		<td></td>
+		<td>城市:</td>
+		<td><div th:text="${customer.city}"></div></td>
+	</tr>
+	<tr>
+		<td>qq群：</td>
+		<td><div th:text="${customer.qqGroupCode}"></div></td>
+		<td></td>
+		<td>邮件:</td>
+		<td><div th:text="${customer.email}"></div></td>
+	</tr>
+	<tr>
+		<td>是否已添加：</td>
+		<td><div th:text="${customer.isAdd}?'是':'否'"></div></td>
+		<td></td>
+		<td>是否已推荐:</td>
+		<td><div th:text="${customer.isRecommend}?'是':'否'"></div></td>
+	</tr>
+	<tr>
+		<td>添加方式：</td>
+		<td><div th:text="${customer.addType}"></div></td>
+		<td></td>
+		<td>是否已赠送:</td>
+		<td><div th:text="${customer.isGive}?'是':'否'"></div></td>
+	</tr>
+	<tr>
+		<td>添加人：</td>
+		<td><div th:text="${customer.addBy}"></div></td>
+		<td></td>
+		<td></td>
+		<td></td>
+	</tr>
+	<tr>
+		<td>
+			<div th:if="${customer.isPartner}">
+				<a href="javascript:void(0)" class="updateStatus"
+					th:attr="data-url=@{/restoreToCustomer(id=${customer.id})}"
+					style="color: #0ae;">取消合作</a>
+			</div>
+			<div th:unless="${customer.isPartner}">
+				<a href="javascript:void(0)" class="updateStatus"
+					th:attr="data-url=@{/updateToPartner(id=${customer.id})}"
+					style="color: #0ae;">升级为合作者</a>
+			</div>
+		</td>
+		<td></td>
+		<td></td>
+		<td><button class="udpateName">修改姓名</button></td>
+		<td><button class="back">返回</button></td>
+	</tr>
+</table>
+</html>

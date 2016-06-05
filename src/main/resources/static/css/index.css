@@ -1,0 +1,193 @@
+.headers {
+	padding-top: 16px;
+	height: 50px;
+	position: relative;
+	z-index: 50;
+	width: 1010px;
+	margin: 0 auto;
+	_float: left;
+}
+
+.logOut {
+	margin-left: 10px;
+}
+
+.r_ind_nav span a, .r_ind_nav span a:hover {
+	color: #e66e1e;
+	font-weight: bold;
+}
+
+.menu_outside {
+	background-position: left bottom;
+	background-color: #F6F6F6;
+	padding-top: 17px;
+	position: relative;
+}
+
+.nav {
+	display: inline;
+	height: 36px;
+	line-height: 22px;
+	margin-left: 50px;
+}
+
+.nav li {
+	float: left;
+	font-size: 16px;
+	cursor: pointer;
+	margin-right: 40px;
+	_margin-right: 30px;
+	height: 36px;
+	transition: all 300ms ease 0s;
+	display: inline;
+}
+
+.logo {
+	margin-top: -25px;
+	margin-left: 20px;
+}
+
+.max_width {
+	display: table-cell;
+	max-width: 220px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	word-wrap: break-word;
+	white-space: pre;
+}
+
+#mainContent {
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.borderDiv {
+	border-bottom: 1px solid #ddd;
+	float: left;
+	width: 100%;
+	padding-bottom: 10px;
+}
+
+.queryDiv {
+	width: 100%;
+	table-layout: fixed;
+	overflow: hidden;
+	white-space: nowrap;
+	margin-top: 10px;
+}
+
+.queryDiv select {
+	border: 1px solid #ddd;
+	padding: 5px 0 5px 15px;
+	width: 120px;
+}
+
+.queryDiv input {
+	border: 1px solid #ddd;
+	padding: 5px 0 5px 15px;
+	width: 150px;
+}
+
+.editDiv input, .editDiv select {
+	border: 1px solid #ddd;
+	padding: 5px 0 5px 15px;
+	width: 250px;
+}
+
+.queryDiv td {
+	text-align: left;
+}
+
+.titleImage img {
+	vertical-align: text-bottom;
+	width: 25px;
+}
+
+.queryDiv li {
+	float: left;
+	padding: 10px;
+	line-height: 31px;
+}
+
+.queryDiv button,.button {
+	border-radius: 4px;
+	background-color: #5bb75b;
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	border: medium none;
+	color: #fff;
+	cursor: pointer;
+	padding: 5px 15px;
+	height: 31px;
+	text-align: left;
+}
+
+.ui-footer {
+	border-top: 1px solid #ffffff;
+	padding-top: 15px;
+	text-align: center;
+}
+
+.commonTable {
+	width: 100%;
+}
+
+.commonTable th, .commonTable td {
+	padding: 10px 0;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
+}
+
+.commonTable tr:nth-child(2n+2) {
+	background: #fbfbfb none repeat scroll 0 0;
+}
+
+.th_back {
+	padding: 10px 0;
+	text-align: center;
+	display: table-cell;
+	background: #f0f0f0;
+}
+
+.table_btn_blue {
+	border-radius: 4px;
+	color: #fff;
+	padding: 5px 15px;
+	transition: all 300ms ease 0s;
+	background-color: #49afcd;
+	background-image: linear-gradient(to bottom, #5bc0de, #2f96b4);
+}
+
+.table_btn_red {
+	border-radius: 4px;
+	color: #fff;
+	padding: 5px 15px;
+	transition: all 300ms ease 0s;
+	background-color: #49afcd;
+	background-image: linear-gradient(to bottom, #ee5f5b, #bd362f);
+}
+
+.btn {
+	border-radius: 4px;
+	background-color: #5bb75b;
+	background-image: linear-gradient(to bottom, #62c462, #51a351);
+	border: medium none;
+	color: #fff;
+	cursor: pointer;
+	padding: 5px 15px;
+	height: 31px;
+	text-align: left;
+}
+
+.table_btn_orange {
+	border-radius: 4px;
+	color: #fff;
+	padding: 5px 15px;
+	transition: all 300ms ease 0s;
+	background-color: #49afcd;
+	background-image: linear-gradient(to bottom, #f17944, #a7450d);
+}
+
+.table_btn:hover {
+	color: #fa9a3c !important;
+}

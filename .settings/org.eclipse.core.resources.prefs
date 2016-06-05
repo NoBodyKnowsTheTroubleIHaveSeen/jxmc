@@ -1,0 +1,15 @@
+eclipse.preferences.version=1
+encoding//src/main/java=UTF-8
+encoding//src/main/resources=UTF-8
+encoding//src/main/resources/templates/common/footer.html=UTF-8
+encoding//src/main/resources/templates/common/header.html=UTF-8
+encoding//src/main/resources/templates/common/menu.html=UTF-8
+encoding//src/main/resources/templates/common/tablePage.html=UTF-8
+encoding//src/main/resources/templates/customer/customerDetail.html=UTF-8
+encoding//src/main/resources/templates/customer/updateAddStatus.html=UTF-8
+encoding//src/main/resources/templates/customer/updateConsumeLevel.html=UTF-8
+encoding//src/main/resources/templates/customer/updateQqIsWeiXin.html=UTF-8
+encoding//src/main/resources/templates/email/sendEmail.html=UTF-8
+encoding//src/test/java=UTF-8
+encoding/<project>=UTF-8
+encoding/emailTemplate.html=UTF-8

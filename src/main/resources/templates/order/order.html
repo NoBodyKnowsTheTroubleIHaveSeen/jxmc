@@ -1,0 +1,72 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/order/order.js"></script>
+<div>
+	<div class="clear"></div>
+	<form action="getOrders" class="ajaxTable" id="getOrders">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> 订单管理
+			</div>
+			<div class="fright">
+				<a id="refreshQuery" href="javascript:void(0);"><span>刷新&nbsp;&nbsp;</span><img
+					src="images/ic_refresh_grey600_24dp.png" /></a>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv">
+			<table>
+				<tbody>
+					<tr>
+						<td>卖家信息&nbsp;&nbsp; <input type="text" id="sender"
+							name="nameOrPhone" placeholder="输入卖家名称/号码" /></td>
+						<td>订单状态&nbsp;&nbsp; <select name="status"
+							style="width: 180px">
+								<option value="">所有</option>
+								<option value="unpay">未付款</option>
+								<option value="pay">待发货</option>
+								<option value="unship_refunding">未发货，申请退款</option>
+								<option value="shiped_refunding">已发货，申请退款</option>
+								<option value="accept">已确认收货</option>
+								<option value="accept_refunding">已确认收货，申请退款</option>
+								<option value="finish">订单完成</option>
+								<option value="close">订单关闭</option>
+						</select></td>
+						<td style="width: 20px"></td>
+						<td>下单时间&nbsp;&nbsp; <input name="startTime"
+							placeholder="开始时间" id="startTime" /> ~ <input name="endTime"
+							placeholder="结束时间" id="endTime" /></td>
+						<td style="width: 20px"></td>
+						<td>
+							<button type="submit" id="querySubmit">查询</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+		<table class="commonTable">
+			<thead>
+				<tr>
+					<th class="th_back" colspan="13">详细信息列表</th>
+				</tr>
+				<tr>
+					<th class="title" id="sellerInfo">卖家信息</th>
+					<th class="title" id="orderInfo">订单信息</th>
+					<th class="title" id="expressInfo">快递信息</th>
+					<th class="title" id="buyerInfo">买家信息</th>
+					<th class="title" id="priceInfo">价格信息</th>
+					<th class="title" id="note">备注</th>
+				</tr>
+			</thead>
+			<tbody id="tableContent"></tbody>
+		</table>
+		<div class="margin_top_10 fright">
+			<div th:replace="common/tablePage"></div>
+		</div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>
