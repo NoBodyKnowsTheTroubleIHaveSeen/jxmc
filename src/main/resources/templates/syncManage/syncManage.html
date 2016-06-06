@@ -1,11 +1,53 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 <div style="width: 50px; height: 50px"></div>
-<form action="/doSyncManage" class="messageForm">
-	<select name="appInfoId">
+<div class="fleft titleImage">
+	<img src="images/iconfont-chaxun.png" /> 同步管理
+</div>
+<form style="margin-top: 50px" action="/doSyncManage"
+	class="messageForm">
+	主店选择： <select name="appInfoId">
 		<option th:each="master:${masters}" th:value="${master.id}"
 			th:text="${master.id+ '-'+master.mobile +'-'+ master.appKey +'-'+ master.secret}"></option>
 	</select>
 	<button type="submit" class="button">同步</button>
 </form>
+<div class="borderDiv"></div>
+<div>
+	<div class="clear"></div>
+	<form action="getWdAppInfos" class="ajaxTable" id="getWdAppInfos">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> app key管理
+			</div>
+			<div class="fright">
+				<a class="ajaxLoad" data-url="/saveOrUpdateCustomer"
+					href="javascript:void(0);"><span>添加app key&nbsp;&nbsp;</span><img
+					src="images/ic_group_add_grey600_36dp.png" /></a> <a id="refreshQuery"
+					href="javascript:void(0);"><span>刷新&nbsp;&nbsp;</span><img
+					src="images/ic_refresh_grey600_24dp.png" /></a>
+			</div>
+		</div>
+		<table class="commonTable">
+			<thead>
+				<tr>
+					<th class="th_back" colspan="13">详细信息列表</th>
+				</tr>
+				<tr>
+					<th class="title" id="id">编号</th>
+					<th class="title" id="sellerInfo">用户名</th>
+					<th class="title" id="orderInfo">手机</th>
+					<th class="title" id="appkey">app信息</th>
+					<th class="title" id="appName">应用名称</th>
+					<th class="title" id="srcWdAppInfoId">所属主店编号</th>
+				</tr>
+			</thead>
+			<tbody id="tableContent"></tbody>
+		</table>
+		<div class="margin_top_10 fright">
+			<div th:replace="common/tablePage"></div>
+		</div>
+	</form>
+	<div class="clear"></div>
+</div>
 </html>

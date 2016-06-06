@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,5 +45,12 @@ public class SyncManageController extends ControllerBase {
 		CommonMessage message = new CommonMessage();
 		message.setMessage("同步成功");
 		return message;
+	}
+
+	@RequestMapping("/getWdAppInfos")
+	@ResponseBody
+	public Page<WdAppInfo> getWdAppInfos(Pageable pageable) {
+		Page<WdAppInfo> pageData = infoDao.findAll(pageable);
+		return pageData;
 	}
 }
