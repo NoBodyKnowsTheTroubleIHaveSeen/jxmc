@@ -89,9 +89,6 @@ $(function() {
 	$("#clearForm").unbind("click").click(function() {
 		$(this).parents("form")[0].reset();
 	})
-	$("#refreshQuery").unbind("click").click(function() {
-		$("#customerRecordForm").submit();
-	})
 	/**
 	 * 显示或隐藏查询按钮
 	 */

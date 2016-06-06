@@ -17,7 +17,9 @@ public class WdAppInfo extends EntityBase {
 	private String accessToken;// token
 	private Date lastFreshTime;// 最后刷新时间
 	private Long expire;// 过期时间
-	
+
+	// 是否为源店铺标志位
+	private Boolean isSrc;
 	private Long srcWdAppInfoId;
 
 	public String getAppKey() {
@@ -98,6 +100,14 @@ public class WdAppInfo extends EntityBase {
 
 	public void setSrcWdAppInfoId(Long srcWdAppInfoId) {
 		this.srcWdAppInfoId = srcWdAppInfoId;
+	}
+
+	public Boolean getIsSrc() {
+		return isSrc;
+	}
+
+	public void setIsSrc(Boolean isSrc) {
+		this.isSrc = isSrc;
 	}
 
 }

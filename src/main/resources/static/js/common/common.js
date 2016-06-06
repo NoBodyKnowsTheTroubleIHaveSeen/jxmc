@@ -331,6 +331,10 @@ $(function() {
 	 * 初始化code信息
 	 */
 	window["codeInfo"] = new Object();
+
+	$(document).on("click", ".resubmitForm", function() {
+		$(this).parents(".ajaxTable").submit();
+	})
 })
 /**
  * 设置表格显示内容

@@ -1,6 +1,5 @@
 package org.whh.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.whh.base.ControllerBase;
 import org.whh.dao.WdAppInfoDao;
 import org.whh.entity.WdAppInfo;
 import org.whh.wd.ProductMangeHelper;
+import org.whh.web.CommonException;
 import org.whh.web.CommonMessage;
 
 @Controller
@@ -27,13 +27,7 @@ public class SyncManageController extends ControllerBase {
 
 	@RequestMapping("/syncManage")
 	public String syncManage(Model model) {
-		Iterable<WdAppInfo> infos = infoDao.findAll();
-		List<WdAppInfo> masters = new ArrayList<WdAppInfo>();
-		for (WdAppInfo wdAppInfo : infos) {
-			if (wdAppInfo.getSrcWdAppInfoId() == null) {
-				masters.add(wdAppInfo);
-			}
-		}
+		List<WdAppInfo> masters = infoDao.getByIsSrc(true);
 		model.addAttribute("masters", masters);
 		return "syncManage/syncManage";
 	}
@@ -52,5 +46,30 @@ public class SyncManageController extends ControllerBase {
 	public Page<WdAppInfo> getWdAppInfos(Pageable pageable) {
 		Page<WdAppInfo> pageData = infoDao.findAll(pageable);
 		return pageData;
+	}
+
+	@RequestMapping("/saveOrUpdateWdAppInfo")
+	public String saveOrUpdateWdAppInfo(Long id, Model model) {
+		List<WdAppInfo> masters = infoDao.getByIsSrc(true);
+		model.addAttribute("masters", masters);
+		if (!isNull(id)) {
+			WdAppInfo info = infoDao.findOne(id);
+			model.addAttribute("wdAppInfo", info);
+		} else {
+			model.addAttribute("wdAppInfo", new WdAppInfo());
+		}
+		return "syncManage/saveOrUpdateWdAppInfo";
+	}
+
+	@RequestMapping("/doSaveOrUpdateWdAppInfo")
+	public String doSaveOrUpdateWdAppInfo(WdAppInfo info, Model model) throws CommonException {
+		List<WdAppInfo> masters = infoDao.getByIsSrc(true);
+		model.addAttribute("masters", masters);
+		try {
+			infoDao.save(info);
+		} catch (Exception e) {
+			throw new CommonException("保存app key信息失败");
+		}
+		return "syncManage/syncManage";
 	}
 }

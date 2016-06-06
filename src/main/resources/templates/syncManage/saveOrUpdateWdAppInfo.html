@@ -1,0 +1,87 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div>
+	<div class="clear"></div>
+	<form action="doSaveOrUpdateWdAppInfo" class="ajaxSubmit">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft titleImage">
+				<img src="images/iconfont-chaxun.png" /> app key管理
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv editDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>用户名</td>
+						<td style="width: 50px"></td>
+						<td><input name="userName" placeholder="输入用户名"
+							th:value="${wdAppInfo.userName}" /></td>
+					</tr>
+					<tr>
+						<td>手机</td>
+						<td style="width: 50px"></td>
+						<td><input name="mobile" placeholder="输入手机号"
+							th:value="${wdAppInfo.mobile}" /></td>
+					</tr>
+					<tr>
+						<td>应用名</td>
+						<td style="width: 50px"></td>
+						<td><input name="appName" placeholder="输入应用名"
+							th:value="${wdAppInfo.appName}" /></td>
+					</tr>
+					<tr>
+						<td>app key</td>
+						<td></td>
+						<td><input name="appKey" placeholder="输入app Key"
+							th:value="${wdAppInfo.appKey}" required="required"/></td>
+					</tr>
+					<tr>
+						<td>app secret</td>
+						<td></td>
+						<td><input name="secret" placeholder="输入app secret"
+							th:value="${wdAppInfo.secret}" required="required"/></td>
+					</tr>
+					<tr>
+						<td>备注</td>
+						<td></td>
+						<td><input name="memo" placeholder="输入备注"
+							th:value="${wdAppInfo.memo}" /></td>
+					</tr>
+					<tr>
+						<td>是否为源店铺</td>
+						<td></td>
+						<td><select name="isSrc">
+								<option value="false" th:selected="${#strings.equals(wdAppInfo.isSrc,'false')}">否</option>
+								<option value="true" th:selected="${#strings.equals(wdAppInfo.isSrc,'true')}">是</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>源店铺选择</td>
+						<td></td>
+						<td>
+						<select name="srcWdAppInfoId">
+								<option value="">无</option>
+								<option th:each="master:${masters}" th:value="${master.id}"
+									th:text="${master.userName + ';' + master.mobile}" th:selected="${#strings.equals(wdAppInfo.srcWdAppInfoId,master.id)}"></option>
+						</select></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<button class="ajaxLoad fleft" data-url="syncManage">返回</button>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+		<input type="hidden" name="id" th:value="${wdAppInfo.id}" />
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

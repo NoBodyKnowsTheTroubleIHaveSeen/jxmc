@@ -18,7 +18,7 @@ public class OrderSchedule {
 	@Autowired
 	OrderHelper orderHelper;
 
-	@Scheduled(fixedRate = 600000)
+//	@Scheduled(fixedRate = 600000)
 //	@Scheduled(fixedRate = 5000)
 	private void scheduledSyncOrders() {
 		Iterable<WdAppInfo> infos = infoDao.findAll();
