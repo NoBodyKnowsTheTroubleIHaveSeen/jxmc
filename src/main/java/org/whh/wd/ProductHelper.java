@@ -35,6 +35,8 @@ import com.alibaba.fastjson.JSONObject;
 @Component
 public class ProductHelper extends WdInterfaceBase {
 
+	public static final int ADD = 1;
+	public static final int UPDATE = 2;
 	private Logger logger = LoggerFactory.getLogger(ProductHelper.class);
 	@Autowired
 	ProductInfoDao productInfoDao;
@@ -194,7 +196,7 @@ public class ProductHelper extends WdInterfaceBase {
 		}
 	}
 
-	public StatusResult addItem(Long appInfoId, ProductInfo copyedInfo) {
+	public StatusResult addOrUpdateItem(Long appInfoId, ProductInfo copyedInfo, Integer type) {
 		JSONObject params = new JSONObject();
 		params.put("itemName", copyedInfo.getItemName());
 		params.put("stock", copyedInfo.getStock());
@@ -236,8 +238,14 @@ public class ProductHelper extends WdInterfaceBase {
 		params.put("free_delivery", copyedInfo.getFreeDelivery().toString());
 		params.put("remote_free_delivery", copyedInfo.getRemoteFreeDelivery().toString());
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		pairs.add(new BasicNameValuePair("param", params.toJSONString()));
-		pairs.add(new BasicNameValuePair("public", getPublicParam(appInfoId, "vdian.item.add", "1.1")));
+		if (type == ADD) {
+			pairs.add(new BasicNameValuePair("param", params.toJSONString()));
+			pairs.add(new BasicNameValuePair("public", getPublicParam(appInfoId, "vdian.item.add", "1.1")));
+		}else if (type == UPDATE) {	
+			params.put("itemID", copyedInfo.getItemId());
+			pairs.add(new BasicNameValuePair("param", params.toJSONString()));
+			pairs.add(new BasicNameValuePair("public", getPublicParam(appInfoId, "vdian.item.update", "1.1")));
+		}
 		String response = post(appInfoId, pairs);
 		StatusResult statusResult = JSONObject.parseObject(response, StatusResult.class);
 		JSONObject obj = JSONObject.parseObject(statusResult.getResult());
@@ -259,21 +267,148 @@ public class ProductHelper extends WdInterfaceBase {
 		List<ProductInfo> iterator = productInfoDao.findByAppInfoId(fromAppId);
 		for (ProductInfo productInfo : iterator) {
 			Long productId = productInfo.getId();
-			ProductInfo oldProduct = productInfoDao.findByAppInfoIdAndSrcProductInfoId(toAppId,productId);
+			ProductInfo oldProduct = productInfoDao.findByAppInfoIdAndSrcProductInfoId(toAppId, productId);
 			if (oldProduct != null) {
-				
-			}else
-			{
-				addItem(toAppId, productInfo);
+				boolean isSame = true;
+				String cates = productInfo.getCates();
+				List<ProductCateVo> vos = JSONObject.parseArray(cates, ProductCateVo.class);
+				String oldCates = productInfo.getCates();
+				List<ProductCateVo> oldVos = JSONObject.parseArray(oldCates, ProductCateVo.class);
+				boolean isCateSame = false;
+				for (ProductCateVo productCateVo : vos) {
+					isCateSame = false;
+					for (ProductCateVo oldVo : oldVos) {
+						if (oldVo.getCate_name().equals(productCateVo.getCate_name())) {
+							isCateSame = true;
+							break;
+						}
+					}
+					if (!isCateSame) {
+						break;
+					}
+				}
+				if (!isCateSame) {
+					isSame = false;
+					List<ProductCateVo> newVos = new ArrayList<ProductCateVo>();
+					for (ProductCateVo productCateVo : vos) {
+						String cateName = productCateVo.getCate_name();
+						ProductCate cate = productCateDao.findByAppInfoIdAndCateNameAndIsRemove(toAppId, cateName,
+								false);
+						ProductCateVo newVo = new ProductCateVo();
+						newVo.setCate_id(cate.getCateId());
+						newVo.setCate_name(cate.getCateName());
+						newVo.setSort_num(cate.getSortNum());
+						newVos.add(newVo);
+					}
+					oldProduct.setCates(JSONObject.toJSONString(newVos));
+				}
+				String imgs = productInfo.getImgs();
+				List<String> imgList = JSONObject.parseArray(imgs, String.class);
+				String oldImgs = oldProduct.getImgs();
+				List<String> oldImgList = JSONObject.parseArray(oldImgs, String.class);
+				boolean isImgSame = false;
+				for (String img : imgList) {
+					isImgSame = false;
+					for (String oldImg : oldImgList) {
+						ProductImages productImages = productImagesDao.findByAppInfoIdAndSourceFileName(toAppId, img);
+						if (productImages.getWdUrl().equals(oldImg)) {
+							isCateSame = true;
+							break;
+						}
+					}
+					if (!isImgSame) {
+						break;
+					}
+				}
+				if (!isImgSame) {
+					isSame = false;
+					uploadFile(toAppId, productInfo);
+				}
+				List<String> newImgs = new ArrayList<String>();
+				for (String img : imgList) {
+					ProductImages images = productImagesDao.findByAppInfoIdAndSourceFileName(toAppId, img);
+					newImgs.add(images.getWdUrl());
+				}
+				oldProduct.setImgs(JSONObject.toJSONString(newImgs));
+				String skus = productInfo.getSkus();
+				List<ProductSkuVo> skuList = JSONObject.parseArray(skus, ProductSkuVo.class);
+				String oldSkus = oldProduct.getSkus();
+				List<ProductSkuVo> oldSkuList = JSONObject.parseArray(oldSkus, ProductSkuVo.class);
+				boolean isSkuSame = false;
+				for (ProductSkuVo sku : skuList) {
+					isSkuSame = false;
+					String str = sku.getTitle() + sku.getPrice();
+					for (ProductSkuVo oldSku : oldSkuList) {
+						String oldStr = oldSku.getTitle() + oldSku.getPrice();
+						if (str.equals(oldStr)) {
+							isSkuSame = true;
+							break;
+						}
+					}
+					if (!isSkuSame) {
+						break;
+					}
+				}
+				if (!isSkuSame) {
+					isSame = false;
+					for (ProductSkuVo skuVo : skuList) {
+						skuVo.setId(null);
+						skuVo.setSku_merchant_code(null);
+					}
+					oldProduct.setCates(JSONObject.toJSONString(skuList));
+				}
+				if (!oldProduct.getFreeDelivery().equals(productInfo.getFreeDelivery())) {
+					isSame = false;
+					oldProduct.setFreeDelivery(productInfo.getFreeDelivery());
+				}
+				if (!oldProduct.getIstop().equals(productInfo.getIstop())) {
+					isSame = false;
+					oldProduct.setIstop(productInfo.getIstop());
+				}
+				if (!oldProduct.getItemDesc().equals(productInfo.getItemDesc())) {
+					isSame = false;
+					oldProduct.setItemDesc(productInfo.getItemDesc());
+				}
+
+				if (!oldProduct.getItemName().equals(productInfo.getItemName())) {
+					isSame = false;
+					oldProduct.setItemName(productInfo.getItemName());
+				}
+				if (!oldProduct.getPrice().equals(productInfo.getPrice())) {
+					isSame = false;
+					oldProduct.setPrice(productInfo.getPrice());
+				}
+				if (!oldProduct.getRemoteFreeDelivery().equals(productInfo.getRemoteFreeDelivery())) {
+					isSame = false;
+					oldProduct.setRemoteFreeDelivery(productInfo.getRemoteFreeDelivery());
+				}
+				if (!oldProduct.getStatus().equals(productInfo.getStatus())) {
+					isSame = false;
+					oldProduct.setStatus(productInfo.getStatus());
+				}
+				if (!oldProduct.getTitles().equals(productInfo.getTitles())) {
+					isSame = false;
+					oldProduct.setTitles(productInfo.getTitles());
+				}
+				/**
+				 * 不检查FxFeeRate,MerchantCode字段
+				 */
+				// oldProduct.getFxFeeRate();
+				// oldProduct.getMerchantCode();
+
+				if (isSame) {
+					continue;
+				}
+				addOrUpdateItem(toAppId, oldProduct,UPDATE);
+			} else {
+				addOrUpdateItem(toAppId, productInfo,ADD);
 			}
 		}
 		syncItemToDatabase(toAppId);
 	}
-	
-	public void sync(Long appInfoId)
-	{
-		
-		
+
+	public void sync(Long appInfoId) {
+
 		syncItemToDatabase(appInfoId);
 		List<WdAppInfo> infos = wdAppInfoDao.getBySrcWdAppInfoId(appInfoId);
 		for (WdAppInfo wdAppInfo : infos) {
