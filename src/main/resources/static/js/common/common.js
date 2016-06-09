@@ -72,7 +72,11 @@ $(function() {
 	})
 	$(document).on("click", ".messageLoad", function() {
 		var url = $(this).data("url");
+		var index = layer.load(0, {
+			shade : [ 0.1, '#fff' ]
+		});
 		$.get(url, function(data) {
+			layer.close(index);
 			layer.alert(data.message);
 		})
 	})
@@ -487,4 +491,40 @@ function getTodayStartTime() {
 	today.setSeconds(0);
 	today.setMilliseconds(0);
 	return today;
+}
+
+function messageFormSubmit(form)
+{
+	event.preventDefault();
+	var action = form.attr("action");
+	var formData = form.serialize();
+	var index = layer.load(0, {
+		shade : [ 0.1, '#fff' ]
+	});
+	$.post(action, formData, function(data) {
+		layer.close(index);
+		if (isNull(data.title)) {
+			data.title = "提示信息";
+		}
+		/**
+		 * 提示消息
+		 */
+		layer.alert(data.message, {
+			title : data.title,
+		}, function(index) {
+			form[0].reset();
+			var nextAction = form.data("nextAction");
+			if (!isNull(nextAction)) {
+				var target = form.data("target");
+				if (isNull(target)) {
+					target = "#mainContent";
+				}
+			}
+			$.post(nextAction, function(data) {
+				$(target).html(data);
+			});
+			layer.close(index);
+		});
+	})
+	return false;
 }

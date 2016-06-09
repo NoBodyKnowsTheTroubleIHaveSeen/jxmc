@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.whh.base.ControllerBase;
 import org.whh.dao.OrdersDao;
+import org.whh.dao.WdAppInfoDao;
 import org.whh.entity.Orders;
+import org.whh.entity.WdAppInfo;
 import org.whh.service.OrdersService;
 import org.whh.util.CalendarUtil;
 import org.whh.wd.OrderHelper;
@@ -35,6 +37,9 @@ public class OrderController extends ControllerBase {
 
 	@Autowired
 	OrderHelper orderHelper;
+	
+	@Autowired
+	WdAppInfoDao appInfoDao;
 
 	@RequestMapping("/order")
 	public String index() {
@@ -65,5 +70,17 @@ public class OrderController extends ControllerBase {
 		}
 		return message;
 	}
-
+	@ResponseBody
+	@RequestMapping("/doOrderSync")
+	public CommonMessage doOrderSync()
+	{
+		Date now = new Date();
+		Iterable<WdAppInfo> infos = appInfoDao.findAll();
+		for (WdAppInfo wdAppInfo : infos) {
+			orderHelper.syncOrders(wdAppInfo.getId(), new Date(0), now);
+		}
+		CommonMessage message = new CommonMessage();
+		message.setMessage("同步订单成功");
+		return message;
+	}
 }

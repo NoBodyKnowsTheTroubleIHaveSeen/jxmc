@@ -7,11 +7,11 @@
 </div>
 <form style="margin-top: 50px" action="/doSyncManage"
 	class="messageForm">
-	源店铺选择： <select name="appInfoId">
+	源店铺选择： <select name="srcAppInfoId">
 		<option th:each="master:${masters}" th:value="${master.id}"
 			th:text="${master.appName+';'+master.userName +';'+ master.mobile}"></option>
 	</select>
-	<button type="submit" class="button">同步</button>
+	<button type="submit" class="button">同步该源店铺</button>
 </form>
 <div class="borderDiv"></div>
 <div>

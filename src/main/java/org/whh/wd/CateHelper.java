@@ -163,7 +163,8 @@ public class CateHelper extends WdInterfaceBase {
 			cate.setSortNum(productCateVo.getSort_num());
 			cate.setUpdateTime(new Date());
 			if (!isSrcCate) {
-				ProductCate srCate = dao.findByAppInfoIdAndCateNameAndIsRemove(srcAppInfoId, productCateVo.getCate_name(),false);
+				ProductCate srCate = dao.findByAppInfoIdAndCateNameAndIsRemove(srcAppInfoId,
+						productCateVo.getCate_name(), false);
 				cate.setSrcProductCateId(srCate.getId());
 			}
 			cates.add(cate);
@@ -173,17 +174,20 @@ public class CateHelper extends WdInterfaceBase {
 		return vos;
 	}
 
+	public void sync(Long srcAppInfoId)
+	{
+		sync(srcAppInfoId);
+	}
 	/**
 	 * 
-	 * 传入源appInfoId
 	 * 从远程同步类目到数据库 将已删除的类目标记为已删除，并找到其他所有未删除的类目，删除 便利其他类目信息，如果没有找到就添加
 	 * 
-	 * @param appInfoId
+	 * @param srcAppInfoId
 	 */
-	public void sync(Long appInfoId) {
-		List<ProductCate> oldCates = dao.findByAppInfoId(appInfoId);
+	public void sync(Long srcAppInfoId, Long toAppInfoId) {
+		List<ProductCate> oldCates = dao.findByAppInfoId(srcAppInfoId);
 		List<String> newCateIds = new ArrayList<String>();
-		List<ProductCateVo> vos = syncCate(appInfoId, true);
+		List<ProductCateVo> vos = syncCate(srcAppInfoId, true);
 		for (ProductCateVo productCateVo : vos) {
 			newCateIds.add(productCateVo.getCate_id());
 		}
@@ -201,7 +205,8 @@ public class CateHelper extends WdInterfaceBase {
 				List<ProductCate> unRemoveCates = dao.findBySrcProductCateIdAndCateNameAndIsRemove(oldCate.getId(),
 						oldCate.getCateName(), false);
 				for (ProductCate productCate : unRemoveCates) {
-					StatusResult result = removeCate(productCate.getAppInfoId(), Integer.parseInt(productCate.getCateId()));
+					StatusResult result = removeCate(productCate.getAppInfoId(),
+							Integer.parseInt(productCate.getCateId()));
 					if (result.getStatus().getStatus_code() == 0) {
 						productCate.setRemove(true);
 						dao.save(productCate);
@@ -210,12 +215,12 @@ public class CateHelper extends WdInterfaceBase {
 				dao.save(oldCate);
 			}
 		}
-		Iterable<WdAppInfo> infos = appInfoDao.findAll();
+		Iterable<WdAppInfo> infos = appInfoDao.getBySrcWdAppInfoId(srcAppInfoId);
 		for (ProductCateVo productCateVo : vos) {
 			String cateName = productCateVo.getCate_name();
 			for (WdAppInfo wdAppInfo : infos) {
 				if (wdAppInfo.getSrcWdAppInfoId() != null) {
-					ProductCate cate = dao.findByAppInfoIdAndCateNameAndIsRemove(wdAppInfo.getId(), cateName,false);
+					ProductCate cate = dao.findByAppInfoIdAndCateNameAndIsRemove(wdAppInfo.getId(), cateName, false);
 					if (cate != null) {
 						productCateVo.setCate_id(cate.getCateId());
 						updateCate(wdAppInfo.getId(), productCateVo);
@@ -228,7 +233,7 @@ public class CateHelper extends WdInterfaceBase {
 			}
 		}
 		for (WdAppInfo wdAppInfo : infos) {
-			if (wdAppInfo.getSrcWdAppInfoId() != null) {
+			if (toAppInfoId == null || wdAppInfo.getId().equals(toAppInfoId)) {
 				syncCate(wdAppInfo.getId(), false);
 			}
 		}

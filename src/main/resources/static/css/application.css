@@ -22,6 +22,10 @@ a {
     border: 0px;
     transition: all 300ms ease 0s;
 }
+a:hover
+{
+	cursor: pointer;
+}
 td {
     border-right: none;
     color: #666666;

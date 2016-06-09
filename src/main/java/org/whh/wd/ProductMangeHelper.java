@@ -16,14 +16,19 @@ public class ProductMangeHelper {
 	@Autowired
 	OrderHelper orderHelper;
 
+	public void sync(Long srcAppInfoId)
+	{
+		sync(srcAppInfoId,null);
+	}
+	
 	/**
 	 * 同步类目和产品
 	 * 
 	 * @param appInfoId
 	 */
-	public void sync(Long appInfoId) {
-		cateHelper.sync(appInfoId);
-		productHelper.sync(appInfoId);
+	public void sync(Long srcAppInfoId,Long toAppInfoId) {
+		cateHelper.sync(srcAppInfoId,toAppInfoId);
+		productHelper.sync(srcAppInfoId,toAppInfoId);
 	}
 
 	public void syncOrder(Long appInfoId, Date startTime, Date endTime) {

@@ -196,7 +196,7 @@ public class ProductHelper extends WdInterfaceBase {
 		}
 	}
 
-	public StatusResult addOrUpdateItem(Long appInfoId, ProductInfo copyedInfo, Integer type) {
+	public StatusResult addOrUpdateItem(Long appInfoId, ProductInfo copyedInfo,Long productInfoId, Integer type) {
 		JSONObject params = new JSONObject();
 		params.put("itemName", copyedInfo.getItemName());
 		params.put("stock", copyedInfo.getStock());
@@ -241,7 +241,7 @@ public class ProductHelper extends WdInterfaceBase {
 		if (type == ADD) {
 			pairs.add(new BasicNameValuePair("param", params.toJSONString()));
 			pairs.add(new BasicNameValuePair("public", getPublicParam(appInfoId, "vdian.item.add", "1.1")));
-		}else if (type == UPDATE) {	
+		} else if (type == UPDATE) {
 			params.put("itemID", copyedInfo.getItemId());
 			pairs.add(new BasicNameValuePair("param", params.toJSONString()));
 			pairs.add(new BasicNameValuePair("public", getPublicParam(appInfoId, "vdian.item.update", "1.1")));
@@ -252,7 +252,7 @@ public class ProductHelper extends WdInterfaceBase {
 		ProductInfo info = new ProductInfo();
 		info.setItemId(obj.getString("item_id"));
 		info.setAppInfoId(appInfoId);
-		info.setSrcProductInfoId(info.getId());
+		info.setSrcProductInfoId(productInfoId);
 		productInfoDao.save(info);
 		return statusResult;
 	}
@@ -312,7 +312,7 @@ public class ProductHelper extends WdInterfaceBase {
 					for (String oldImg : oldImgList) {
 						ProductImages productImages = productImagesDao.findByAppInfoIdAndSourceFileName(toAppId, img);
 						if (productImages.getWdUrl().equals(oldImg)) {
-							isCateSame = true;
+							isImgSame = true;
 							break;
 						}
 					}
@@ -323,30 +323,35 @@ public class ProductHelper extends WdInterfaceBase {
 				if (!isImgSame) {
 					isSame = false;
 					uploadFile(toAppId, productInfo);
+					List<String> newImgs = new ArrayList<String>();
+					for (String img : imgList) {
+						ProductImages images = productImagesDao.findByAppInfoIdAndSourceFileName(toAppId, img);
+						newImgs.add(images.getWdUrl());
+					}
+					oldProduct.setImgs(JSONObject.toJSONString(newImgs));
 				}
-				List<String> newImgs = new ArrayList<String>();
-				for (String img : imgList) {
-					ProductImages images = productImagesDao.findByAppInfoIdAndSourceFileName(toAppId, img);
-					newImgs.add(images.getWdUrl());
-				}
-				oldProduct.setImgs(JSONObject.toJSONString(newImgs));
 				String skus = productInfo.getSkus();
 				List<ProductSkuVo> skuList = JSONObject.parseArray(skus, ProductSkuVo.class);
 				String oldSkus = oldProduct.getSkus();
 				List<ProductSkuVo> oldSkuList = JSONObject.parseArray(oldSkus, ProductSkuVo.class);
 				boolean isSkuSame = false;
-				for (ProductSkuVo sku : skuList) {
-					isSkuSame = false;
-					String str = sku.getTitle() + sku.getPrice();
-					for (ProductSkuVo oldSku : oldSkuList) {
-						String oldStr = oldSku.getTitle() + oldSku.getPrice();
-						if (str.equals(oldStr)) {
-							isSkuSame = true;
+				if (skuList.size() == 0 && skuList.size() == oldSkuList.size()) {
+					isSkuSame = true;
+				}else
+				{
+					for (ProductSkuVo sku : skuList) {
+						isSkuSame = false;
+						String str = sku.getTitle() + sku.getPrice();
+						for (ProductSkuVo oldSku : oldSkuList) {
+							String oldStr = oldSku.getTitle() + oldSku.getPrice();
+							if (str.equals(oldStr)) {
+								isSkuSame = true;
+								break;
+							}
+						}
+						if (!isSkuSame) {
 							break;
 						}
-					}
-					if (!isSkuSame) {
-						break;
 					}
 				}
 				if (!isSkuSame) {
@@ -361,10 +366,10 @@ public class ProductHelper extends WdInterfaceBase {
 					isSame = false;
 					oldProduct.setFreeDelivery(productInfo.getFreeDelivery());
 				}
-				if (!oldProduct.getIstop().equals(productInfo.getIstop())) {
-					isSame = false;
-					oldProduct.setIstop(productInfo.getIstop());
-				}
+//				if (!oldProduct.getIstop().equals(productInfo.getIstop())) {
+//					isSame = false;
+//					oldProduct.setIstop(productInfo.getIstop());
+//				}
 				if (!oldProduct.getItemDesc().equals(productInfo.getItemDesc())) {
 					isSame = false;
 					oldProduct.setItemDesc(productInfo.getItemDesc());
@@ -399,20 +404,26 @@ public class ProductHelper extends WdInterfaceBase {
 				if (isSame) {
 					continue;
 				}
-				addOrUpdateItem(toAppId, oldProduct,UPDATE);
+				addOrUpdateItem(toAppId, oldProduct,oldProduct.getSrcProductInfoId(), UPDATE);
 			} else {
-				addOrUpdateItem(toAppId, productInfo,ADD);
+				addOrUpdateItem(toAppId, productInfo,productInfo.getId(), ADD);
 			}
 		}
 		syncItemToDatabase(toAppId);
 	}
 
-	public void sync(Long appInfoId) {
+	public void sync(Long srcAppInfoId) {
+		sync(srcAppInfoId, null);
+	}
 
-		syncItemToDatabase(appInfoId);
-		List<WdAppInfo> infos = wdAppInfoDao.getBySrcWdAppInfoId(appInfoId);
+	public void sync(Long srcAppInfoId, Long toAppInfoId) {
+
+		syncItemToDatabase(srcAppInfoId);
+		List<WdAppInfo> infos = wdAppInfoDao.getBySrcWdAppInfoId(srcAppInfoId);
 		for (WdAppInfo wdAppInfo : infos) {
-			syncItemToAnother(appInfoId, wdAppInfo.getId());
+			if (toAppInfoId == null || wdAppInfo.getId().equals(toAppInfoId)) {
+				syncItemToAnother(srcAppInfoId, wdAppInfo.getId());
+			}
 		}
 	}
 }

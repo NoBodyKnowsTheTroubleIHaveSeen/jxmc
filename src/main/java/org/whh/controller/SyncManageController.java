@@ -34,8 +34,14 @@ public class SyncManageController extends ControllerBase {
 
 	@RequestMapping("/doSyncManage")
 	@ResponseBody
-	public CommonMessage doSyncManage(Long appInfoId) {
-		helper.sync(appInfoId);
+	public CommonMessage doSyncManage(Long srcAppInfoId,Long toAppInfoId) {
+//		if (!isNull(srcAppInfoId)) {
+//			helper.sync(srcAppInfoId);
+//		}else if (!isNull(toAppInfoId)) {
+//			WdAppInfo info = infoDao.findOne(toAppInfoId);
+//			Long srcId =info.getSrcWdAppInfoId();
+//			helper.sync(srcId,toAppInfoId);
+//		}
 		CommonMessage message = new CommonMessage();
 		message.setMessage("同步成功");
 		return message;
