@@ -1,5 +1,18 @@
 //# sourceURL=order.js
 $(function() {
+	$(document).on("click", ".syncOrder", function() {
+		var url = $(this).data("url");
+		var index = layer.load(0, {
+			shade : [ 0.1, '#fff' ]
+		});
+		$.get(url, function(data) {
+			layer.close(index);
+			layer.alert(data.message,function(index){
+				$("#getOrders").submit();
+				layer.close(index);
+			});
+		})
+	})
 	$("#startTime").datepicker({
 		changeMonth : true,
 		changeYear : true,

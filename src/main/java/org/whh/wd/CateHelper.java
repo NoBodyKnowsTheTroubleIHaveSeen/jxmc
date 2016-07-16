@@ -165,7 +165,9 @@ public class CateHelper extends WdInterfaceBase {
 			if (!isSrcCate) {
 				ProductCate srCate = dao.findByAppInfoIdAndCateNameAndIsRemove(srcAppInfoId,
 						productCateVo.getCate_name(), false);
-				cate.setSrcProductCateId(srCate.getId());
+				if (srCate != null) {
+					cate.setSrcProductCateId(srCate.getId());
+				}
 			}
 			cates.add(cate);
 

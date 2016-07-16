@@ -30,7 +30,12 @@ $(function() {
 						+ data.id + "' id='name_" + data.id + "'>无</a>";
 			}
 			return "<a href='javascript:void(0)' class='getDetailBtn' data-id='"
-					+ data.id + "' id='name_" + data.id + "'>" + data.name + "</a>";
+					+ data.id
+					+ "' id='name_"
+					+ data.id
+					+ "'>"
+					+ data.name
+					+ "</a>";
 		},
 		consumeLevel : function(data) {
 			return "<a href='javascript:void(0)' class='updateConsumeLevelBtn' data-id='"
@@ -196,30 +201,29 @@ $(function() {
 		var id = $(this).data("id");
 		var val = $(this).data("val");
 		var msg = "";
-		if ("是" == val) {
+		if (true == val) {
 			msg = "修改为qq号码(!=)不与微信号一致";
 			val = false;
 		} else {
 			msg = "修改为qq号码(=)与微信号一致";
 			val = true;
 		}
-		layer.confirm(msg, function() {
-			var param = {
-				id : id,
-				val : val
+		var param = {
+			id : id,
+			val : val
+		}
+		$.post("updateQqIsWeiXin", param, function(data) {
+			if (val) {
+				layer.msg(data.message, {
+					time : 500
+				}, function() {
+					$("#name_" + id).click();
+				});
+			} else {
+				layer.msg(data.message);
+				$("#customerRecordForm").submit();
 			}
-			$.post("updateQqIsWeiXin", param, function(data) {
-				if (val) {
-					layer.msg(data.message, {
-						time : 500
-					}, function() {
-						$("#name_" + id).click();
-					});
-				} else {
-					layer.msg(data.message);
-					$("#customerRecordForm").submit();
-				}
-			})
-		});
+		})
+
 	});
 });
