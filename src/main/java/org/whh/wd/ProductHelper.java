@@ -425,8 +425,7 @@ public class ProductHelper extends WdInterfaceBase {
 	}
 
 	public void sync(Long srcAppInfoId, Long toAppInfoId, Boolean isSyncAll) {
-
-		syncItemToDatabase(srcAppInfoId);
+		syncItemToDatabase(toAppInfoId);
 		List<WdAppInfo> infos = wdAppInfoDao.getBySrcWdAppInfoId(srcAppInfoId);
 		for (WdAppInfo wdAppInfo : infos) {
 			if (isSyncAll || wdAppInfo.getId().equals(toAppInfoId)) {

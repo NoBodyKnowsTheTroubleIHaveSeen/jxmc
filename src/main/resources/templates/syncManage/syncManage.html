@@ -6,12 +6,12 @@
 	<img src="images/iconfont-chaxun.png" /> 同步管理
 </div>
 <form style="margin-top: 50px" action="/doSyncManage"
-	class="messageForm">
+	class="syncAll">
 	源店铺选择： <select name="srcAppInfoId">
 		<option th:each="master:${masters}" th:value="${master.id}"
 			th:text="${master.appName+';'+master.userName +';'+ master.mobile}"></option>
 	</select>
-	<input type="hidden" name="isSyncAll" value="true">
+	<input type="hidden" name="isSyncAll" value="true"/>
 	<button type="submit" class="button">同步该源店铺</button>
 </form>
 <div class="borderDiv"></div>
