@@ -49,14 +49,14 @@ $(function() {
 			if (isNull(data.qqIsWeiXin)) {
 				return "<a href='javascript:void(0)' class='qqIsWeiXinBtn' data-id='"
 						+ data.id
-						+ "' data-val='false'>是</a>/"
+						+ "' data-val='true'>是</a>/"
 						+ "<a href='javascript:void(0)' class='qqIsWeiXinBtn' data-id='"
-						+ data.id + "' data-val='true'>否</a>";
+						+ data.id + "' data-val='false'>否</a>";
 			}
 			return "<a href='javascript:void(0)' class='qqIsWeiXinBtn' data-id='"
 					+ data.id
 					+ "' data-val="
-					+ data.qqIsWeiXin
+					+ !data.qqIsWeiXin_code
 					+ ">"
 					+ data.qqIsWeiXin + "</a>";
 		},
@@ -122,32 +122,19 @@ $(function() {
 						var isAddBtn = $(this);
 						var id = isAddBtn.data("id");
 						layer
-								.confirm(
-										'设置客户添加状态为已添加',
-										{
-											time : 0,
-											btn : [ '确定', '取消' ]
-										// 按钮
-										},
-										function(index) {
-											layer
-													.open({
-														type : 2,
-														title : '设置添加信息',
-														shadeClose : false,
-														shade : 0.2,
-														area : [ '320px',
-																'280px' ],
-														content : "getIframeWithId?controllerName=customer&pageName=updateAddStatus&params={id:'"
-																+ id + "'}",
-														end : function() {
-															$(
-																	"#customerRecordForm")
-																	.submit();
-														}
-													});
-											layer.close(index);
-										});
+								.open({
+									type : 2,
+									title : '设置添加信息',
+									shadeClose : false,
+									shade : 0.2,
+									area : [ '320px', '280px' ],
+									content : "getIframeWithId?controllerName=customer&pageName=updateAddStatus&params={id:'"
+											+ id + "'}",
+									end : function() {
+										$("#customerRecordForm").submit();
+									}
+								});
+						layer.close(index);
 					});
 	/**
 	 * 查看客户具体信息
@@ -161,7 +148,7 @@ $(function() {
 			title : '查看客户信息',
 			shadeClose : false,
 			shade : 0.2,
-			area : [ '500px', '300px' ],
+			area : [ '600px', '300px' ],
 			content : "getCustomerDetail?id=" + id,
 			end : function() {
 				$("#customerRecordForm").submit();
@@ -201,7 +188,7 @@ $(function() {
 		var id = $(this).data("id");
 		var val = $(this).data("val");
 		var msg = "";
-		if (true == val) {
+		if (false == val) {
 			msg = "修改为qq号码(!=)不与微信号一致";
 			val = false;
 		} else {

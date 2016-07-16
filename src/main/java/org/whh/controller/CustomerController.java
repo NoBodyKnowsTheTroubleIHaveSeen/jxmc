@@ -58,6 +58,7 @@ public class CustomerController extends ControllerBase {
 	 */
 	@RequestMapping("/customer")
 	public String index(Model model) {
+		getCode(model);
 		return "customer/customer";
 	}
 

@@ -51,12 +51,8 @@
 				function() {
 					$.post("doUpdateAddStatus", $("#doUpdateAddStatusForm")
 							.serialize(), function(message) {
-						layer.msg(message.message,
-								function() {
-									var index = parent.layer
-											.getFrameIndex(window.name);
-									parent.layer.close(index);
-								});
+						var index = parent.layer.getFrameIndex(window.name);
+						parent.layer.close(index);
 					})
 					return false;
 				});

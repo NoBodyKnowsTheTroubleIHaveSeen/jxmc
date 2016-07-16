@@ -221,6 +221,7 @@ $(function() {
 																table = table
 																		+ display;
 															} else if (codeIds[headId] != undefined) {
+																data[headId+"_code"] = data[headId];
 																var display = getByCode(
 																		codeIds[headId],
 																		data[headId]);
