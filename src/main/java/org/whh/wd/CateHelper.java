@@ -182,11 +182,11 @@ public class CateHelper extends WdInterfaceBase {
 	}
 	/**
 	 * 
-	 * 从远程同步类目到数据库 将已删除的类目标记为已删除，并找到其他所有未删除的类目，删除 便利其他类目信息，如果没有找到就添加
+	 * 从远程同步类目到数据库 将已删除的类目标记为已删除，并找到其他所有未删除的类目，删除 遍历其他类目信息，如果没有找到就添加
 	 * 
 	 * @param srcAppInfoId
 	 */
-	public void sync(Long srcAppInfoId, Long toAppInfoId) {
+	public void sync(Long srcAppInfoId, Long toAppInfoId,Boolean isSyncAll) {
 		List<ProductCate> oldCates = dao.findByAppInfoId(srcAppInfoId);
 		List<String> newCateIds = new ArrayList<String>();
 		List<ProductCateVo> vos = syncCate(srcAppInfoId, true);
@@ -221,7 +221,7 @@ public class CateHelper extends WdInterfaceBase {
 		for (ProductCateVo productCateVo : vos) {
 			String cateName = productCateVo.getCate_name();
 			for (WdAppInfo wdAppInfo : infos) {
-				if (wdAppInfo.getSrcWdAppInfoId() != null) {
+				if (isSyncAll || wdAppInfo.getId().equals(toAppInfoId)) {
 					ProductCate cate = dao.findByAppInfoIdAndCateNameAndIsRemove(wdAppInfo.getId(), cateName, false);
 					if (cate != null) {
 						productCateVo.setCate_id(cate.getCateId());
@@ -235,7 +235,7 @@ public class CateHelper extends WdInterfaceBase {
 			}
 		}
 		for (WdAppInfo wdAppInfo : infos) {
-			if (toAppInfoId == null || wdAppInfo.getId().equals(toAppInfoId)) {
+			if (isSyncAll|| wdAppInfo.getId().equals(toAppInfoId)) {
 				syncCate(wdAppInfo.getId(), false);
 			}
 		}

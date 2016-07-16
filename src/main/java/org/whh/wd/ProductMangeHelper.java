@@ -16,9 +16,9 @@ public class ProductMangeHelper {
 	@Autowired
 	OrderHelper orderHelper;
 
-	public void sync(Long srcAppInfoId)
+	public void sync(Long srcAppInfoId,Boolean isSyncAll)
 	{
-		sync(srcAppInfoId,null);
+		sync(srcAppInfoId,null,isSyncAll);
 	}
 	
 	/**
@@ -26,9 +26,9 @@ public class ProductMangeHelper {
 	 * 
 	 * @param appInfoId
 	 */
-	public void sync(Long srcAppInfoId,Long toAppInfoId) {
-		cateHelper.sync(srcAppInfoId,toAppInfoId);
-		productHelper.sync(srcAppInfoId,toAppInfoId);
+	public void sync(Long srcAppInfoId,Long toAppInfoId,Boolean isSyncAll) {
+		cateHelper.sync(srcAppInfoId,toAppInfoId,isSyncAll);
+		productHelper.sync(srcAppInfoId,toAppInfoId,isSyncAll);
 	}
 
 	public void syncOrder(Long appInfoId, Date startTime, Date endTime) {

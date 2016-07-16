@@ -11,6 +11,7 @@
 		<option th:each="master:${masters}" th:value="${master.id}"
 			th:text="${master.appName+';'+master.userName +';'+ master.mobile}"></option>
 	</select>
+	<input type="hidden" name="isSyncAll" value="true">
 	<button type="submit" class="button">同步该源店铺</button>
 </form>
 <div class="borderDiv"></div>

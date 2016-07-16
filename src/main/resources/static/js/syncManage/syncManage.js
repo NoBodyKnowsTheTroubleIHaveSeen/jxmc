@@ -11,7 +11,7 @@ $(function() {
 			}
 			return "<form class='messageForm' onsubmit='messageFormSubmit($(this))'  action='/doSyncManage' style='display: inline'><input name='"+tmp+"' type='hidden' value='"
 					+ data.id
-					+ "'></input><input type='submit'  class='table_btn_red' value='同步'></input></form>"
+					+ "'></input><input type='hidden' name='isSyncAll' value='false'></input><input type='submit'  class='table_btn_red' value='同步'></input></form>"
 					+ "&nbsp;&nbsp;&nbsp;<input type='button' class='ajaxLoad table_btn_blue' data-url='saveOrUpdateWdAppInfo?id="
 					+ data.id + "' value='编辑'>";
 		}
