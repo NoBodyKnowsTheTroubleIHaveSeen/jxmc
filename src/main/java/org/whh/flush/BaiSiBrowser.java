@@ -1,13 +1,9 @@
 package org.whh.flush;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -89,10 +85,4 @@ public class BaiSiBrowser extends DriverBase {
 			jokeInfoDao.save(info);
 		}
 	}
-
-
-	public static void main(String[] args) {
-		new BaiSiBrowser().grab();
-	}
-
 }

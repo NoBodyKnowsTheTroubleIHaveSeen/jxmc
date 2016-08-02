@@ -140,8 +140,4 @@ public class QiuBaiBrowser extends DriverBase {
 		nextPage.click();
 	}
 
-	public static void main(String[] args) {
-		new QiuBaiBrowser().grab();
-	}
-
 }
