@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<div>
+	<div class="clear"></div>
+	<form action="addJoke" class="messageForm">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft">笑话集管理</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv editDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>内容</td>
+						<td style="width: 50px"></td>
+						<td><textarea style="width: 400px;height:200px" name="content" placeholder="输入内容"></textarea></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<button class="ajaxLoad fleft" data-url="customer">返回</button>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

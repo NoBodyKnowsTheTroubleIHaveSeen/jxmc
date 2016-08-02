@@ -13,11 +13,20 @@ public class DriverBase
 	private static Logger logger = LoggerFactory.getLogger(DriverBase.class);
 	public WebDriver driver;
 
-	public DriverBase()
+	public DriverBase(Boolean isInit,Boolean isShow)
+	{
+		if (isInit) {
+			init(isShow);
+		}
+	}
+	
+	public void init(Boolean isShow)
 	{
 		System.setProperty("webdriver.chrome.driver", this.getClass().getResource("/").getFile() +"bin/chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.manage().window().setPosition(new Point(-2000, 0));
+		if (!isShow) {
+			driver.manage().window().setPosition(new Point(-2000, 0));
+		}
 	}
 
 	public void closeDriver()
