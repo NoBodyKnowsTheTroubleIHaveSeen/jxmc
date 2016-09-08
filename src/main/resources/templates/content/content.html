@@ -1,0 +1,91 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script>
+	$(function() {
+		$("#nextContent").click(function() {
+			$.get("getNextContent", function(data) {
+				data = $.parseJSON(data);
+				console.log(data.content);
+				console.log(data.id)
+				$("#content").html(data.content);
+				$("#contentId").val(data.id);
+				if (data.thumb) {
+
+					$("#img").attr("src", data.thumb);
+				} else {
+					$("#img").attr("src", "");
+				}
+			})
+		})
+		$("#nextContent").click();
+		$("#auditSuccess").click(function() {
+			audit(2);
+		})
+		$("#auditFail").click(function() {
+			audit(3);
+		})
+		function audit(auditStatus) {
+			var param = {
+				id : $("#contentId").val(),
+				auditStatus : auditStatus
+			};
+			$.post("auditContent", param, function() {
+				$("#nextContent").click();
+			})
+		}
+	})
+</script>
+<div>
+	<div class="clear"></div>
+	<br /> <br />
+	<div id="content" style="font-size: 24px"></div>
+	<img id="img" /> <input class="button fright" type="button" value="下一条"
+		id="nextContent" /> <br /> <br />
+	<div>
+		<input name="id" id="contentId" hidden="true" /> <input type="button"
+			class="button fright" style="margin-left: 20px;width:80px" value="通过"
+			id="auditSuccess" /> <input class="button fright" style="width:80px" type="button"
+			value="不通过" id="auditFail" />
+	</div>
+	<form action="addContent" class="messageForm">
+		<div class="borderDiv margin_top_10">
+			<div class="fleft">内容集管理</div>
+		</div>
+		<div class="clear"></div>
+		<div class="queryDiv editDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>类型</td>
+						<td style="width: 50px"></td>
+						<td><select name="type">
+								<option value="1">笑话</option>
+								<option value="2">美文，哲文</option>
+								<option value="3">干货</option>
+								<option value="4">茶·生活</option>
+						</select></td>
+					</tr>
+					<tr>
+						<td>内容</td>
+						<td style="width: 50px"></td>
+						<td><textarea style="width: 400px; height: 200px"
+								name="content" placeholder="输入内容"></textarea></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td></td>
+						<td>
+							<button class="ajaxLoad fleft" data-url="customer">返回</button>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

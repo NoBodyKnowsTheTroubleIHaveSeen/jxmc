@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,7 +40,7 @@ public class QiuBaiBrowser extends DriverBase {
 	}
 
 	public void grab() {
-		init(true);
+		init();
 		driver.navigate().to(url);
 		WebElement nextPage = driver.findElement(By.xpath("//div[contains(@class, 'history-nv')]/a"));
 		String nextUrl = nextPage.getAttribute("href");
@@ -133,11 +135,22 @@ public class QiuBaiBrowser extends DriverBase {
 	}
 
 	public void goToNextPage() {
-		WebElement nextPage = driver.findElement(By.xpath("//div[contains(@class, 'history-nv')]/a"));
-		String nextUrl = nextPage.getAttribute("href");
-		String[] urls = nextUrl.split("/");
-		lastUuid = urls[urls.length - 1];
-		nextPage.click();
+		try {
+			WebElement nextPage = driver.findElement(By.xpath("//div[contains(@class, 'history-nv')]/a"));
+			String nextUrl = nextPage.getAttribute("href");
+			String[] urls = nextUrl.split("/");
+			lastUuid = urls[urls.length - 1];
+			nextPage.click();
+		}
+		catch(UnhandledAlertException ex)
+		{
+			Alert alt = driver.switchTo().alert();
+		    alt.accept();
+		}
+		catch (Exception e) {
+			logger.error("获取信息失败", e);
+		}
+		driver.navigate().to(url);
 	}
 
 }

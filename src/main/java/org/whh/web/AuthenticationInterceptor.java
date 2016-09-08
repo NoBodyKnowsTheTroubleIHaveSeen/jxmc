@@ -15,7 +15,7 @@ public class AuthenticationInterceptor implements HandlerInterceptor {
 			throws Exception {
 		String uri = request.getRequestURI();
 		// 仅当登陆成功时才允许注册新用户 ||uri.equals("/doRegister")|| uri.equals("/register")
-		if (uri.equals("/login") || uri.equals("/doLogin")) {
+		if (uri.equals("/login") || uri.equals("/doLogin")|| uri.equals("/grab")||uri.equals("/gzhSend")) {
 			response.setHeader("isLoginPage", "true");
 			return true;
 		}

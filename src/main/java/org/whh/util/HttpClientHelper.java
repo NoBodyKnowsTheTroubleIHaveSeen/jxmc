@@ -2,8 +2,10 @@ package org.whh.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -20,7 +22,10 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+
+import com.alibaba.fastjson.JSONObject;
 
 public class HttpClientHelper {
 	public static final int GET = 1;
@@ -73,7 +78,19 @@ public class HttpClientHelper {
 	public static String get(String url, String data) {
 		return getOrPost(HttpClientHelper.GET, url, null, data);
 	}
+	public static String post(String url,JSONObject params)
+	{
+		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		params.forEach(new BiConsumer<String, Object>() {
 
+			@Override
+			public void accept(String t, Object u) {
+				pairs.add(new BasicNameValuePair(t, u.toString()));
+			}
+		});
+		return getOrPost(HttpClientHelper.POST, url, pairs, null);
+	}
+	
 	public static String post(String url, List<NameValuePair> pairs) {
 		return getOrPost(HttpClientHelper.POST, url, pairs, null);
 	}
