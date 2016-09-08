@@ -34,7 +34,7 @@ public class RouterMangerHelper
 				return d.findElement(By.id("pcPassword"));
 			}
 		});
-		pwdInput.sendKeys("wkmsbd123");
+		pwdInput.sendKeys("xlszj77@s");
 		WebElement loginBtn = driver.findElement(By.id("logIn"));
 		loginBtn.click();
 	}

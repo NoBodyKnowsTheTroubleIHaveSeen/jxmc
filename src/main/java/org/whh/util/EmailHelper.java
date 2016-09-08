@@ -44,8 +44,8 @@ public class EmailHelper
 	private static void initEmailAccount()
 	{
 		EmailAccount account1 = new EmailAccount();
-		account1.setSenderEmail("whhwkm@163.com");
-		account1.setPassword("wy@password=987");
+		account1.setSenderEmail("liaccount@163.com");
+		account1.setPassword("gkdms776234@s");
 		account1.setSmtpServer("smtp.163.com");
 		account1.setSmtpPort(587);
 		

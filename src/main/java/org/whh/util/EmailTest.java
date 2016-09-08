@@ -25,7 +25,7 @@ private static List<EmailAccount> accounts = new ArrayList<EmailAccount>();
 //	public static void main(String[] args)
 //	{
 //		initEmailAccount();
-//		EmailTest.sendEmail("whhwkm100@sina.com");
+//		EmailTest.sendEmail("test199@sina.com");
 //	}
 //	
 	public EmailTest()
@@ -47,8 +47,8 @@ private static List<EmailAccount> accounts = new ArrayList<EmailAccount>();
 	private static void initEmailAccount()
 	{
 		EmailAccount account1 = new EmailAccount();
-		account1.setSenderEmail("whhwkm@163.com");
-		account1.setPassword("wy@password=987");
+		account1.setSenderEmail("test199@163.com");
+		account1.setPassword("gslisteglocal888");
 		account1.setSmtpServer("localhost");
 		account1.setSmtpPort(587);
 		
