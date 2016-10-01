@@ -1,68 +1,75 @@
 * {
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
 }
-body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset, table, img, td, div, input {
-    margin: 0;
-    padding: 0;
-    border: none;
+
+body, ul, dl, dd, dt, ol, li, p, h1, h2, h3, h4, h5, h6, form, fieldset,
+	table, img, td, div, input {
+	margin: 0;
+	padding: 0;
+	border: none;
 }
+
 body {
-    font-family: 微软雅黑;
-    font-style: normal;
-    font-weight: normal;
-    font-variant: normal;
-    color: #666;
+	font-family: 微软雅黑;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #666;
 }
+
 a {
-    outline-style: none;
-    color: #0ae;
-    text-decoration: none;
-    border: 0px;
-    transition: all 300ms ease 0s;
+	outline-style: none;
+	color: #0ae;
+	text-decoration: none;
+	border: 0px;
+	transition: all 300ms ease 0s;
 }
-a:hover
-{
+
+a:hover {
 	cursor: pointer;
 }
+
 td {
-    border-right: none;
-    color: #666666;
-    padding: 10px 0;
-    text-align: center;
+	border-right: none;
+	color: #666666;
+	padding: 10px 0;
+	text-align: center;
 }
+
 .fleft {
-    float: left;
+	float: left;
 }
+
 .fright {
-    float: right;
+	float: right;
 }
-.hidden
-{
-    display:none;
+
+.hidden {
+	display: none;
 }
-.clear{
-	clear:both;
+
+.clear {
+	clear: both;
 }
-.margin_top_10
-{
+
+.margin_top_10 {
 	margin-top: 10px;
 }
-.center{
+
+.center {
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 }
 
+.subMenu {
+	background: blue;
+}
 
-
-
-
-
-
-
-
-
-
-
+.absoluteCenter {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+}

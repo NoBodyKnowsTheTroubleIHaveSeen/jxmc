@@ -12,26 +12,37 @@
 		</div>
 		<div class="nav fleft">
 			<ul>
-				 <li class="nav_i r_ind_nav"><span><a
+				<li class="nav_i r_ind_nav"><span><a
 						href="javascript:void(0);" data-url="/customer"
 						class="ajaxLoad main">客户信息管理</a></span></li>
 				<li class="nav_i"><span><a href="javascript:void(0);"
 						data-url="/partner" class="ajaxLoad">合作者管理</a></span></li>
-				<!-- <li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/goods" class="ajaxLoad">商品管理</a></span></li>
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/finance" class="ajaxLoad">财务管理</a></span></li>
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/email" class="ajaxLoad">邮件管理</a></span></li>  -->
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/flush" class="ajaxLoad">微店浏览</a></span></li>
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/order" class="ajaxLoad main">订单管理</a></span></li>
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/syncManage" class="ajaxLoad">同步管理</a></span></li>
-				<li class="nav_i"><span><a href="javascript:void(0);"
-						data-url="/content" class="ajaxLoad">其他</a></span></li>
+				<li class="nav_i" data-sub-menu="hidden_menu_wd"><span><a
+						href="javascript:void(0);">微店管理</a></span></li>
+				<li class="nav_i" data-sub-menu="hidden_menu_wx"><span><a
+						href="javascript:void(0);">微信管理</a></span></li>
+				<li class="nav_i" data-sub-menu="hidden_menu_other"><span><a
+						href="javascript:void(0);">其他</a></span></li>
 			</ul>
+			<div class="subMenu hidden_menu_wd">
+				<ul>
+					<li data-url="/order" class="ajaxLoad">订单管理</li>
+					<li data-url="/syncManage" class="ajaxLoad">同步管理</li>
+					<li data-url="/flush" class="ajaxLoad">微店浏览</li>
+				</ul>
+			</div>
+			<div class="subMenu hidden_menu_wx">
+				<ul>
+					<li data-url="/showWxUser" class="ajaxLoad">公众号用户</li>
+					<li data-url="/showMaterail" class="ajaxLoad">素材管理</li>
+				</ul>
+			</div>
+			<div class="subMenu hidden_menu_other">
+				<ul>
+					<li data-url="/email" class="ajaxLoad">邮件管理</li>
+					<li data-url="/content" class="ajaxLoad">邮件管理</li>
+				</ul>
+			</div>
 		</div>
 	</header>
 </div>
@@ -39,6 +50,16 @@
 	$(".nav .nav_i").hover(function() {
 		$(".nav .nav_i").removeClass("r_ind_nav");
 		$(this).addClass("r_ind_nav");
+		$(".subMenu").hide();
+		var subMenu = $(this).data("subMenu");
+		$("." + subMenu).show();
+	});
+	$(".subMenu").mouseleave(function() {
+		$(".subMenu").fadeOut(700);
+	});
+	$(".menu_outside").on("click",".ajaxLoad",function() {
+		var subUrl = $(this).data("url");
+		window.history.pushState("?subUrl="+subUrl, null, "?subUrl="+subUrl);
 	});
 </script>
 </html>

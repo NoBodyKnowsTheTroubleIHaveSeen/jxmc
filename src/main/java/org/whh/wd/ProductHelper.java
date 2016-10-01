@@ -184,7 +184,7 @@ public class ProductHelper extends WdInterfaceBase {
 			}
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			pairs.add(new BasicNameValuePair("access_token", getAccessToken(appInfoId)));
-			String response = HttpClientHelper.uploadWdFile("http://api.vdian.com/media/upload", pairs, file);
+			String response = HttpClientHelper.uploadFile("https://api.vdian.com/media/upload", pairs, file);
 			JSONObject imgUrl = JSONObject.parseObject(response);
 			String wdUrl = imgUrl.getString("result");
 			image = new ProductImages();

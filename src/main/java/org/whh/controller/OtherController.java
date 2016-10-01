@@ -17,10 +17,10 @@ import org.whh.entity.Contents;
 import org.whh.entity.JokeInfo;
 import org.whh.flush.BaiSiBrowser;
 import org.whh.flush.GuoKerBrowser;
-import org.whh.flush.GzhAutoSend;
 import org.whh.flush.QiuBaiBrowser;
 import org.whh.flush.SanWenBrowser;
 import org.whh.web.CommonMessage;
+import org.whh.wxpublic.MaterailManage;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -44,9 +44,6 @@ public class OtherController extends ControllerBase {
 	@Autowired
 	JokeInfoDao jokeInfoDao;
 
-	@Autowired
-	GzhAutoSend gzhAutoSend;
-
 	@RequestMapping("/grab")
 	@ResponseBody
 	public String grab() {
@@ -55,27 +52,15 @@ public class OtherController extends ControllerBase {
 			@Override
 			public void run() {
 				logger.debug("开始启动抓取...");
-				// browser.grab();
-				// baiSiBrowser.grab();
+//				 browser.grab();
+//				 baiSiBrowser.grab();
 				sanWenBrowser.grab();
 				// guoKerBrowser.grab();
 			}
 		}).start();
 		return "success";
 	}
-
-	@RequestMapping("/gzhSend")
-	@ResponseBody
-	public String gzhSend(String page, String id, String userName, String pwd) {
-		new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				gzhAutoSend.send(page, id, userName, pwd);
-			}
-		}).start();
-		return "success";
-	}
+	
 
 	@RequestMapping("/content")
 	public String index(Model model) {
@@ -130,5 +115,14 @@ public class OtherController extends ControllerBase {
 		contentsDao.save(content);
 		message.setMessage("添加成功!");
 		return message;
+	}
+	@Autowired
+	MaterailManage manage;
+	@RequestMapping("/common/test")
+	@ResponseBody
+	public String test(Integer size)
+	{
+		manage.batchGetMaterial(size);
+		return "";
 	}
 }

@@ -2,6 +2,7 @@ package org.whh.frame;
 
 import java.util.List;
 
+import org.dom4j.Document;
 import org.dom4j.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,8 @@ public class CodeUtil implements Init
 	public void init()
 	{
 		logger.info("初始化code...");
-		Element root = XMLHelper.getRootElement(this.getClass().getResource("/").getFile() +"config/code.xml");
+		Document document = XMLHelper.parse(this.getClass().getResource("/").getFile() +"config/code.xml");
+		Element root = document.getRootElement();
 		Element versionElement = root.element("version");
 		Element deleteVersionElement = root.element("deleteVersion");
 		Long version = Long.parseLong(versionElement.getText());

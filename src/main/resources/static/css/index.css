@@ -35,11 +35,11 @@
 	float: left;
 	font-size: 16px;
 	cursor: pointer;
-	margin-right: 40px;
-	_margin-right: 30px;
 	height: 36px;
 	transition: all 300ms ease 0s;
 	display: inline;
+	width: 130px;
+	text-align: center;
 }
 
 .logo {
@@ -57,7 +57,7 @@
 }
 
 #mainContent {
-	width: 90%;
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -110,7 +110,7 @@
 	line-height: 31px;
 }
 
-.queryDiv button,.button {
+.queryDiv button, .button {
 	border-radius: 4px;
 	background-color: #5bb75b;
 	background-image: linear-gradient(to bottom, #62c462, #51a351);
@@ -136,6 +136,9 @@
 	padding: 10px 0;
 	border-bottom: 1px solid #ddd;
 	text-align: center;
+	max-width: 190px;
+	word-wrap: break-word;
+	word-break: break-all;
 }
 
 .commonTable tr:nth-child(2n+2) {
@@ -190,4 +193,35 @@
 
 .table_btn:hover {
 	color: #fa9a3c !important;
+}
+
+.subMenu {
+	width: 130px;
+	display: none;
+	position: absolute;
+	background: #315565;
+	top: 50px;
+	filter: alpha(opacity = 80);
+	-moz-opacity: 0.8;
+	opacity: 0.8;
+}
+
+.hidden_menu_wd {
+	margin-left: 260px;
+}
+
+.hidden_menu_wx {
+	margin-left: 390px;
+}
+
+.hidden_menu_other {
+	margin-left: 520px;
+}
+
+.subMenu li {
+	color: #e66e1e;
+}
+
+.subMenu li:hover {
+	color: white;
 }

@@ -23,11 +23,11 @@ public class WDBrowser extends DriverBase
 	public WDBrowser ()
 	{
 		super(true,false);
-		entrances.add("http://weidian.com/?userid=839209114&wfr=wx");
-		entrances.add("http://weidian.com/s/839209114?wfr=qfriend");
-		entrances.add("http://weidian.com/?userid=839209114&wfr=wx_profile");
-		entrances.add("http://weidian.com/?userid=839209114&wfr=wb");
-		entrances.add("http://weidian.com/?userid=839209114&wfr=wxp&from=timeline&isappinstalled=1");
+		entrances.add("https://weidian.com/?userid=839209114&wfr=wx");
+		entrances.add("https://weidian.com/s/839209114?wfr=qfriend");
+		entrances.add("https://weidian.com/?userid=839209114&wfr=wx_profile");
+		entrances.add("https://weidian.com/?userid=839209114&wfr=wb");
+		entrances.add("https://weidian.com/?userid=839209114&wfr=wxp&from=timeline&isappinstalled=1");
 	}
 	
 	/**

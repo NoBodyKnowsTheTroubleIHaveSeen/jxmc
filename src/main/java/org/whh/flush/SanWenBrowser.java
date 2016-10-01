@@ -32,7 +32,8 @@ public class SanWenBrowser extends DriverBase {
 	public Long startId = 3654819L;
 
 	public void grab() {
-		startId = 3729759L;
+		String maxId = contentsDao.findBySrcId(Contents.SRC_ID_SAN_WEN);
+		startId = Long.parseLong(maxId);
 		init(true);
 		for (int i = 0; i < 1000000; i++) {
 			String url = "http://www.sanwen.net/subject/" + startId + "/";

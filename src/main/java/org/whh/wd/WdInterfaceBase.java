@@ -17,7 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 public class WdInterfaceBase {
 
 	private final String grantType = "client_credential";
-	private final String wdApiAddress = "http://api.vdian.com/api";
+	private final String wdApiAddress = "https://api.vdian.com/api";
 
 	@Autowired
 	private WdAppInfoDao dao;

@@ -1,0 +1,53 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/wxpublic/showMaterial.js"></script>
+<div class="clear"></div>
+<div>
+	<div class=" margin_top_10">
+		<div class="fleft titleImage">
+			<img src="images/iconfont-chaxun.png" />微信公众号素材
+		</div>
+		<a class="ajaxTableLoad fright" style="margin-top:10px">刷新 <img
+			src="images/ic_refresh_grey600_24dp.png" />
+		</a>
+		<div class="queryDiv fright" style="width: 330px">
+			<form action="/syncMaterial" class="messageForm">
+				<a class="messageLoad" data-url="/updateMenu"
+					href="javascript:void(0);"><span>更新菜单&nbsp;&nbsp;</span></a> <input
+					name="size" value="1" placeholder="输入要同步的素材数" />
+				<button class="resubmitForm">同步素材</button>
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="borderDiv"></div>
+	<form action="getMaterail" class="ajaxTable">
+		<div class="clear"></div>
+		<div></div>
+		<div class="clear"></div>
+		<table class="commonTable">
+			<thead>
+				<tr>
+					<th class="th_back" colspan="15">详细信息列表</th>
+				</tr>
+				<tr>
+					<th class="title" id="title">标题</th>
+					<th class="title" id="digest">摘要</th>
+					<th class="title" id="isUsed">是否已发布</th>
+					<th class="title" id="mediaId" hidden="true">mediaId</th>
+					<th class="title" id="url">内容</th>
+					<th class="title" id="keyword">关键词</th>
+					<th class="title" id="setKeyword">设置关键词</th>
+					<th class="title" id="operate">操作</th>
+				</tr>
+			</thead>
+			<tbody id="tableContent"></tbody>
+		</table>
+		<div class="fright margin_top_10">
+			<div th:replace="common/tablePage"></div>
+		</div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>

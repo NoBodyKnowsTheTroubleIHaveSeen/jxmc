@@ -32,7 +32,7 @@ public class OrderHelper extends WdInterfaceBase {
 	 * @return
 	 */
 	public void syncOrders(Long appInfoId, Date startTime, Date endTime, Integer pageNum) {
-		int defaultPageSize = 200;
+		int defaultPageSize = 50;
 		JSONObject params = new JSONObject();
 		params.put("page_num", pageNum);
 		params.put("page_size", defaultPageSize);

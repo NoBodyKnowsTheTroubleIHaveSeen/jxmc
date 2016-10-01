@@ -1,8 +1,10 @@
 package org.whh.wxpublic;
 
+import org.springframework.stereotype.Component;
 import org.whh.util.HttpClientHelper;
-import org.whh.util.WeChatUtil;
+import org.whh.util.WxPublicUtil;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -11,6 +13,7 @@ import com.alibaba.fastjson.JSONObject;
  * @author ASUS-PC
  *
  */
+@Component
 public class MessageSend {
 	public static final String MSG_TYPE_TEXT = "text";// 发送文本消息
 	public static final String MSG_TYPE_IMAGE = "image";// 发送图片消息
@@ -22,7 +25,9 @@ public class MessageSend {
 	public static final String MSG_TYPE_MPNEWS = "mpnews";// 发送图文消息（点击跳转到图文消息页面）
 															// 图文消息条数限制在8条以内
 	public static final String MSG_TYPE_WXCARD = "wxcard";// 发送卡券
+	
 
+	String url = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=";
 	/**
 	 * 发送文本消息
 	 * 
@@ -30,15 +35,95 @@ public class MessageSend {
 	 * @param text
 	 */
 	public void sendText(String openId, String text) {
-		String sendUrl = "https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token="
-				+ WeChatUtil.getAccessToken();
+		String sendUrl = url + WxPublicUtil.getAccessToken();
 		JSONObject params = new JSONObject();
 		params.put("touser", openId);
 		params.put("msgtype", MSG_TYPE_TEXT);
-		params.put("text", text);
-		String response = HttpClientHelper.post(sendUrl, params);
+		JSONObject textParam = new JSONObject();
+		textParam.put("content", text);
+		params.put("text", textParam);
+		String response = HttpClientHelper.post(sendUrl, params.toJSONString());
 		System.out.println(response);
 
 	}
+	
+	/**
+	 * 发送图片消息
+	 * @param openId
+	 * @param mediaId
+	 */
+	public void sendImage(String openId,String mediaId)
+	{
+		String sendUrl = url + WxPublicUtil.getAccessToken();
+		JSONObject param = new JSONObject();
+		param.put("touser", openId);
+		param.put("msgtype", "image");
+		JSONObject image = new JSONObject();
+		image.put("media_id", mediaId);
+		param.put("image", image);
+		String response = HttpClientHelper.post(sendUrl, param);
+		System.out.println(response);
+	}
+	
+	public void sendNews(String openId,String mediaId)
+	{
+		String sendUrl = url + WxPublicUtil.getAccessToken();
+		JSONObject param = new JSONObject();
+		param.put("touser", openId);
+		param.put("msgtype", "mpnews");
+		JSONObject mpnews = new JSONObject();
+		mpnews.put("media_id", mediaId);
+		param.put("mpnews", mpnews);
+		String response = HttpClientHelper.post(sendUrl, param);
+		System.out.println(response);
+	}
+	/**
+	 * 发送图文消息（点击跳转到外链） 图文消息条数限制在8条以内，注意，如果图文数超过8，则将会无响应。
+	 * @param openId
+	 * @param title
+	 * @param description
+	 * @param contentUrl
+	 * @param picUrl
+	 */
+	public void sendNews(String openId,String title,String description,String contentUrl,String picUrl)
+	{
+		String sendUrl = url + WxPublicUtil.getAccessToken();
+		JSONObject param = new JSONObject();
+		param.put("touser", openId);
+		param.put("msgtype", "news");
+		JSONObject articals = new JSONObject();
+		JSONArray articalsArr= new JSONArray();
+		JSONObject artical = new JSONObject();
+		artical.put("title", title);
+		artical.put("description", description);
+		artical.put("url", contentUrl);
+		artical.put("picurl", picUrl);
+		articalsArr.add(artical);
+		articals.put("articles", articalsArr);
+		param.put("news", articals);
+		String response = HttpClientHelper.post(sendUrl, param);
+		System.out.println(response);
+	}
+	
+	public void sendWxCard(String openId,String cardId)
+	{
+		String sendUrl = url + WxPublicUtil.getAccessToken();
+		JSONObject param = new JSONObject();
+		param.put("touser", openId);
+		param.put("msgtype", "wxcard");
+		JSONObject wxcard = new JSONObject();
+		wxcard.put("card_id", cardId);
+		param.put("wxcard", wxcard);
+		String response = HttpClientHelper.post(sendUrl, param);
+		System.out.println(response);
+	}
 
+	public static void main(String[] args) {
+		
+//		new MessageSend().sendText("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "i came from customer service interface ^_^ ");
+//		new MessageSend().sendImage("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "_cTL3zLnzUlRiCf6wxYig0tHfeyaUQFCcx18sHQlEI0");
+//		new MessageSend().sendNews("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "_cTL3zLnzUlRiCf6wxYig8gwctfx_Y4w5jSQ1QaLnxQ");
+//		new MessageSend().sendNews("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "fuck","fuck you","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg");
+		new MessageSend().sendWxCard("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "p2xQRxGJ63OF8WEjbJ2seLhnyTqA");
+	}
 }

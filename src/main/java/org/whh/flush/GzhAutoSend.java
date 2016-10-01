@@ -3,6 +3,7 @@ package org.whh.flush;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.bcel.generic.NEW;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -17,6 +18,10 @@ import org.whh.entity.GzhSendRecord;
 
 @Component
 public class GzhAutoSend extends DriverBase {
+	
+	public static Object lock =  new Object();
+	
+	public static String imageUrl = "";
 
 	private static Logger logger = LoggerFactory.getLogger(GzhAutoSend.class);
 	private String startPage = "https://mp.weixin.qq.com/";
@@ -45,6 +50,22 @@ public class GzhAutoSend extends DriverBase {
 		WebElement loginBtn = driver.findElement(By.xpath("//a[@id='loginBt']"));
 		loginBtn.click();
 		WebDriverWait wait = new WebDriverWait(driver, 300);
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		WebElement image = wait.until(new ExpectedCondition<WebElement>() {
+			@Override
+			public WebElement apply(WebDriver d) {
+				return d.findElement(By.xpath("//img[@class='qrcode js_qrcode']"));
+			}
+		});
+		imageUrl = image.getAttribute("src");
+		synchronized (GzhAutoSend.lock) {
+				GzhAutoSend.lock.notify();
+		}
 		WebElement yhgl = wait.until(new ExpectedCondition<WebElement>() {
 			@Override
 			public WebElement apply(WebDriver d) {

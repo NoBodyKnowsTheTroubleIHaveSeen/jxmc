@@ -2,10 +2,8 @@ package org.whh.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.BiConsumer;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
@@ -19,10 +17,10 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import com.alibaba.fastjson.JSONObject;
@@ -31,18 +29,27 @@ public class HttpClientHelper {
 	public static final int GET = 1;
 	public static final int POST = 2;
 
-	private static String getOrPost(int type, String url, List<NameValuePair> pairs, String requestParam) {
+	private static String getOrPost(int type, String url, String params, List<NameValuePair> pairs,
+			String requestParam) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpRequestBase request = null;
 		try {
 			switch (type) {
 			case HttpClientHelper.GET:
-				request = new HttpGet(url + "?" + requestParam);
+				if (!NullUtil.isNull(requestParam)) {
+					request = new HttpGet(url + "?" + requestParam);
+				} else {
+					request = new HttpGet(url);
+				}
 				break;
 			case HttpClientHelper.POST:
 				request = new HttpPost(url);
-				HttpEntity entity = new UrlEncodedFormEntity(pairs, "utf-8");
-				((HttpPost) request).setEntity(entity);
+				if (!NullUtil.isNull(params)) {
+					((HttpPost) request).setEntity(new StringEntity(params, "utf-8"));
+				} else if (!NullUtil.isNull(pairs)) {
+					HttpEntity entity = new UrlEncodedFormEntity(pairs, "utf-8");
+					((HttpPost) request).setEntity(entity);
+				}
 				break;
 			}
 			ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
@@ -51,7 +58,7 @@ public class HttpClientHelper {
 					int status = response.getStatusLine().getStatusCode();
 					if (status >= 200 && status < 300) {
 						HttpEntity entity = response.getEntity();
-						return entity != null ? EntityUtils.toString(entity) : null;
+						return entity != null ? EntityUtils.toString(entity,"utf-8") : null;
 					} else {
 						throw new ClientProtocolException("Unexpected response status: " + status);
 					}
@@ -76,23 +83,28 @@ public class HttpClientHelper {
 	}
 
 	public static String get(String url, String data) {
-		return getOrPost(HttpClientHelper.GET, url, null, data);
+		return getOrPost(HttpClientHelper.GET, url, null, null, data);
 	}
-	public static String post(String url,JSONObject params)
-	{
-		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		params.forEach(new BiConsumer<String, Object>() {
 
-			@Override
-			public void accept(String t, Object u) {
-				pairs.add(new BasicNameValuePair(t, u.toString()));
-			}
-		});
-		return getOrPost(HttpClientHelper.POST, url, pairs, null);
+	public static String post(String url, JSONObject params) {
+		return post(url, params.toJSONString());
+		// List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+		// params.forEach(new BiConsumer<String, Object>() {
+		//
+		// @Override
+		// public void accept(String t, Object u) {
+		// pairs.add(new BasicNameValuePair(t, u.toString()));
+		// }
+		// });
+		// return getOrPost(HttpClientHelper.POST, url,null, pairs, null);
 	}
-	
+
 	public static String post(String url, List<NameValuePair> pairs) {
-		return getOrPost(HttpClientHelper.POST, url, pairs, null);
+		return getOrPost(HttpClientHelper.POST, url, null, pairs, null);
+	}
+
+	public static String post(String url, String param) {
+		return getOrPost(HttpClientHelper.POST, url, param, null, null);
 	}
 
 	private static byte[] getOrPostGetByte(int type, String url, List<NameValuePair> pairs, String requestParam) {
@@ -147,7 +159,7 @@ public class HttpClientHelper {
 		return buffer.substring(0, buffer.length() - 1).toString();
 	}
 
-	public static String uploadWdFile(String url, List<NameValuePair> pairs, File file) {
+	public static String uploadFile(String url, List<NameValuePair> pairs, File file) {
 		CloseableHttpClient httpclient = HttpClients.createDefault();
 		HttpPost post = new HttpPost(url);
 		try {

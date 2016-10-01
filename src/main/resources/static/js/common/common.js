@@ -30,6 +30,9 @@ $(function() {
 					} else {
 						layer.msg("系统错误！", function() {
 						});
+						setTimeout(function() {
+							layer.closeAll();
+						}, 3000)
 					}
 				}
 			})
@@ -72,19 +75,25 @@ $(function() {
 	})
 	$(document).on("click", ".messageLoad", function() {
 		var url = $(this).data("url");
+		var form = $(this).parents("form");
 		var index = layer.load(0, {
 			shade : [ 0.1, '#fff' ]
 		});
 		$.get(url, function(data) {
 			layer.close(index);
 			layer.alert(data.message);
+			form.submit();
 		})
 	})
 	$(document).on("submit", ".messageForm", function() {
 		var action = $(this).attr("action");
 		var formData = $(this).serialize();
 		var form = $(this);
+		var index = layer.load(0, {
+			shade : [ 0.1, '#fff' ]
+		});
 		$.post(action, formData, function(data) {
+			layer.close(index);
 			if (isNull(data.title)) {
 				data.title = "提示信息";
 			}
@@ -221,7 +230,8 @@ $(function() {
 																table = table
 																		+ display;
 															} else if (codeIds[headId] != undefined) {
-																data[headId+"_code"] = data[headId];
+																data[headId
+																		+ "_code"] = data[headId];
 																var display = getByCode(
 																		codeIds[headId],
 																		data[headId]);
@@ -339,6 +349,9 @@ $(function() {
 
 	$(document).on("click", ".resubmitForm", function() {
 		$(this).parents(".ajaxTable").submit();
+	})
+	$(document).on("click", ".ajaxTableLoad", function() {
+		$(".ajaxTable").submit();
 	})
 })
 /**
@@ -494,8 +507,7 @@ function getTodayStartTime() {
 	return today;
 }
 
-function messageFormSubmit(form)
-{
+function messageFormSubmit(form,callback) {
 	event.preventDefault();
 	var action = form.attr("action");
 	var formData = form.serialize();
@@ -526,6 +538,66 @@ function messageFormSubmit(form)
 			});
 			layer.close(index);
 		});
+		if (isFunc(callback)) {
+			callback();
+		}
 	})
 	return false;
+}
+/**
+ * 动态生成form 参数：表单Id,表单action,标题,参数,要显示字段的名称列表,字段上传的key,回调
+ */
+function generateSetForm(formId, action, title, param, names, keys, callback) {
+	$("#" + formId).remove();
+	var length = keys.length;
+	var height = length * 50 + 120;
+	var form = "<form id='"
+			+ formId
+			+ "' action='"
+			+ action
+			+ "' style='position: absolute;top: 50%;left: 50%;background:#77c3e8;text-aligin:center; width:400px;height:"
+			+ height + "px; margin-top:-" + height / 2
+			+ "px;margin-left:-200px;'>";
+	form = form + "<br/><h4 style='text-align:center'>" + title + "</h4><br/>"
+	form = form + "<table>"
+	for ( var i in keys) {
+		form = form + "<tr><td style='width: 150px;'>";
+		form = form + names[i] + ":</td><td>";
+		if(param[keys[i]] != undefined)
+		{
+			form = form + "<input name='" + keys[i]
+			+ "' value='"+param[keys[i]]+"' style='width: 200px;'/></br>";
+		}else
+		{
+			form = form + "<input name='" + keys[i]
+			+ "' style='width: 200px;'/></br>";
+		}
+		form = form + "</td></tr>";
+		delete param[keys[i]];
+	}
+	for ( var i in param) {
+		form = form + "<input style='display:none' name='" + i + "' value='"
+				+ param[i] + "'/>";
+	}
+	form = form
+			+ "<tr><td></td><td><input type='submit' style='order-radius: 4px;"
+			+ "background-color:#5bb75b;background-image:linear-gradient(to bottom, #62c462, #51a351);"
+			+ "border: medium none;color: #fff;cursor: pointer;padding: 5px 15px;height: 31px;text-align:left;float:left'/>"
+			+ "<input  style='order-radius: 4px;"
+			+ "background-color:#5bb75b;background-image:linear-gradient(to bottom, #62c462, #51a351);"
+			+ "border: medium none;color: #fff;cursor: pointer;padding: 5px 15px;height: 31px;text-align:left;float:right'"
+			+ " class='cancelForm' type='button' value='取消'/></td></tr>"
+	form = form + "</table>"
+	form = form + "</form>";
+	$("body").append(form);
+	$(document).off("submit", "#" + formId);
+	$(document).on("submit", "#" + formId, function() {
+		messageFormSubmit($("#" + formId),callback);
+		$("#" + formId).remove();
+		return false;
+	})
+	$(document).off("click", ".cancelForm");
+	$(document).on("click", ".cancelForm", function() {
+		$(this).parents("form").remove();
+	})
 }
