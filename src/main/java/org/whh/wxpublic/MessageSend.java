@@ -117,13 +117,13 @@ public class MessageSend {
 		String response = HttpClientHelper.post(sendUrl, param);
 		System.out.println(response);
 	}
-
-	public static void main(String[] args) {
-		
-//		new MessageSend().sendText("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "i came from customer service interface ^_^ ");
-//		new MessageSend().sendImage("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "_cTL3zLnzUlRiCf6wxYig0tHfeyaUQFCcx18sHQlEI0");
-//		new MessageSend().sendNews("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "_cTL3zLnzUlRiCf6wxYig8gwctfx_Y4w5jSQ1QaLnxQ");
-//		new MessageSend().sendNews("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "fuck","fuck you","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg");
-		new MessageSend().sendWxCard("o2xQRxF4jPLi_k8ibKUEyGsUThoM", "p2xQRxGJ63OF8WEjbJ2seLhnyTqA");
-	}
+//
+//	public static void main(String[] args) {
+//		
+////		new MessageSend().sendText("oxjz9srK72sIEPj5xcSDJPDMWJz8", "i came from customer service interface ^_^ ");
+////		new MessageSend().sendImage("oxjz9srK72sIEPj5xcSDJPDMWJz8", "_cTL3zLnzUlRiCf6wxYig0tHfeyaUQFCcx18sHQlEI0");
+////		new MessageSend().sendNews("oxjz9srK72sIEPj5xcSDJPDMWJz8", "90hC4K9jq_d_P3Ywgl9I2fVtZB_Yi0l0Kkg3SKZrt8A");
+////		new MessageSend().sendNews("oxjz9srK72sIEPj5xcSDJPDMWJz8", "fuck","fuck you","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg","http://mmbiz.qpic.cn/mmbiz_jpg/k9VXYZNbAHYE3MU8Nia7Rw9WHuC10sqWVvxbc9tcoSnv4LsYMsCM2tRmmswPqdDdiaL6jI3Sx3Hdp9WSWfvTWqTg/0?wx_fmt=jpeg");
+////		new MessageSend().sendWxCard("oxjz9srK72sIEPj5xcSDJPDMWJz8", "p2xQRxGJ63OF8WEjbJ2seLhnyTqA");
+//	}
 }
