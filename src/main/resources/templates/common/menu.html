@@ -40,7 +40,8 @@
 			<div class="subMenu hidden_menu_other">
 				<ul>
 					<li data-url="/email" class="ajaxLoad">邮件管理</li>
-					<li data-url="/content" class="ajaxLoad">邮件管理</li>
+					<li data-url="/content" class="ajaxLoad">内容管理</li>
+					<li data-url="/generateQrcode" class="ajaxLoad">公众号二维码生成</li>
 				</ul>
 			</div>
 		</div>
@@ -57,9 +58,13 @@
 	$(".subMenu").mouseleave(function() {
 		$(".subMenu").fadeOut(700);
 	});
-	$(".menu_outside").on("click",".ajaxLoad",function() {
-		var subUrl = $(this).data("url");
-		window.history.pushState("?subUrl="+subUrl, null, "?subUrl="+subUrl);
-	});
+	$(".menu_outside").on(
+			"click",
+			".ajaxLoad",
+			function() {
+				var subUrl = $(this).data("url");
+				window.history.pushState("?subUrl=" + subUrl, null, "?subUrl="
+						+ subUrl);
+			});
 </script>
 </html>

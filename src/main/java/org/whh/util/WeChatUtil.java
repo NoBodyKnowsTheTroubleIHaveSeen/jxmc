@@ -1,11 +1,5 @@
 package org.whh.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.junit.Test;
-
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -16,6 +10,10 @@ import com.alibaba.fastjson.JSONObject;
 public class WeChatUtil {
 
 	private static final String API_URL = "https://api.weixin.qq.com/cgi-bin/token";
+
+	private static Long lastGetAccesTokenTime = null;
+
+	private static String accessToken = null;
 
 	public static String getAccessToken() {
 		return getAccessToken(ConfigPropertyUtil.getProperty("appid"), ConfigPropertyUtil.getProperty("secret"));
@@ -29,20 +27,22 @@ public class WeChatUtil {
 	 * @return
 	 */
 	public static String getAccessToken(String appId, String secrect) {
-		JSONObject param = new JSONObject();
-		param.put("grant_type", "client_credential");
-		param.put("appid", appId);
-		param.put("secret", secrect);
-		String response = HttpClientHelper.post(API_URL, param);
-		JSONObject obj = JSONObject.parseObject(response);
-		String accessToken = obj.getString("access_token");
+		if (lastGetAccesTokenTime != null && System.currentTimeMillis() - lastGetAccesTokenTime < 5000 * 1000L) {
+			JSONObject param = new JSONObject();
+			param.put("grant_type", "client_credential");
+			param.put("appid", appId);
+			param.put("secret", secrect);
+			String response = HttpClientHelper.post(API_URL, param);
+			JSONObject obj = JSONObject.parseObject(response);
+			accessToken = obj.getString("access_token");
+			lastGetAccesTokenTime = System.currentTimeMillis();
+		}
 		return accessToken;
 	}
 
 	public static JSONObject getPublicParam() {
-		String accessToken = getAccessToken();
 		JSONObject object = new JSONObject();
-		object.put("access_token", accessToken);
+		object.put("access_token", getAccessToken());
 		return object;
 	}
 }

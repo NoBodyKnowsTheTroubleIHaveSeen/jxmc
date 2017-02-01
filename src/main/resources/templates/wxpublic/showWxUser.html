@@ -16,6 +16,53 @@
 			</div>
 		</div>
 		<div class="clear"></div>
+		<div class="queryDiv">
+			<table>
+				<tbody>
+					<tr>
+						<td>昵称&nbsp; <input type="text" name="nickname"
+							placeholder="输入昵称查询" style="width: 160px" />
+						</td>
+						<td style="width: 60px"></td>
+						<td>openId&nbsp;&nbsp;&nbsp;<input type="text" id="openId"
+							name="openId" placeholder="输入openId查询" style="width: 160px" />
+						</td>
+						<td style="width: 60px"></td>
+						<td>推荐openId&nbsp; <input type="text" id="recommendOpenId"
+							name="recommendOpenId" placeholder="输入推荐openId查询"
+							style="width: 160px" /></td>
+						<td style="width: 60px"></td>
+						<td>推荐数大于&nbsp; <input type="text" id="recommendCount"
+							name="recommendCount" placeholder="输入推荐推荐数大于的数量"
+							style="width: 200px" />
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>日期&nbsp; <input name="startTime" placeholder="开始时间"
+							id="startTime" style="width: 160px" />
+						</td>
+						<td></td>
+						<td>结束时间&nbsp;<input name="endTime" placeholder="结束时间"
+							id="endTime" style="width: 160px" /></td>
+						<td></td>
+						<td>是否订阅 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select
+							name="subscribe" style="width: 160px">
+								<option value="">全部</option>
+								<option value="false">否</option>
+								<option value="true">是</option>
+						</select>
+						</td>
+						<td></td>
+						<td>
+							<button class="fright" type="submit" id="querySubmit">查询</button>
+							<button class="fleft" id="clearForm">清空查询条件</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="borderDiv"></div>
+		</div>
 		<div></div>
 		<div class="clear"></div>
 		<table class="commonTable">
@@ -27,13 +74,14 @@
 					<th class="title" id="headImgUrl">头像</th>
 					<th class="title" id="nickname">昵称</th>
 					<th class="title" id="sex">性别</th>
-					<th class="title" id="openId">openId</th>
+					<th class="title" id="info">信息</th>
 					<th class="title" id="subscribe">是否订阅</th>
-					<th class="title" id="country">国家</th>
-					<th class="title" id="province">省份</th>
-					<th class="title" id="city">城市</th>
-					<th class="title" id="tagIdList">标签Id列表</th>
-					<th class="title" id="groupId">groupId列表</th>
+					<th class="title" id="area">国家</th>
+					<th class="title" id="recommendCount">推荐好友数量</th>
+					<th class="title" id="isReward" data-code="trueFalse">奖励设置</th>
+					<th class="title" id="tagIdList" hidden="hidden">标签Id列表</th>
+					<th class="title" id="groupId" hidden="hidden">groupId列表</th>
+					<th class="title" id="operate">操作</th>
 				</tr>
 			</thead>
 			<tbody id="tableContent"></tbody>

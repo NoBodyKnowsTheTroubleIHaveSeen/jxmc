@@ -15,6 +15,7 @@ public class Material extends EntityBase {
 	public static final int TYPE_CONTENT = 2;// 文章
 	public static final int TYPE_TEA = 3;// 茶叶相关
 	public static final int TYPE_OTHER = 4;// 其他
+	public static final int TYPE_LOCAL_URL = 5;//本网站url素材
 	/**
 	 * title 图文消息的标题 thumb_media_id 图文消息的封面图片素材id（必须是永久mediaID） show_cover_pic
 	 * 是否显示封面，0为false，即不显示，1为true，即显示 author 作者 digest
@@ -49,11 +50,17 @@ public class Material extends EntityBase {
 
 	private Integer materialStatus;// 素材状态，0.正常状态,1.当日笑话素材,2.本期素材
 	
-	private String keyword;//关键词,作为菜单时的关键词
+	private String menuTitle;//关键词,作为菜单时的关键词(本期文章/笑话)
 	
 	private String inputCode;//用户输入码
 	
 	private Integer action;//素材关联的动作
+	
+	private String keywords;
+	
+	private Long qrCodeInfoId;
+	
+	private String qrCodeInfoTicket;//二维码场景
 	
 	public static Integer ACTION_PUSH_RECOMMEND = 1;//推送推荐有礼信息
 
@@ -183,12 +190,12 @@ public class Material extends EntityBase {
 		this.materialStatus = materialStatus;
 	}
 
-	public String getKeyword() {
-		return keyword;
+	public String getMenuTitle() {
+		return menuTitle;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	public void setMenuTitle(String menuTitle) {
+		this.menuTitle = menuTitle;
 	}
 
 	public String getInputCode() {
@@ -205,6 +212,30 @@ public class Material extends EntityBase {
 
 	public void setAction(Integer action) {
 		this.action = action;
+	}
+
+	public String getKeywords() {
+		return keywords;
+	}
+
+	public void setKeywords(String keywords) {
+		this.keywords = keywords;
+	}
+
+	public Long getQrCodeInfoId() {
+		return qrCodeInfoId;
+	}
+
+	public void setQrCodeInfoId(Long qrCodeInfoId) {
+		this.qrCodeInfoId = qrCodeInfoId;
+	}
+
+	public String getQrCodeInfoTicket() {
+		return qrCodeInfoTicket;
+	}
+
+	public void setQrCodeInfoTicket(String qrCodeInfoTicket) {
+		this.qrCodeInfoTicket = qrCodeInfoTicket;
 	}
 
 

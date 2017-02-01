@@ -94,6 +94,25 @@ public class WxXMLHelper {
 		root.add(imageItem);
 		return document;
 	}
+	/**
+	 * 创建客服回复
+	 * @param originalUserName
+	 * @param toUserName
+	 * @param content
+	 * @return
+	 */
+	public static Document createKfDocument(String originalUserName, String toUserName, String content) {
+		Document document = createDcoument(originalUserName, toUserName);
+		Element msgTypeEle = DocumentHelper.createElement("MsgType");
+		msgTypeEle.addCDATA("transfer_customer_service");
+		Element contentEle = DocumentHelper.createElement("Content");
+		contentEle.addCDATA(content);
+		Element root = document.getRootElement();
+		root.add(msgTypeEle);
+		root.add(contentEle);
+
+		return document;
+	}
 
 	/**
 	 * 创建回复文档基础信息

@@ -2,6 +2,7 @@ package org.whh.wxpublic;
 
 import org.whh.util.HttpClientHelper;
 import org.whh.util.WxPublicUtil;
+import org.whh.vo.SceneObject;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -33,13 +34,13 @@ public class QrCodeMange {
 		return result;
 	}
 
-	public static JSONObject generateLimitSrcCode(String sceneStr) {
+	public static JSONObject generateLimitSrcCode(SceneObject sceneObject) {
 		String sendUrl = url + WxPublicUtil.getAccessToken();
 		JSONObject params = new JSONObject();
 		params.put("action_name", "QR_LIMIT_STR_SCENE");
 		JSONObject action_info = new JSONObject();
 		JSONObject scene = new JSONObject();
-		scene.put("scene_str", sceneStr);
+		scene.put("scene_str", JSONObject.toJSONString(sceneObject));
 		action_info.put("scene", scene);
 		params.put("action_info", action_info);
 		String response = HttpClientHelper.post(sendUrl, params.toJSONString());
@@ -51,7 +52,7 @@ public class QrCodeMange {
 		return result;
 	}
 
-	public static void main(String[] args) {
-		generateLimitCode(100000);
-	}
+//	public static void main(String[] args) {
+//		generateLimitCode(100000);
+//	}
 }

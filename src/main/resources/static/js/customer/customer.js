@@ -128,8 +128,8 @@ $(function() {
 									shadeClose : false,
 									shade : 0.2,
 									area : [ '320px', '280px' ],
-									content : "getIframeWithId?controllerName=customer&pageName=updateAddStatus&params={id:'"
-											+ id + "'}",
+									content : encodeURI("getIframeWithId?controllerName=customer&pageName=updateAddStatus&params={id:'"
+											+ id + "'}"),
 									end : function() {
 										$("#customerRecordForm").submit();
 									}
@@ -149,7 +149,7 @@ $(function() {
 			shadeClose : false,
 			shade : 0.2,
 			area : [ '600px', '300px' ],
-			content : "getCustomerDetail?id=" + id,
+			content : encodeURI("getCustomerDetail?id=" + id),
 			end : function() {
 				$("#customerRecordForm").submit();
 			}
@@ -173,8 +173,8 @@ $(function() {
 									shadeClose : false,
 									shade : 0.2,
 									area : [ '300px', '140px' ],
-									content : "getIframeWithId?controllerName=customer&pageName=updateConsumeLevel&params={id:'"
-											+ id + "'}",
+									content : encodeURI("getIframeWithId?controllerName=customer&pageName=updateConsumeLevel&params={id:'"
+											+ id + "'}"),
 									end : function() {
 										$("#customerRecordForm").submit();
 									}

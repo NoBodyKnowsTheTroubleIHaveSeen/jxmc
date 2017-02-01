@@ -3,6 +3,7 @@ package org.whh.util;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Properties;
@@ -25,7 +26,10 @@ public class ConfigPropertyUtil {
 	 */
 	public static String getProperty(String filePath, String fileName, String property) {
 		if (NullUtil.isNull(filePath)) {
-			filePath = ConfigPropertyUtil.class.getResource("/").getFile() + "config/";
+			try {
+				filePath = ConfigPropertyUtil.class.getResource("/").toURI().getPath() + "config/";
+			} catch (URISyntaxException e) {
+			}
 		} else if (!filePath.endsWith("/")) {
 			filePath = filePath + "/";
 		}

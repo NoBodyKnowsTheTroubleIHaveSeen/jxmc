@@ -71,9 +71,6 @@ $(function() {
 	}
 	setTableDisplay(obj);
 
-	/**
-	 * 更新客户消费等级
-	 */
 	$(document).off("click", ".updateExpress");
 	$(document)
 			.on(
@@ -89,8 +86,8 @@ $(function() {
 									shadeClose : false,
 									shade : 0.2,
 									area : [ '300px', '180px' ],
-									content : "getIframeWithId?controllerName=order&pageName=updateExpress&params={orderId:'"
-											+ orderId + "'}",
+									content : encodeURI("getIframeWithId?controllerName=order&pageName=updateExpress&params={orderId:'"
+											+ orderId + "'}"),
 									end : function() {
 										$("#getOrders").submit();
 									}

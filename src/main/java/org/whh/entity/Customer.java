@@ -49,6 +49,14 @@ public class Customer extends EntityBase {
 	private String sex;
 	// 年龄
 	private Integer age;
+	// 状态
+	private Integer status;
+
+	public static final int STATUS_ADDING = 1;// 正在添加
+
+	public static final int STATUS_ADDED = 2;// 已添加
+
+	public static final int STATUS_NO_EXIST = 3;// 用户不存在
 
 	public String getProvince() {
 		return province;
@@ -216,6 +224,14 @@ public class Customer extends EntityBase {
 
 	public void setAge(Integer age) {
 		this.age = age;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }

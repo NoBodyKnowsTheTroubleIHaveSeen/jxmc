@@ -3,7 +3,6 @@ package org.whh.flush;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.bcel.generic.NEW;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

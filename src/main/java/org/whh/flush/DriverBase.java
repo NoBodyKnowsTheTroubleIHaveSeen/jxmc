@@ -1,5 +1,6 @@
 package org.whh.flush;
 
+import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.whh.util.RandomHelper;
 
+
 public class DriverBase {
 	private static Logger logger = LoggerFactory.getLogger(DriverBase.class);
 	public WebDriver driver;
@@ -22,7 +24,7 @@ public class DriverBase {
 	private String newWindowHandle;
 	
 	private WebDriver newWindow;
-
+	
 	public DriverBase(Boolean isInit, Boolean isShow) {
 		if (isInit) {
 			init(isShow);
@@ -37,9 +39,13 @@ public class DriverBase {
 	 * @param isShow
 	 */
 	public void init(Boolean isShow) {
-		System.setProperty("webdriver.chrome.driver",
-				this.getClass().getResource("/").getFile() + "bin/chromedriver.exe");
+		try {
+			System.setProperty("webdriver.chrome.driver",
+					this.getClass().getResource("/").toURI().getPath() + "bin/chromedriver.exe");
+		} catch (URISyntaxException e) {
+		}
 		driver = new ChromeDriver();
+		driver.manage().window().maximize();
 		if (!isShow) {
 			driver.manage().window().setPosition(new Point(-2000, 0));
 		}

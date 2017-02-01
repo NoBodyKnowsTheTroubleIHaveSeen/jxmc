@@ -23,9 +23,9 @@ import com.alibaba.fastjson.JSONObject;
 public class MaterailManage {
 	@Autowired
 	MaterialDao materialDao;
-	public static void main(String[] args) throws IOException {
-		new MaterailManage().batchGetMaterial(Integer.MAX_VALUE);
-	}
+//	public static void main(String[] args) throws IOException {
+//		new MaterailManage().batchGetMaterial(Integer.MAX_VALUE);
+//	}
 	public void addImage() {
 		String addUrl = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
 				+ WxPublicUtil.getAccessToken();

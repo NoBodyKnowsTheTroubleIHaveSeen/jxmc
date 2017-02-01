@@ -18,6 +18,7 @@ import org.whh.entity.JokeInfo;
 import org.whh.flush.BaiSiBrowser;
 import org.whh.flush.GuoKerBrowser;
 import org.whh.flush.QiuBaiBrowser;
+import org.whh.flush.QqSend;
 import org.whh.flush.SanWenBrowser;
 import org.whh.web.CommonMessage;
 import org.whh.wxpublic.MaterailManage;
@@ -117,12 +118,16 @@ public class OtherController extends ControllerBase {
 		return message;
 	}
 	@Autowired
-	MaterailManage manage;
+	QqSend qqSend;
+	
 	@RequestMapping("/common/test")
 	@ResponseBody
 	public String test(Integer size)
 	{
-		manage.batchGetMaterial(size);
-		return "";
+		qqSend.send("http://mp.weixin.qq.com/s?__biz=MzAwMjk0MDYxNA==&mid=100000145&idx=1&sn=f2c5b06d1b4be86ff5aa1f0cf873297d#rd");
+		return "success";
 	}
+	
+	
+	
 }

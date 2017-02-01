@@ -27,25 +27,43 @@ public class MenuManage {
 				+ WxPublicUtil.getAccessToken();
 		ArrayList<WxButton> buttons = new ArrayList<WxButton>();
 		WxButton xdBtn = new WxButton();
-		xdBtn.setName("小店");
+		xdBtn.setName("茶·生活");
 
 		WxButton dpRecommendBtn = new WxButton();
-		dpRecommendBtn.setName("店铺推荐");
+		dpRecommendBtn.setName("掌柜推荐");
 		dpRecommendBtn.setType("view");
 		dpRecommendBtn.setUrl("https://weidian.com/item.html?itemID=1690101947&p=0");
 
-		WxButton mcBtn = new WxButton();
-		mcBtn.setName("铁观音蜜茶");
-		mcBtn.setType("view");
-		mcBtn.setUrl("http://weidian.com/item_classes.html?userid=839209114&c=78292631");
+		// WxButton mcBtn = new WxButton();
+		// mcBtn.setName("铁观音蜜茶");
+		// mcBtn.setType("view");
+		// mcBtn.setUrl("http://weidian.com/item_classes.html?userid=839209114&c=78292631");
 
 		WxButton dpBtn = new WxButton();
-		dpBtn.setName("进入店铺");
+		dpBtn.setName("进入小店");
 		dpBtn.setType("view");
 		dpBtn.setUrl("http://weidian.com/?userid=839209114");
 
+		WxButton helpBtn = new WxButton();
+		helpBtn.setName("帮助");
+		helpBtn.setType("media_id");
+		helpBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2XQIqtnHGvTiIVNZaXCIVOA");
+
+//		WxButton kdBtn = new WxButton();
+//		kdBtn.setName("快递查询");
+//		kdBtn.setType("view");
+//		kdBtn.setUrl("http://www.kuaidi100.com/");
+
+		WxButton contactBtn = new WxButton();
+		contactBtn.setName("关于我们");
+		contactBtn.setType("media_id");
+		contactBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2YZeXnEtJEHM7dn_HWGD3_o");
+
 		ArrayList<WxButton> xdBtnList = new ArrayList<WxButton>();
-		xdBtnList.add(mcBtn);
+		// xdBtnList.add(mcBtn);
+		xdBtnList.add(helpBtn);
+		xdBtnList.add(contactBtn);
+//		xdBtnList.add(kdBtn);
 		xdBtnList.add(dpRecommendBtn);
 		xdBtnList.add(dpBtn);
 		xdBtn.setSub_button(xdBtnList);
@@ -54,7 +72,7 @@ public class MenuManage {
 		 */
 
 		WxButton liftBtn = new WxButton();
-		liftBtn.setName("茶·生活");
+		liftBtn.setName("聚享·杂谈");
 
 		WxButton cpBtn = new WxButton();
 		cpBtn.setName("铁观音冲泡视频");
@@ -63,8 +81,8 @@ public class MenuManage {
 
 		WxButton bqBtn = new WxButton();
 		Material current = materialDao.findCurrentContent();
-		if (current.getKeyword() != null && current.getKeyword().length() <= 15) {
-			bqBtn.setName(current.getKeyword());
+		if (current.getMenuTitle() != null && current.getMenuTitle().length() <= 15) {
+			bqBtn.setName(current.getMenuTitle());
 		} else {
 			bqBtn.setName("本期精彩");
 		}
@@ -88,45 +106,31 @@ public class MenuManage {
 		liftBtnList.add(randomBtn);
 		liftBtnList.add(bqBtn);
 		liftBtn.setSub_button(liftBtnList);
-		/**
-		 * 服务
-		 */
-		WxButton serviceBtn = new WxButton();
-		serviceBtn.setName("服务");
-
-		WxButton helpBtn = new WxButton();
-		helpBtn.setName("帮助");
-		helpBtn.setType("media_id");
-		helpBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2XQIqtnHGvTiIVNZaXCIVOA");
-
-		WxButton kdBtn = new WxButton();
-		kdBtn.setName("快递查询");
-		kdBtn.setType("view");
-		kdBtn.setUrl("http://www.kuaidi100.com/");
-
-		WxButton contactBtn = new WxButton();
-		contactBtn.setName("关于我们");
-		contactBtn.setType("media_id");
-		contactBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2YZeXnEtJEHM7dn_HWGD3_o");
 
 		WxButton recommendBtn = new WxButton();
 		recommendBtn.setName("推荐有礼");
 		recommendBtn.setType("click");
 		recommendBtn.setKey("4");
 
-		ArrayList<WxButton> serviceBtnList = new ArrayList<WxButton>();
-		serviceBtnList.add(helpBtn);
-		serviceBtnList.add(kdBtn);
-		serviceBtnList.add(contactBtn);
-		serviceBtnList.add(recommendBtn);
-		serviceBtn.setSub_button(serviceBtnList);
+		/**
+		 * 服务
+		 */
+		// WxButton serviceBtn = new WxButton();
+		// serviceBtn.setName("服务");
+		//
+		// ArrayList<WxButton> serviceBtnList = new ArrayList<WxButton>();
+		// serviceBtnList.add(helpBtn);
+		// serviceBtnList.add(kdBtn);
+		// serviceBtnList.add(contactBtn);
+		// serviceBtnList.add(recommendBtn);
+		// serviceBtn.setSub_button(serviceBtnList);
 
 		/**
 		 * 菜单添加
 		 */
-		buttons.add(xdBtn);
 		buttons.add(liftBtn);
-		buttons.add(serviceBtn);
+		buttons.add(xdBtn);
+		buttons.add(recommendBtn);
 		JSONObject param = new JSONObject();
 		param.put("button", buttons);
 		String response = HttpClientHelper.post(createUrl, param);

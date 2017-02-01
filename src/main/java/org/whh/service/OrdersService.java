@@ -19,6 +19,7 @@ import org.whh.entity.Orders;
 
 @Service
 public class OrdersService extends ServiceBase {
+
 	@Autowired
 	private OrdersDao ordersDao;
 
@@ -48,4 +49,5 @@ public class OrdersService extends ServiceBase {
 		}, pageable);
 		return result;
 	}
+
 }

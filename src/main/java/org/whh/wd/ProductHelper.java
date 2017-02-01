@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -157,7 +158,11 @@ public class ProductHelper extends WdInterfaceBase {
 				continue;
 			}
 			String localImageName = srcImgUrl.substring(srcImgUrl.indexOf("-") + 1, srcImgUrl.indexOf("?"));
-			File file = new File(this.getClass().getResource("/").getFile() + "wdImages/" + localImageName);
+			File file = null;
+			try {
+				file = new File(this.getClass().getResource("/").toURI().getPath() + "wdImages/" + localImageName);
+			} catch (URISyntaxException e1) {
+			}
 			/**
 			 * 源图片文件不在本地目录中，下载
 			 */

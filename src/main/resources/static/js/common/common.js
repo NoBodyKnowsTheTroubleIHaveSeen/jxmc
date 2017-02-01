@@ -537,6 +537,10 @@ function messageFormSubmit(form,callback) {
 				$(target).html(data);
 			});
 			layer.close(index);
+			var nextPage = form.data("nextPage");
+			if (!isNull(nextPage)) {
+				window.location = nextPage;
+			}
 		});
 		if (isFunc(callback)) {
 			callback();

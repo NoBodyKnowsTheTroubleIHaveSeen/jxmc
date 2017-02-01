@@ -31,21 +31,26 @@ $(function() {
 			return result;
 		},
 		operate : function(data) {
-			var result = "";
+			var result = "<a href=http://qr.liantu.com/api.php?&w=500&text="
+					+ encodeURIComponent(data.url)
+					+ ">二维码</a>&nbsp;&nbsp;&nbsp;";
+			result = result + "<form class='messageForm' data-next-page='/?subUrl=/showMaterail' action='/createSecene?mediaId=" + data.id
+			+ "'><a class='messageLoad'>场景二维码</a></form>";
 			if (data.materialStatus == 1) {
-				return "<span style='color:red'>本期笑话</span>";
+				return result + "<span style='color:red'>本期笑话</span>";
 			} else if (data.materialStatus == 2) {
-				return "<span style='color:red'>本期文章</span>";
+				return result + "<span style='color:red'>本期文章</span>";
 			}
-			return "<a data-url='/setTodayJoke?mediaId="
+			return result
+					+ "<a data-url='/setTodayJoke?mediaId="
 					+ data.mediaId
 					+ "' class='messageLoad'>设为本期笑话</a>&nbsp;&nbsp;&nbsp;<a data-url='/setCurrentContent?mediaId="
 					+ data.mediaId + "' class='messageLoad'>设为本期文章</a>";
 		},
 		setKeyword : function(data) {
 			var result = "<a class='setKeyword' data-id='" + data.id + "' ";
-			if (data.keyword) {
-				result = result + "data-keyword='" + data.keyword + "' ";
+			if (data.keywords) {
+				result = result + "data-keywords='" + data.keywords + "' ";
 			}
 			if (data.inputCode) {
 				result = result + "data-input-code='" + data.inputCode + "' ";
@@ -53,8 +58,14 @@ $(function() {
 			if (data.action) {
 				result = result + "data-action='" + data.action + "' ";
 			}
+			if (data.menuTitle) {
+				result = result + "data-menu-title='" + data.menuTitle + "' ";
+			}
 			result = result + ">设置</a>";
 			return result;
+		},
+		qrcode:function(data){
+			return "<img style='width:200px;height:200px' src='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data.qrCodeInfoTicket + "'/>";
 		}
 	}
 	setTableDisplay(obj);
@@ -73,19 +84,21 @@ $(function() {
 			".setKeyword",
 			function() {
 				var id = $(this).data("id");
-				var keyword = $(this).data("keyword");
+				var menuTitle = $(this).data("menuTitle");
 				var inputCode = $(this).data("inputCode");
 				var action = $(this).data("action");
+				var keywords = $(this).data("keywords");
 				var param = {
 					id : id,
-					keyword : keyword,
+					menuTitle : menuTitle,
 					inputCode : inputCode,
-					action : action
+					action : action,
+					keywords : keywords
 				};
-				generateSetForm("setKeywordForm", "/setKeyword", "设置关键词",
-						param, [ "关键词", "回复码", "动作编号" ], [ "keyword",
-								"inputCode", "action" ], function() {
-							$(".ajaxTable").submit();
-						});
+				generateSetForm("setKeywordForm", "/setKeyword", "配置", param, [
+						"作为菜单时的标题", "回复码", "回复关键词", "动作编号" ], [ "menuTitle",
+						"inputCode", "keywords", "action" ], function() {
+					$(".ajaxTable").submit();
+				});
 			})
 })

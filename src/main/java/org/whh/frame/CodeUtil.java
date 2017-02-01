@@ -31,42 +31,48 @@ public class CodeUtil implements Init
 	public void init()
 	{
 		logger.info("初始化code...");
-		Document document = XMLHelper.parse(this.getClass().getResource("/").getFile() +"config/code.xml");
-		Element root = document.getRootElement();
-		Element versionElement = root.element("version");
-		Element deleteVersionElement = root.element("deleteVersion");
-		Long version = Long.parseLong(versionElement.getText());
-		Long deleteVersion = Long.parseLong(deleteVersionElement.getText());
-		SystemProperty property = systemPropertyDao.findOne(1L);
-		Long oldVersion = property.getCodeVersion();
-		Long oldDeleteVersion = property.getCodeDeleteVersion();
-		if (version.equals(oldVersion))
-		{
-			logger.info("code版本未更新，不进行操作，code初始化完成.");
-			return;
-		}
-		if (!deleteVersion.equals(oldDeleteVersion))
-		{
-			logger.info("code删除版已更新，删除旧code.");
-			codeDao.deleteAll();
-		}
-		List<Element> codeGroups = root.elements("codeGroup");
-		for (Element codeGroup : codeGroups)
-		{
-			List<Element> codes = codeGroup.elements("code");
-			for (Element code : codes)
+		try {
+			String codeFilePath = this.getClass().getResource("/").toURI().getPath() +"config/code.xml";
+			logger.info("code配置文件位置：" + codeFilePath);
+			Document document = XMLHelper.parse(codeFilePath);
+			Element root = document.getRootElement();
+			Element versionElement = root.element("version");
+			Element deleteVersionElement = root.element("deleteVersion");
+			Long version = Long.parseLong(versionElement.getText());
+			Long deleteVersion = Long.parseLong(deleteVersionElement.getText());
+			SystemProperty property = systemPropertyDao.findOne(1L);
+			Long oldVersion = property.getCodeVersion();
+			Long oldDeleteVersion = property.getCodeDeleteVersion();
+			if (version.equals(oldVersion))
 			{
-				Code c = new Code();
-				c.setCodeGroup(codeGroup.attributeValue("name"));
-				c.setCodeKey(code.attributeValue("key"));
-				c.setCodeValue(code.attributeValue("value"));
-				c.setId(Long.parseLong(code.attributeValue("id")));
-				codeDao.save(c);
+				logger.info("code版本未更新，不进行操作，code初始化完成.");
+				return;
 			}
+			if (!deleteVersion.equals(oldDeleteVersion))
+			{
+				logger.info("code删除版已更新，删除旧code.");
+				codeDao.deleteAll();
+			}
+			List<Element> codeGroups = root.elements("codeGroup");
+			for (Element codeGroup : codeGroups)
+			{
+				List<Element> codes = codeGroup.elements("code");
+				for (Element code : codes)
+				{
+					Code c = new Code();
+					c.setCodeGroup(codeGroup.attributeValue("name"));
+					c.setCodeKey(code.attributeValue("key"));
+					c.setCodeValue(code.attributeValue("value"));
+					c.setId(Long.parseLong(code.attributeValue("id")));
+					codeDao.save(c);
+				}
+			}
+			property.setCodeDeleteVersion(deleteVersion);
+			property.setCodeVersion(version);
+			systemPropertyDao.save(property);
+		} catch (Exception e) {
+			logger.error("初始化code异常",e);
 		}
-		property.setCodeDeleteVersion(deleteVersion);
-		property.setCodeVersion(version);
-		systemPropertyDao.save(property);
 		logger.info("初始化code完成.");
 	}
 }

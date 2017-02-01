@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.whh.entity.User;
 
 import com.alibaba.fastjson.JSONObject;
@@ -23,8 +24,9 @@ public class IframeController {
 	 * @return
 	 */
 	@RequestMapping("getIframeWithId")
-	public String getIframeWithId(String controllerName, String pageName, Long id, Model model, HttpSession session,
-			String params) {
+	
+	public String getIframeWithId(String controllerName, String pageName,@RequestParam(value="params", required=false)String params, Model model, HttpSession session
+			) {
 		JSONObject jsonObject = JSONObject.parseObject(params);
 		Collection<String> keys = jsonObject.keySet();
 		for (String key : keys) {

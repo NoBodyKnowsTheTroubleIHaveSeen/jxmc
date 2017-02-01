@@ -1,0 +1,57 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script type="text/javascript" src="js/content/qrcode.js"></script>
+<div>
+	<div class="clear"></div>
+	<div class="borderDiv margin_top_10">
+		<div class="fleft">公众号二维码生成</div>
+	</div>
+	<form action="doGenerateQrcode" class="messageForm">
+		<div class="clear"></div>
+		<div class="queryDiv editDiv">
+			<table class="center">
+				<tbody>
+					<tr>
+						<td>内容</td>
+						<td style="width: 50px"></td>
+						<td><input name="url" placeholder="输入URL/内容" /></td>
+						<td style="width: 50px"></td>
+						<td>标题</td>
+						<td style="width: 50px"></td>
+						<td><input name="title" placeholder="输入标题" /></td>
+						<td style="width: 50px"></td>
+						<td>
+							<button type="submit" class="fright" id="querySubmit">提交</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="clear"></div>
+		<div class="borderDiv"></div>
+	</form>
+	<form action="getGenerateQrcode" class="ajaxTable"
+		id="customerRecordForm">
+		<table class="commonTable">
+			<thead>
+				<tr>
+					<th class="th_back" colspan="15">二维码生成列表</th>
+				</tr>
+				<tr>
+					<th class="title" id="actionName">名称</th>
+					<th class="title" id="ticket">ticket</th>
+					<th class="title" id="url">url</th>
+					<th class="title" id="sceneStr">场景</th>
+					<th class="title" id="qrcode">二维码</th>
+				</tr>
+			</thead>
+			<tbody id="tableContent"></tbody>
+		</table>
+		<div class="fright margin_top_10">
+			<div th:replace="common/tablePage"></div>
+		</div>
+	</form>
+	<div class="clear"></div>
+</div>
+</html>
