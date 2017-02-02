@@ -16,7 +16,7 @@ public class TulingUtil {
 
 	private static String APIAddress = "http://www.tuling123.com/openapi/api";
 
-	private static String APIkey = "";
+	private static String APIkey = "9a71099ecba148489125e55c191e2de6";
 
 	private static String defaultImgUrl = "https://www.baidu.com/img/bd_logo1.png";
 
@@ -86,7 +86,6 @@ public class TulingUtil {
 		String response = HttpClientHelper.post(APIAddress, params);
 		JSONObject result = JSONObject.parseObject(response);
 		return result;
-
 	}
 
 	// public static void main(String[] args) {

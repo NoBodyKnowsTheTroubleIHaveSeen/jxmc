@@ -38,7 +38,7 @@ public class EventProcess implements MsgProcess {
 		case "unsubscribe":// 取消订阅
 			return procesUnsubscribe(originalUserName);
 		case "SCAN":
-			break;
+			return processScan(toUserName,originalUserName,root);
 		case "LOCATION":
 			break;
 		case "CLICK":
@@ -105,6 +105,7 @@ public class EventProcess implements MsgProcess {
 					String value = object.getValue();
 					JSONObject contentObjet = JSONObject.parseObject(value);
 					Long mediaId = contentObjet.getLong("mediaId");
+					Material material = materialDao.findOne(mediaId);
 					user.setRecommendMediaId(mediaId);
 					if (NullUtil.isNull(mediaId)) {
 						new Thread(new Runnable() {
@@ -115,7 +116,6 @@ public class EventProcess implements MsgProcess {
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
-								Material material = materialDao.findOne(mediaId);
 								String title = material.getTitle();
 								String description = material.getDigest();
 								String contentUrl = material.getUrl();
@@ -135,7 +135,7 @@ public class EventProcess implements MsgProcess {
 								/**
 								 * 此处发送关联的素材信息
 								 */
-								messageSendService.sendNews(origionalUserName, mediaId.toString());
+								messageSendService.sendNews(origionalUserName, material.getMediaId());
 							}
 						}).start();
 					}
@@ -144,7 +144,7 @@ public class EventProcess implements MsgProcess {
 			}
 		}
 		publicUserDao.save(user);
-		String welcomeMsg = "没有你的日子,总感觉生活少了什么， 终于还是把你盼来了。\r\n\r\n\r\n\r\n^_^,你还不了解我吧，来聊聊呗。先告诉你啊,回复以下内容是不会有反应的：\r\n\r\n1.进入小店\r\n\r\n2.本期精彩内容\r\n\r\n3.随机推荐内容\r\n\r\n4.推荐好友赢好礼啦\r\n\r\n114.找客服?.什么鬼\r\n\r\n默认'聪明的'机器人将会和你聊天，请记住调戏机器人是一件没有道德的事哦，你看着办喽";
+		String welcomeMsg = "没有你的日子,总感觉生活少了什么， 终于还是把你盼来了。\r\n\r\n\r\n\r\n^_^,你还不了解我吧，聊聊呗。先告诉你,回复以下内容是不会有反应的：\r\n\r\n1.进入小店\r\n\r\n2.本期精彩内容\r\n\r\n3.随机推荐内容\r\n\r\n4.推荐好友赢好礼啦\r\n\r\n114.找客服?.什么鬼\r\n\r\n默认'聪明的'机器人将会和你聊天，请记住调戏机器人是一件没有道德的事，你看着办喽";
 		Document responseDocument = WxXMLHelper.createTextDocument(origionalUserName, toUserName, welcomeMsg);
 		return responseDocument.asXML();
 	}
@@ -161,6 +161,42 @@ public class EventProcess implements MsgProcess {
 			user.setUpdateTime(new Date());
 			user.setSubscribe(true);
 			publicUserDao.save(user);
+		}
+		return "";
+	}
+	
+	private String processScan(String toUserName, String origionalUserName, Element root) {
+		Element keyEle = root.element("EventKey");
+		if (!NullUtil.isNull(keyEle)) {
+			String key = keyEle.getText();
+			if (!NullUtil.isNull(key)) {
+				SceneObject object = JSONObject.parseObject(key, SceneObject.class);
+				int type = object.getType();
+				switch (type) {
+				case SceneObject.TYPE_SCAN_MATERIAL:
+				case SceneObject.TYPE_SCAN_URL:
+					String value = object.getValue();
+					JSONObject contentObjet = JSONObject.parseObject(value);
+					Long mediaId = contentObjet.getLong("mediaId");
+					Material material = materialDao.findOne(mediaId);
+						new Thread(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									Thread.sleep(1000);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								String title = material.getTitle();
+								String description = material.getDigest();
+								String contentUrl = material.getUrl();
+								String picUrl = material.getThumb_url();
+								messageSendService.sendNews(origionalUserName, title, description, contentUrl, picUrl);
+							}
+						}).start();
+					break;
+				}
+			}
 		}
 		return "";
 	}

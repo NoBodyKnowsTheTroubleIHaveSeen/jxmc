@@ -257,22 +257,22 @@ public class WxPublicController extends ControllerBase {
 	@ResponseBody
 	public CommonMessage createSecene(Long mediaId, HttpServletResponse response) {
 		CommonMessage message = new CommonMessage("生成成功");
-//		Material materail = materialDao.findOne(mediaId);
-//		Long qrCodeInfoId = materail.getQrCodeInfoId();
-//		QrCodeInfo qrCodeInfo = null;
-//		SceneObject object = new SceneObject();
-//		object.setType(SceneObject.TYPE_SCAN_MATERIAL);
-//		JSONObject contentObjet = new JSONObject();
-//		contentObjet.put("mediaId", mediaId);
-//		object.setValue(JSONObject.toJSONString(contentObjet));
-//		if (qrCodeInfoId == null) {
-//			qrCodeInfo = qrcodeInfoService.createAndGetQrCodeInfo(object);
-//			materail.setQrCodeInfoId(qrCodeInfo.getId());
-//			materail.setQrCodeInfoTicket(qrCodeInfo.getTicket());
-//			materialDao.save(materail);
-//		} else {
-//			qrCodeInfo = qrcodeInfoService.createAndGetQrCodeInfo(object);
-//		}
+		Material materail = materialDao.findOne(mediaId);
+		Long qrCodeInfoId = materail.getQrCodeInfoId();
+		QrCodeInfo qrCodeInfo = null;
+		SceneObject object = new SceneObject();
+		object.setType(SceneObject.TYPE_SCAN_MATERIAL);
+		JSONObject contentObjet = new JSONObject();
+		contentObjet.put("mediaId", materail.getId());
+		object.setValue(JSONObject.toJSONString(contentObjet));
+		if (qrCodeInfoId == null) {
+			qrCodeInfo = qrcodeInfoService.createAndGetQrCodeInfo(object);
+			materail.setQrCodeInfoId(qrCodeInfo.getId());
+			materail.setQrCodeInfoTicket(qrCodeInfo.getTicket());
+			materialDao.save(materail);
+		} else {
+			qrCodeInfo = qrcodeInfoService.createAndGetQrCodeInfo(object);
+		}
 		return message;
 	}
 
