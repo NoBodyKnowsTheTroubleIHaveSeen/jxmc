@@ -107,39 +107,22 @@ public class EventProcess implements MsgProcess {
 					Long mediaId = contentObjet.getLong("mediaId");
 					Material material = materialDao.findOne(mediaId);
 					user.setRecommendMediaId(mediaId);
-					if (NullUtil.isNull(mediaId)) {
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-								String title = material.getTitle();
-								String description = material.getDigest();
-								String contentUrl = material.getUrl();
-								String picUrl = material.getThumb_url();
-								messageSendService.sendNews(origionalUserName, title, description, contentUrl, picUrl);
+					new Thread(new Runnable() {
+						@Override
+						public void run() {
+							try {
+								Thread.sleep(1000);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
 							}
-						}).start();
-					} else {
-						new Thread(new Runnable() {
-							@Override
-							public void run() {
-								try {
-									Thread.sleep(1000);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-								/**
-								 * 此处发送关联的素材信息
-								 */
-								messageSendService.sendNews(origionalUserName, material.getMediaId());
-							}
-						}).start();
-					}
-					break;
+							String title = material.getTitle();
+							String description = material.getDigest();
+							String contentUrl = material.getUrl();
+							String picUrl = material.getThumb_url();
+							messageSendService.sendNews(origionalUserName, title, description, contentUrl, picUrl);
+						}
+					}).start();
+				break;
 				}
 			}
 		}
@@ -173,8 +156,8 @@ public class EventProcess implements MsgProcess {
 				SceneObject object = JSONObject.parseObject(key, SceneObject.class);
 				int type = object.getType();
 				switch (type) {
-				case SceneObject.TYPE_SCAN_MATERIAL:
 				case SceneObject.TYPE_SCAN_URL:
+				case SceneObject.TYPE_SCAN_MATERIAL:
 					String value = object.getValue();
 					JSONObject contentObjet = JSONObject.parseObject(value);
 					Long mediaId = contentObjet.getLong("mediaId");
