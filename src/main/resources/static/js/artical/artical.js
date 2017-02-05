@@ -29,10 +29,40 @@ function getByNum(num) {
 	}
 }
 $(function() {
+	var isSubscriber = $("#isSubscriber").val();
+	var ticket = $("#ticket").val();
 	var title = $("#title").val();
 	var chapter = $("#chapter").val();
 	var chapterSize = $("#chapterSize").val();
 	$(".chapter").text(getByNum(chapter));
+	$(".firstChpater").attr("href",
+			"/common/artical?chapter=" + 1 + "&title=" + title);
+	$(".lastChapter").attr("href",
+			"/common/artical?chapter=" + chapterSize + "&title=" + title);
+	if (!isSubscriber) {
+		var url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+ticket;
+		$(".preChapter").css("display", "none");
+		$(".nextChapter").attr("href", url);
+		$(".lastChapter").attr("href", url);
+		for (var i = 1; i <= chapterSize; i++) {
+			var chapterText = getByNum(i);
+			var li = '<li><a href="' + url + '">第' + chapterText + '章</a></li>';
+			if (i % 10 == 0) {
+				li = li + "<li class='divider'></li>"
+			}
+			$("#chapters").append(li);
+		}
+		return;
+	}
+	for (var i = 1; i <= chapterSize; i++) {
+		var chapterText = getByNum(i);
+		var li = '<li><a href="/common/artical?chapter=' + i + '&title='
+				+ title + '">第' + chapterText + '章</a></li>';
+		if (i % 10 == 0) {
+			li = li + "<li class='divider'></li>"
+		}
+		$("#chapters").append(li);
+	}
 	if (chapter == 1) {
 		$(".preChapter").css("display", "none");
 	} else {
@@ -47,19 +77,5 @@ $(function() {
 	} else {
 		$(".nextChapter").attr("href",
 				"/common/artical?chapter=" + nextChapter + "&title=" + title);
-	}
-	$(".firstChpater").attr("href",
-			"/common/artical?chapter=" + 1 + "&title=" + title);
-	$(".lastChapter").attr("href",
-			"/common/artical?chapter=" + chapterSize + "&title=" + title);
-	for (var i = 1; i <= chapterSize; i++) {
-		var chapterText = getByNum(i);
-		var li = '<li><a href="/common/artical?chapter=' + i
-				+ '&title=' + title + '">第' + chapterText + '章</a></li>';
-		if( i %10 == 0)
-		{
-			li = li + "<li class='divider'></li>"
-		}
-		$("#chapters").append(li);
 	}
 })

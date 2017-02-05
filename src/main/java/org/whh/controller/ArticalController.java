@@ -19,12 +19,14 @@ public class ArticalController extends ControllerBase {
 	Logger logger = LoggerFactory.getLogger(ArticalController.class);
 
 	@RequestMapping("/common/artical")
-	public String artical(String title, String chapter, Model model) {
+	public String artical(String title, String chapter,String ticket,Boolean isSubscriber, Model model) {
 		String content = getContent(title, chapter);
 		model.addAttribute("content", content);
 		model.addAttribute("title", title);
 		model.addAttribute("chapter", chapter);
 		model.addAttribute("chapterSize", getChapterSize(title));
+		model.addAttribute("ticket", ticket);
+		model.addAttribute("isSubscriber", isSubscriber);
 		return "artical/articalTemplate";
 	}
 
