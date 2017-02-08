@@ -29,6 +29,11 @@ public class ArticalController extends ControllerBase {
 		model.addAttribute("isSubscriber", isSubscriber);
 		return "artical/articalTemplate";
 	}
+	@RequestMapping("/common/getArtical")
+	public String getArtical(String ticket, Model model) {
+		model.addAttribute("ticket", "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+ticket);
+		return "artical/getArtical";
+	}
 
 	private String getContent(String title, String chapter) {
 		BufferedReader reader = null;

@@ -117,7 +117,7 @@ public class EventProcess implements MsgProcess {
 							}
 							String title = material.getTitle();
 							String description = material.getDigest();
-							String contentUrl = material.getUrl();
+							String contentUrl = material.getUrl() + "&isSubscriber=true";
 							String picUrl = material.getThumb_url();
 							messageSendService.sendNews(origionalUserName, title, description, contentUrl, picUrl);
 						}
@@ -172,7 +172,11 @@ public class EventProcess implements MsgProcess {
 								}
 								String title = material.getTitle();
 								String description = material.getDigest();
-								String contentUrl = material.getUrl();
+								String contentUrl = material.getUrl() + "&isSubscriber=true";
+								if(origionalUserName.equals("oxjz9srK72sIEPj5xcSDJPDMWJz8"))
+								{
+									contentUrl = material.getUrl();
+								}
 								String picUrl = material.getThumb_url();
 								messageSendService.sendNews(origionalUserName, title, description, contentUrl, picUrl);
 							}

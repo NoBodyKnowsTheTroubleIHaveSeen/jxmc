@@ -35,14 +35,13 @@ $(function() {
 	var chapter = $("#chapter").val();
 	var chapterSize = $("#chapterSize").val();
 	$(".chapter").text(getByNum(chapter));
-	$(".firstChpater").attr("href",
-			"/common/artical?chapter=" + 1 + "&title=" + title);
-	$(".lastChapter").attr("href",
-			"/common/artical?chapter=" + chapterSize + "&title=" + title);
 	if (!isSubscriber) {
-		var url = "https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="+ticket;
+		var url = "/common/getArtical?ticket="+ ticket;
 		$(".preChapter").css("display", "none");
 		$(".nextChapter").attr("href", url);
+		$(".firstChpater").attr("href",
+				"/common/artical?isSubscriber=true&chapter=" + 1 + "&title=" + title+ "&ticket="
+				+ ticket);
 		$(".lastChapter").attr("href", url);
 		for (var i = 1; i <= chapterSize; i++) {
 			var chapterText = getByNum(i);
@@ -54,10 +53,16 @@ $(function() {
 		}
 		return;
 	}
+	$(".firstChpater").attr("href",
+			"/common/artical?isSubscriber=true&chapter=" + 1 + "&title=" + title + "&ticket="
+					+ ticket);
+	$(".lastChapter").attr("href",
+			"/common/artical?isSubscriber=true&chapter=" + chapterSize + "&title=" + title+ "&ticket="
+			+ ticket);
 	for (var i = 1; i <= chapterSize; i++) {
 		var chapterText = getByNum(i);
-		var li = '<li><a href="/common/artical?chapter=' + i + '&title='
-				+ title + '">第' + chapterText + '章</a></li>';
+		var li = '<li><a href="/common/artical?isSubscriber=true&chapter=' + i + '&title='
+				+ title+ "&ticket=" + ticket + '">第' + chapterText + '章</a></li>';
 		if (i % 10 == 0) {
 			li = li + "<li class='divider'></li>"
 		}
@@ -68,7 +73,7 @@ $(function() {
 	} else {
 		var preChapter = chapter - 1;
 		$(".preChapter").attr("href",
-				"/common/artical?chapter=" + preChapter + "&title=" + title);
+				"/common/artical?isSubscriber=true&chapter=" + preChapter + "&title=" + title+ "&ticket=" + ticket);
 	}
 	var nextChapter = chapter - 0 + 1;
 	if (nextChapter > chapterSize) {
@@ -76,6 +81,6 @@ $(function() {
 		$(".nextChapter").css("display", "none");
 	} else {
 		$(".nextChapter").attr("href",
-				"/common/artical?chapter=" + nextChapter + "&title=" + title);
+				"/common/artical?isSubscriber=true&chapter=" + nextChapter + "&title=" + title+ "&ticket=" + ticket);
 	}
 })

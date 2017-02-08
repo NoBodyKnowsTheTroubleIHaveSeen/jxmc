@@ -1,0 +1,31 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+<title>查看全文</title>
+
+<link rel="stylesheet" href="/css/bootstrap.min.css" />
+<style type="text/css">
+.starter-template {
+	padding: 10px 15px;
+	text-align: center;
+}
+</style>
+<script src="/js/common/jquery-2.1.4.js"></script>
+<script src="/js/common/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<div style="text-align:center">
+		<img style="width:200px;height:200px" th:src="${ticket}"/>
+		<div></div>
+		<span>长按识别图中二维码,查看完整内容</span>
+		</div>
+	</div>
+</body>
+</html>
