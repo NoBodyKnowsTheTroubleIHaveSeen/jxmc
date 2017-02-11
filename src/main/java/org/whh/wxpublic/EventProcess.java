@@ -127,7 +127,7 @@ public class EventProcess implements MsgProcess {
 			}
 		}
 		publicUserDao.save(user);
-		String welcomeMsg = "没有你的日子,总感觉生活少了什么， 终于还是把你盼来了。\r\n\r\n\r\n\r\n^_^,你还不了解我吧，聊聊呗。先告诉你,回复以下内容是不会有反应的：\r\n\r\n1.进入小店\r\n\r\n2.本期精彩内容\r\n\r\n3.随机推荐内容\r\n\r\n4.推荐好友赢好礼啦\r\n\r\n114.找客服?.什么鬼\r\n\r\n默认'聪明的'机器人将会和你聊天，请记住调戏机器人是一件没有道德的事，你看着办喽";
+		String welcomeMsg = "没有你的日子,总感觉生活少了点什么， 终于还是把你盼来了。\r\n\r\n\r\n\r\n^_^,回复以下内容是不会有反应的,不信你试试：\r\n\r\n1.进入小店\r\n\r\n2.精彩内容\r\n\r\n3.随机推荐\r\n\r\n4.推荐好友赢好礼啦\r\n\r\n114.客服?\r\n\r\n可以和我们聪明的公众号机器人聊天哦，但请不要调戏他，你看着办喽";
 		Document responseDocument = WxXMLHelper.createTextDocument(origionalUserName, toUserName, welcomeMsg);
 		return responseDocument.asXML();
 	}
