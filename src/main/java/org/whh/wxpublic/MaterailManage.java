@@ -26,13 +26,21 @@ public class MaterailManage {
 //	public static void main(String[] args) throws IOException {
 //		new MaterailManage().batchGetMaterial(Integer.MAX_VALUE);
 //	}
-	public void addImage() {
+	public static String addImage(String filePath) {
 		String addUrl = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="
 				+ WxPublicUtil.getAccessToken();
 		List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 		pairs.add(new BasicNameValuePair("type", "image"));
-		String response = HttpClientHelper.uploadFile(addUrl, pairs, new File("e://test.jpg"));
-		System.out.println(response);
+		String response = HttpClientHelper.uploadFile(addUrl, pairs, new File(filePath));
+		return response;
+	}
+	public static String delMaterial(String mediaId) {
+		String delUrl = "https://api.weixin.qq.com/cgi-bin/material/del_material?access_token="
+				+ WxPublicUtil.getAccessToken();
+		JSONObject artical = new JSONObject();
+		artical.put("media_id", mediaId);
+		String response = HttpClientHelper.post(delUrl, artical);
+		return response;
 	}
 
 	public void addNews() throws IOException {

@@ -34,8 +34,9 @@ $(function() {
 			var result = "<a href=http://qr.liantu.com/api.php?&w=500&text="
 					+ encodeURIComponent(data.url)
 					+ ">二维码</a>&nbsp;&nbsp;&nbsp;";
-			result = result + "<form class='messageForm' data-next-page='/?subUrl=/showMaterail' action='/createSecene?mediaId=" + data.id
-			+ "'><a class='messageLoad'>场景二维码</a></form>";
+			result = result
+					+ "<form class='messageForm' data-next-page='/?subUrl=/showMaterail' action='/createSecene?mediaId="
+					+ data.id + "'><a class='messageLoad'>场景二维码</a></form>";
 			if (data.materialStatus == 1) {
 				return result + "<span style='color:red'>本期笑话</span>";
 			} else if (data.materialStatus == 2) {
@@ -64,8 +65,9 @@ $(function() {
 			result = result + ">设置</a>";
 			return result;
 		},
-		qrcode:function(data){
-			return "<img style='width:200px;height:200px' src='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket=" + data.qrCodeInfoTicket + "'/>";
+		qrcode : function(data) {
+			return "<img style='width:200px;height:200px' src='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket="
+					+ data.qrCodeInfoTicket + "'/>";
 		}
 	}
 	setTableDisplay(obj);
@@ -100,5 +102,69 @@ $(function() {
 						"inputCode", "keywords", "action" ], function() {
 					$(".ajaxTable").submit();
 				});
+			})
+			var image=new Image();
+	function setImageURL(url){
+	    image.src=url;
+	}
+	$("#file").on(
+			"change",
+			function() {
+			   var file=this.files[0];
+			   var filePath = $(this).val().split("\\");
+			   var filaName = filePath[filePath.length - 1];
+			   var reader=new FileReader();
+			    reader.onload=function(){
+			        // 通过 reader.result 来访问生成的 DataURL
+			        var url=reader.result;
+			        setImageURL(url);
+			        
+			        var width = 440;
+				    var height=440;
+				    var x = 320;
+				    var y = 320;
+				    var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
+				    ctx=canvas.getContext('2d');
+
+				    ctx.drawImage(image,x,y,width,height,0,0,width,height);
+				    $(document.body).append(canvas)
+					
+					var data=canvas.toDataURL();
+
+					// dataURL 的格式为 “data:image/png;base64,****”,逗号之前都是一些说明性的文字，我们只需要逗号之后的就行了
+					data=data.split(',')[1];
+					data=window.atob(data);
+					var ia = new Uint8Array(data.length);
+					for (var i = 0; i < data.length; i++) {
+					    ia[i] = data.charCodeAt(i);
+					};
+					
+					// canvas.toDataURL 返回的默认格式就是 image/png
+					var blob=new Blob([ia], {type:"image/png"});
+					var formData=new FormData();
+
+					formData.append('file',blob,filaName);
+					
+					$.ajax({
+						url : '/uploadGroupQrcode',
+						type : 'POST',
+						data : formData,
+						async : false,
+						cache : false,
+						contentType : false,
+						processData : false,
+						success : function(data) {
+							var data = $.parseJSON(data);
+							alert(data.message);
+						},
+						error : function(returndata) {
+							alert(returndata);
+						}
+					});
+					$(".uploadFile")[0].reset();
+			        
+			    };
+			    reader.readAsDataURL(file);
+			  
 			})
 })

@@ -19,10 +19,12 @@
 				<button>同步素材</button>
 			</form>
 		</div>
-		<div class="queryDiv fright" style="width: 330px">
-			<form action="/updateGroupQrCodeMaterailId" class="messageForm">
-				<input name="id" placeholder="输入群二维码素材id" th:value="${groupQrCodeMaterailId}"/>
-				<button>设置群二维码素材id</button>
+		<div class="queryDiv fright">
+			<form enctype="multipart/form-data" action="/uploadGroupQrcode"
+				class="uploadFile">
+				<p>
+					群二维码图片：<input type="file" name="file" id="file" />
+				</p>
 			</form>
 		</div>
 	</div>

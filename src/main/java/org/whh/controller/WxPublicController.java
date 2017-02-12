@@ -1,5 +1,10 @@
 package org.whh.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +16,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.whh.base.ControllerBase;
 import org.whh.dao.ConfigInfoDao;
 import org.whh.dao.MaterialDao;
@@ -72,7 +79,7 @@ public class WxPublicController extends ControllerBase {
 
 	@Autowired
 	QrcodeInfoService qrcodeInfoService;
-	
+
 	@Autowired
 	ConfigInfoDao configInfoDao;
 
@@ -118,10 +125,9 @@ public class WxPublicController extends ControllerBase {
 	@RequestMapping("/showMaterail")
 	public String showMaterail(Model model) {
 		ConfigInfo info = configInfoDao.findOne(1L);
-		if(info != null && info.getGroupQrCodeMaterailId() != null)
-		{
+		if (info != null && info.getGroupQrCodeMaterailId() != null) {
 			String groupQrCodeMaterailId = info.getGroupQrCodeMaterailId();
-			model.addAttribute("groupQrCodeMaterailId",groupQrCodeMaterailId);
+			model.addAttribute("groupQrCodeMaterailId", groupQrCodeMaterailId);
 		}
 		return "wxpublic/showMaterail";
 	}
@@ -300,20 +306,56 @@ public class WxPublicController extends ControllerBase {
 		Material material = materialDao.findOne(id);
 		return material.getContent();
 	}
-	@RequestMapping("/updateGroupQrCodeMaterailId")
+
+	@RequestMapping("/uploadGroupQrcode")
 	@ResponseBody
-	public CommonMessage updateGroupQrCodeMaterailId(String id)
-	{
-		ConfigInfo info = configInfoDao.findOne(1L);
-		if( info == null)
-		{
-			info = new ConfigInfo();
-			info.setId(1L);
-		}
-		info.setGroupQrCodeMaterailId(id);
-		configInfoDao.save(info);
+	public CommonMessage uploadGroupQrcode(@RequestParam("file") MultipartFile file) {
 		CommonMessage message = new CommonMessage();
-		message.setMessage("更新群二维码素材id成功");
+		if (!file.isEmpty()) {
+			try {
+				File directory = new File("upload");
+				if (!directory.exists()) {
+					directory.mkdirs();
+				}
+				String uploadFilePath = "upload/" + System.currentTimeMillis() + "_" + file.getOriginalFilename();
+				File f = new File(uploadFilePath);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f));
+				out.write(file.getBytes());
+				out.flush();
+				out.close();
+				String response = MaterailManage.addImage(f.getAbsolutePath());
+				JSONObject object = JSONObject.parseObject(response);
+				String materialId = object.getString("media_id");
+				String url = object.getString("url");
+				ConfigInfo info = configInfoDao.findOne(1L);
+				if (info == null) {
+					info = new ConfigInfo();
+					info.setId(1L);
+				}
+				else{
+					String oldFilePath = info.getGroupQrCodeImgPath();
+					if (!isNull(oldFilePath)) {
+						File oldFile = new File(oldFilePath);
+						oldFile.delete();
+					}
+					String groupQrCodeMaterailId = info.getGroupQrCodeMaterailId();
+					if (!isNull(groupQrCodeMaterailId)) {
+						MaterailManage.delMaterial(groupQrCodeMaterailId);
+					}
+				}
+				info.setGroupQrCodeImgPath(uploadFilePath);
+				info.setGroupQrCodeMaterailId(materialId);
+				info.setGroupQrCodeMaterailUrl(url);
+				configInfoDao.save(info);
+			} catch (FileNotFoundException e) {
+				message.setMessage("上传失败," + e.getMessage());
+			} catch (IOException e) {
+				message.setMessage("上传失败," + e.getMessage());
+			}
+			message.setMessage("上传成功");
+		} else {
+			message.setMessage("上传失败，因为文件是空的.");
+		}
 		return message;
 	}
 }
