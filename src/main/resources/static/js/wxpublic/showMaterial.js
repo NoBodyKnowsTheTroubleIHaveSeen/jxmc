@@ -144,24 +144,24 @@ $(function() {
 					var formData=new FormData();
 
 					formData.append('file',blob,filaName);
-//					
-//					$.ajax({
-//						url : '/uploadGroupQrcode',
-//						type : 'POST',
-//						data : formData,
-//						async : false,
-//						cache : false,
-//						contentType : false,
-//						processData : false,
-//						success : function(data) {
-//							var data = $.parseJSON(data);
-//							alert(data.message);
-//						},
-//						error : function(returndata) {
-//							alert(returndata);
-//						}
-//					});
-//					$(".uploadFile")[0].reset();
+					
+					$.ajax({
+						url : '/uploadGroupQrcode',
+						type : 'POST',
+						data : formData,
+						async : false,
+						cache : false,
+						contentType : false,
+						processData : false,
+						success : function(data) {
+							var data = $.parseJSON(data);
+							alert(data.message);
+						},
+						error : function(returndata) {
+							alert(returndata);
+						}
+					});
+					$(".uploadFile")[0].reset();
 			        
 			    };
 			    reader.readAsDataURL(file);
