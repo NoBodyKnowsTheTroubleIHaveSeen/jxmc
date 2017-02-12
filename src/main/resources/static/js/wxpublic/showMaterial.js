@@ -154,8 +154,7 @@ $(function() {
 						contentType : false,
 						processData : false,
 						success : function(data) {
-							var data = $.parseJSON(data);
-							alert(data.message);
+							layer.alert(data.message);
 						},
 						error : function(returndata) {
 							alert(returndata);
