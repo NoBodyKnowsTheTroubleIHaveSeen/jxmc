@@ -7,11 +7,13 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.whh.dao.ConfigInfoDao;
 import org.whh.dao.MaterialDao;
 import org.whh.dao.QrCodeInfoDao;
 import org.whh.dao.WxKeywordMapDao;
 import org.whh.dao.WxSubscribeCallDao;
 import org.whh.dao.WxSubscriberMessageDao;
+import org.whh.entity.ConfigInfo;
 import org.whh.entity.Material;
 import org.whh.entity.QrCodeInfo;
 import org.whh.entity.WxKeywordMap;
@@ -38,37 +40,44 @@ public class TextProcess implements MsgProcess {
 	WxSubscriberMessageDao wxSubscriberMessageDao;
 	@Autowired
 	WxSubscribeCallDao wxSubscribeCallDao;
-
 	@Autowired
 	QrcodeInfoService qrcodeInfoService;
+	@Autowired
+	ConfigInfoDao configInfoDao;
+	@Autowired
+	MessageSendService messageSendService;
 	/**
 	 * 进入首页
 	 */
-	private static final String CODE_INTO_INDEX = "1";
+	 static final String CODE_INTO_INDEX = "1";
 	/**
 	 * 本期内容
 	 */
-	private static final String CODE_NOW_CONTENT = "2";
+	 static final String CODE_NOW_CONTENT = "2";
 	/**
 	 * 随机文章
 	 */
-	private static final String CODE_RANDOM_CONTNET = "3";
+	static final String CODE_RANDOM_CONTNET = "3";
 	/**
 	 * 推荐
 	 */
-	private static final String CODE_RECOMMEND = "4";
+	 static final String CODE_RECOMMEND = "4";
 	/**
 	 * 随机笑话
 	 */
-	private static final String CODE_RANDOM_JOKE = "6";
+	 static final String CODE_RANDOM_JOKE = "6";
 
-	private static final String CODE_NOW_JOKE = "5";
+	 static final String CODE_NOW_JOKE = "5";
+	 
+	 static final String CODE_HISTORY = "7";
+	 
+	 static final String CODE_GROUP_QR_CODE = "11";
 
 	/**
 	 * 帮助
 	 */
-	private static final String CODE_HELP = "?";
-	private static final String CODE_HELP_CN = "？";
+	 static final String CODE_HELP = "?";
+	 static final String CODE_HELP_CN = "？";
 
 	private Document getRandomMaterial(List<Material> materials, String fromUserName, String toUserName) {
 		Document responseDocument = null;
@@ -146,6 +155,26 @@ public class TextProcess implements MsgProcess {
 			Material help = materialDao.findByMediaId("90hC4K9jq_d_P3Ywgl9I2XQIqtnHGvTiIVNZaXCIVOA");
 			responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, help.getTitle(), help.getDigest(),
 					help.getThumb_url(), help.getUrl());
+			break;
+		case CODE_GROUP_QR_CODE:
+			message.setDescription("输入代码：" + CODE_GROUP_QR_CODE);
+			ConfigInfo configInfo = configInfoDao.findOne(1L);
+			if(configInfo != null && configInfo.getGroupQrCodeMaterailId() != null)
+			{
+				String msg = "加入微信群与小伙伴们谈谈国事家事天下事，扫描二维码即可进入哦";
+				responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, msg);
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				messageSendService.sendImage(originUser, configInfo.getGroupQrCodeMaterailId());
+			}
+			break;
+		case CODE_HISTORY:
+			responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, "往期精彩", "公众号发布的历史精彩内容",
+					"https://mmbiz.qlogo.cn/mmbiz_png/S3RO59TkTwgqkD0lndBdfzAUN1VbxQU4fxJopa1QDPznIhN8hX8UW0ZJSEGbic2MtJncZLkZFqJcQfiby9f96jibA/0?wx_fmt=png", "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwMjk0MDYxNA==&scene=124#wechat_redirect");
+			break;
 		default:
 			break;
 		}

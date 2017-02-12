@@ -36,23 +36,23 @@ public class MessageSendSchedule {
 	@Scheduled(cron = "0 0 17-21 * * ?")
 	public void sendMessage() {
 
-		Iterable<WxPublicUser> users = wxPublicUserDao.findAll();
-		Iterator<WxPublicUser> iterator = users.iterator();
-		Date dayTimeStart = CalendarUtil.getDayTimeStart(new Date());
-		List<Material> material = materialDao.findByMaterialStatus(Material.MATERIAL_STATUS_CURRENT_JOKE);
-		while (iterator.hasNext()) {
-			try {
-				WxPublicUser user = iterator.next();
-				Date date = user.getLastSendTime();
-				if (date != null && date.getTime() > dayTimeStart.getTime()) {
-					continue;
-				}
-				new MessageSendService().sendNews(user.getOpenId(), material.get(0).getMediaId());
-				user.setLastSendTime(new Date());
-				wxPublicUserDao.save(user);
-			} catch (Exception e) {
-				logger.error("定时发送每日推荐内容失败", e);
-			}
-		}
+//		Iterable<WxPublicUser> users = wxPublicUserDao.findAll();
+//		Iterator<WxPublicUser> iterator = users.iterator();
+//		Date dayTimeStart = CalendarUtil.getDayTimeStart(new Date());
+//		List<Material> material = materialDao.findByMaterialStatus(Material.MATERIAL_STATUS_CURRENT_JOKE);
+//		while (iterator.hasNext()) {
+//			try {
+//				WxPublicUser user = iterator.next();
+//				Date date = user.getLastSendTime();
+//				if (date != null && date.getTime() > dayTimeStart.getTime()) {
+//					continue;
+//				}
+//				new MessageSendService().sendNews(user.getOpenId(), material.get(0).getMediaId());
+//				user.setLastSendTime(new Date());
+//				wxPublicUserDao.save(user);
+//			} catch (Exception e) {
+//				logger.error("定时发送每日推荐内容失败", e);
+//			}
+//		}
 	}
 }

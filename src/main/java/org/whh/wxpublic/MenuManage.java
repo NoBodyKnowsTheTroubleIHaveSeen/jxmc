@@ -49,11 +49,6 @@ public class MenuManage {
 		helpBtn.setType("media_id");
 		helpBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2XQIqtnHGvTiIVNZaXCIVOA");
 
-//		WxButton kdBtn = new WxButton();
-//		kdBtn.setName("快递查询");
-//		kdBtn.setType("view");
-//		kdBtn.setUrl("http://www.kuaidi100.com/");
-
 		WxButton contactBtn = new WxButton();
 		contactBtn.setName("关于我们");
 		contactBtn.setType("media_id");
@@ -63,7 +58,6 @@ public class MenuManage {
 		// xdBtnList.add(mcBtn);
 		xdBtnList.add(helpBtn);
 		xdBtnList.add(contactBtn);
-//		xdBtnList.add(kdBtn);
 		xdBtnList.add(dpRecommendBtn);
 		xdBtnList.add(dpBtn);
 		xdBtn.setSub_button(xdBtnList);
@@ -92,45 +86,38 @@ public class MenuManage {
 		WxButton randomBtn = new WxButton();
 		randomBtn.setName("随机推荐");
 		randomBtn.setType("click");
-		randomBtn.setKey("3");
+		randomBtn.setKey(TextProcess.CODE_RANDOM_CONTNET);
 
 		WxButton historyBtn = new WxButton();
 		historyBtn.setName("往期精彩");
 		historyBtn.setType("view");
 		historyBtn.setUrl(
-				"http://mp.weixin.qq.com/mp/getmasssendmsg?__biz=MzAwMjk0MDYxNA==#wechat_webview_type=1&wechat_redirect");
+				"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwMjk0MDYxNA==&scene=124#wechat_redirect");
+		
+		WxButton qrCodeBtn = new WxButton();
+		qrCodeBtn.setName("杂谈微信群");
+		qrCodeBtn.setType("click");
+		qrCodeBtn.setKey(TextProcess.CODE_GROUP_QR_CODE);
 
 		ArrayList<WxButton> liftBtnList = new ArrayList<WxButton>();
 		liftBtnList.add(cpBtn);
 		liftBtnList.add(historyBtn);
 		liftBtnList.add(randomBtn);
 		liftBtnList.add(bqBtn);
+//		liftBtnList.add(qrCodeBtn);
 		liftBtn.setSub_button(liftBtnList);
 
 		WxButton recommendBtn = new WxButton();
 		recommendBtn.setName("推荐有礼");
 		recommendBtn.setType("click");
-		recommendBtn.setKey("4");
-
-		/**
-		 * 服务
-		 */
-		// WxButton serviceBtn = new WxButton();
-		// serviceBtn.setName("服务");
-		//
-		// ArrayList<WxButton> serviceBtnList = new ArrayList<WxButton>();
-		// serviceBtnList.add(helpBtn);
-		// serviceBtnList.add(kdBtn);
-		// serviceBtnList.add(contactBtn);
-		// serviceBtnList.add(recommendBtn);
-		// serviceBtn.setSub_button(serviceBtnList);
+		recommendBtn.setKey(TextProcess.CODE_RECOMMEND);
 
 		/**
 		 * 菜单添加
 		 */
 		buttons.add(liftBtn);
 		buttons.add(xdBtn);
-		buttons.add(recommendBtn);
+//		buttons.add(recommendBtn);
 		JSONObject param = new JSONObject();
 		param.put("button", buttons);
 		String response = HttpClientHelper.post(createUrl, param);
