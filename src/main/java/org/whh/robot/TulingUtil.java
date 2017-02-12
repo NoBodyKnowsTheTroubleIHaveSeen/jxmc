@@ -24,7 +24,6 @@ public class TulingUtil {
 			Integer status, boolean isKfOnlie) {
 		Document responseDocument = null;
 		String text = "";
-		isFirst = true;
 		if (isFirst) {
 			text = "回复\"114\"可转到客服哦,有空就陪我聊会天呗,我可是天下最聪明的机器人萝卜特007";
 			responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, text);
