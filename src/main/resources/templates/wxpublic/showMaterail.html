@@ -11,8 +11,12 @@
 		<a class="ajaxTableLoad fright" style="margin-top: 10px">刷新 <img
 			src="images/ic_refresh_grey600_24dp.png" />
 		</a>
-		<div class="queryDiv fright" style="width: 330px">
-			<form action="/syncMaterial" class="messageForm">
+		<div class="queryDiv fright" style="width: 640px">
+			<form enctype="multipart/form-data" action="/uploadGroupQrcode"
+				class="uploadFile" style="display: inline">
+					群二维码图片：<input type="file" name="file" id="file" style="display:inline;width:200px" />
+			</form>
+			<form action="/syncMaterial" class="messageForm" style="display: inline">
 				<a class="messageLoad" data-url="/updateMenu"
 					href="javascript:void(0);"><span>更新菜单&nbsp;&nbsp;</span></a> <input
 					name="size" value="1" placeholder="输入要同步的素材数" />
@@ -20,16 +24,12 @@
 			</form>
 		</div>
 		<div class="queryDiv fright">
-			<form enctype="multipart/form-data" action="/uploadGroupQrcode"
-				class="uploadFile">
-				<p>
-					群二维码图片：<input type="file" name="file" id="file" />
-				</p>
-			</form>
+			
 		</div>
 	</div>
 	<div class="clear"></div>
 	<div class="borderDiv"></div>
+	<div id="groupQrcodeDiv" style="text-align:center"></div>
 	<form action="getMaterail" class="ajaxTable">
 		<div class="clear"></div>
 		<div></div>

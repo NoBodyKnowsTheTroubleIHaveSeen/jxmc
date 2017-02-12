@@ -127,7 +127,7 @@ $(function() {
 				    ctx=canvas.getContext('2d');
 
 				    ctx.drawImage(image,x,y,width,height,0,0,width,height);
-				    $(document.body).append(canvas)
+				    $("#groupQrcodeDiv").append(canvas)
 					
 					var data=canvas.toDataURL();
 
@@ -145,23 +145,23 @@ $(function() {
 
 					formData.append('file',blob,filaName);
 					
-					$.ajax({
-						url : '/uploadGroupQrcode',
-						type : 'POST',
-						data : formData,
-						async : false,
-						cache : false,
-						contentType : false,
-						processData : false,
-						success : function(data) {
-							var data = $.parseJSON(data);
-							alert(data.message);
-						},
-						error : function(returndata) {
-							alert(returndata);
-						}
-					});
-					$(".uploadFile")[0].reset();
+//					$.ajax({
+//						url : '/uploadGroupQrcode',
+//						type : 'POST',
+//						data : formData,
+//						async : false,
+//						cache : false,
+//						contentType : false,
+//						processData : false,
+//						success : function(data) {
+//							var data = $.parseJSON(data);
+//							alert(data.message);
+//						},
+//						error : function(returndata) {
+//							alert(returndata);
+//						}
+//					});
+//					$(".uploadFile")[0].reset();
 			        
 			    };
 			    reader.readAsDataURL(file);
