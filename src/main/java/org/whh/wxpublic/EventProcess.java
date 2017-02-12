@@ -137,6 +137,11 @@ public class EventProcess implements MsgProcess {
 		ConfigInfo info = configInfoDao.findOne(1L);
 		if(info != null && info.getGroupQrCodeMaterailId() != null)
 		{
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			messageSendService.sendImage(origionalUserName, info.getGroupQrCodeMaterailId());
 		}
 		return responseDocument.asXML();
