@@ -8,7 +8,7 @@
 		<div class="fleft titleImage">
 			<img src="images/iconfont-chaxun.png" />微信公众号素材
 		</div>
-		<a class="ajaxTableLoad fright" style="margin-top:10px">刷新 <img
+		<a class="ajaxTableLoad fright" style="margin-top: 10px">刷新 <img
 			src="images/ic_refresh_grey600_24dp.png" />
 		</a>
 		<div class="queryDiv fright" style="width: 330px">
@@ -16,7 +16,13 @@
 				<a class="messageLoad" data-url="/updateMenu"
 					href="javascript:void(0);"><span>更新菜单&nbsp;&nbsp;</span></a> <input
 					name="size" value="1" placeholder="输入要同步的素材数" />
-				<button class="resubmitForm">同步素材</button>
+				<button>同步素材</button>
+			</form>
+		</div>
+		<div class="queryDiv fright" style="width: 330px">
+			<form action="/updateGroupQrCodeMaterailId" class="messageForm">
+				<input name="id" placeholder="输入群二维码素材id" th:value="${groupQrCodeMaterailId}"/>
+				<button>设置群二维码素材id</button>
 			</form>
 		</div>
 	</div>
