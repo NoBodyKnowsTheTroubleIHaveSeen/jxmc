@@ -121,8 +121,8 @@ $(function() {
 			        
 			        var width = 500;
 				    var height=500;
-				    var x = 296;
-				    var y = 280;
+				    var x = 293;
+				    var y = 285;
 				    var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
 				    ctx=canvas.getContext('2d');
 

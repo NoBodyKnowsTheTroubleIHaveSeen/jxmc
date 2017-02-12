@@ -132,7 +132,7 @@ public class EventProcess implements MsgProcess {
 			}
 		}
 		publicUserDao.save(user);
-		String welcomeMsg = "   没有你的日子,总感觉生活少了点什么， 终于可算把你盼来了。\r\n\r\n   回复\"?\"可获取更多帮助，回复\"114\"可找客服,^_^\r\n\r\n   您还可以和我们聪明的公众号机器人聊天哦，最好不要调戏他哦。\r\n\r\n赶快扫描下方二维码加入我们的社群吧，小伙伴们都在等你呢。";
+		String welcomeMsg = "   没有你的日子,总感觉生活少了点什么， 终于可算把你盼来了。\r\n\r\n   回复\"?\"可获取更多帮助，回复\"114\"可找客服,^_^\r\n\r\n   您还可以和我们聪明的公众号机器人聊天哦，最好不要调戏他哦。\r\n\r\n赶快扫描下方二维码加入我们的群吧，小伙伴们都在等你呢。";
 		Document responseDocument = WxXMLHelper.createTextDocument(origionalUserName, toUserName, welcomeMsg);
 		ConfigInfo info = configInfoDao.findOne(1L);
 		if(info != null && info.getGroupQrCodeMaterailId() != null)
