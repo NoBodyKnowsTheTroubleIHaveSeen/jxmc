@@ -119,10 +119,10 @@ $(function() {
 			        var url=reader.result;
 			        setImageURL(url);
 			        
-			        var width = 460;
-				    var height=460;
-				    var x = 300;
-				    var y = 300;
+			        var width = 500;
+				    var height=500;
+				    var x = 296;
+				    var y = 280;
 				    var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
 				    ctx=canvas.getContext('2d');
 
@@ -144,24 +144,24 @@ $(function() {
 					var formData=new FormData();
 
 					formData.append('file',blob,filaName);
-					
-					$.ajax({
-						url : '/uploadGroupQrcode',
-						type : 'POST',
-						data : formData,
-						async : false,
-						cache : false,
-						contentType : false,
-						processData : false,
-						success : function(data) {
-							var data = $.parseJSON(data);
-							alert(data.message);
-						},
-						error : function(returndata) {
-							alert(returndata);
-						}
-					});
-					$(".uploadFile")[0].reset();
+//					
+//					$.ajax({
+//						url : '/uploadGroupQrcode',
+//						type : 'POST',
+//						data : formData,
+//						async : false,
+//						cache : false,
+//						contentType : false,
+//						processData : false,
+//						success : function(data) {
+//							var data = $.parseJSON(data);
+//							alert(data.message);
+//						},
+//						error : function(returndata) {
+//							alert(returndata);
+//						}
+//					});
+//					$(".uploadFile")[0].reset();
 			        
 			    };
 			    reader.readAsDataURL(file);
