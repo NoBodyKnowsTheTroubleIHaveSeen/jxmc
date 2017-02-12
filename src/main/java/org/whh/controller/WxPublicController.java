@@ -9,12 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.whh.base.ControllerBase;
+import org.whh.dao.ConfigInfoDao;
 import org.whh.dao.MaterialDao;
 import org.whh.dao.WxKeywordMapDao;
 import org.whh.dao.WxPublicUserDao;
+import org.whh.entity.ConfigInfo;
 import org.whh.entity.Material;
 import org.whh.entity.QrCodeInfo;
 import org.whh.entity.WxKeywordMap;
@@ -69,6 +72,9 @@ public class WxPublicController extends ControllerBase {
 
 	@Autowired
 	QrcodeInfoService qrcodeInfoService;
+	
+	@Autowired
+	ConfigInfoDao configInfoDao;
 
 	@RequestMapping("/common/gzhSend")
 	public String gzhSend() {
@@ -110,7 +116,13 @@ public class WxPublicController extends ControllerBase {
 	}
 
 	@RequestMapping("/showMaterail")
-	public String showMaterail() {
+	public String showMaterail(Model model) {
+		ConfigInfo info = configInfoDao.findOne(1L);
+		if(info != null && info.getGroupQrCodeMaterailId() != null)
+		{
+			String groupQrCodeMaterailId = info.getGroupQrCodeMaterailId();
+			model.addAttribute("groupQrCodeMaterailId",groupQrCodeMaterailId);
+		}
 		return "wxpublic/showMaterail";
 	}
 
@@ -287,5 +299,21 @@ public class WxPublicController extends ControllerBase {
 	public String getMaterialContent(Long id) {
 		Material material = materialDao.findOne(id);
 		return material.getContent();
+	}
+	@RequestMapping("/updateGroupQrCodeMaterailId")
+	@ResponseBody
+	public CommonMessage updateGroupQrCodeMaterailId(String id)
+	{
+		ConfigInfo info = configInfoDao.findOne(1L);
+		if( info == null)
+		{
+			info = new ConfigInfo();
+			info.setId(1L);
+		}
+		info.setGroupQrCodeMaterailId(id);
+		configInfoDao.save(info);
+		CommonMessage message = new CommonMessage();
+		message.setMessage("更新群二维码素材id成功");
+		return message;
 	}
 }

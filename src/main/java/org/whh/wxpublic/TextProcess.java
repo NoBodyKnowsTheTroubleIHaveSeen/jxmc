@@ -136,7 +136,7 @@ public class TextProcess implements MsgProcess {
 			object.setValue(originUser);
 			QrCodeInfo info = qrcodeInfoService.createAndGetQrCodeInfo(object);
 			responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, "分享给小伙伴,推荐有礼啦",
-					"      分享完成即可获得茶具一套，或铁观音密茶一盒!",
+					"   分享完成即可获得茶具一套或铁观音密茶一盒!",
 					"https://mmbiz.qlogo.cn/mmbiz_jpg/S3RO59TkTwg8ra3Xj4ITk1Ixymibia1HgEIicMFRArfwYic38QCR8MXVU20M1rWI2WiaWSe0JgQCU5QYpHugNY5R3Zg/0?wx_fmt=jpeg",
 					"http://whhwkm.xicp.net:88/common/getRecommendCode?ticket=" + info.getTicket());
 			break;

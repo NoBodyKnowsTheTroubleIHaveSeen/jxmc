@@ -6,8 +6,10 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.whh.dao.ConfigInfoDao;
 import org.whh.dao.MaterialDao;
 import org.whh.dao.WxPublicUserDao;
+import org.whh.entity.ConfigInfo;
 import org.whh.entity.Material;
 import org.whh.entity.WxPublicUser;
 import org.whh.util.NullUtil;
@@ -28,6 +30,9 @@ public class EventProcess implements MsgProcess {
 	@Autowired
 	MaterialDao materialDao;
 
+	@Autowired
+	ConfigInfoDao configInfoDao;
+	
 	@Override
 	public String process(String toUserName, String originalUserName, String createTime, Document document) {
 		Element root = document.getRootElement();
@@ -127,8 +132,13 @@ public class EventProcess implements MsgProcess {
 			}
 		}
 		publicUserDao.save(user);
-		String welcomeMsg = "没有你的日子,总感觉生活少了点什么， 终于还是把你盼来了。\r\n\r\n\r\n\r\n^_^,回复以下内容是不会有反应的,不信你试试：\r\n\r\n1.进入小店\r\n\r\n2.精彩内容\r\n\r\n3.随机推荐\r\n\r\n4.推荐好友赢好礼啦\r\n\r\n114.客服?\r\n\r\n可以和我们聪明的公众号机器人聊天哦，但请不要调戏他，你看着办喽";
+		String welcomeMsg = "   没有你的日子,总感觉生活少了点什么， 终于可算把你盼来了。\r\n\r\n   回复\"?\"可获取更多帮助，回复\"114\"可找客服,^_^\r\n\r\n   您还可以和我们聪明的公众号机器人聊天哦，最好不要调戏他哦。\r\n\r\n赶快扫描下方二维码加入我们的社群吧，小伙伴们都在等你呢。";
 		Document responseDocument = WxXMLHelper.createTextDocument(origionalUserName, toUserName, welcomeMsg);
+		ConfigInfo info = configInfoDao.findOne(1L);
+		if(info != null && info.getGroupQrCodeMaterailId() != null)
+		{
+			messageSendService.sendImage(origionalUserName, info.getGroupQrCodeMaterailId());
+		}
 		return responseDocument.asXML();
 	}
 
