@@ -119,10 +119,10 @@ $(function() {
 			        var url=reader.result;
 			        setImageURL(url);
 			        
-			        var width = 440;
-				    var height=440;
-				    var x = 320;
-				    var y = 320;
+			        var width = 460;
+				    var height=460;
+				    var x = 300;
+				    var y = 300;
 				    var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
 				    ctx=canvas.getContext('2d');
 
