@@ -33,6 +33,9 @@ public class EventProcess implements MsgProcess {
 	@Autowired
 	ConfigInfoDao configInfoDao;
 	
+	@Autowired
+	UserManage userManage;
+	
 	@Override
 	public String process(String toUserName, String originalUserName, String createTime, Document document) {
 		Element root = document.getRootElement();
@@ -132,7 +135,14 @@ public class EventProcess implements MsgProcess {
 			}
 		}
 		publicUserDao.save(user);
-		String welcomeMsg = "   没有你的日子,总感觉生活少了点什么， 终于可算把你盼来了。\r\n\r\n   回复\"?\"可获取更多帮助，回复\"114\"可找客服,^_^\r\n\r\n   您还可以和我们聪明的公众号机器人聊天哦，最好不要调戏他哦。\r\n\r\n赶快扫描下方二维码加入我们的群吧，小伙伴们都在等你呢。";
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				WxPublicUser userDettail = userManage.getUserDetail(origionalUserName);
+				publicUserDao.save(userDettail);
+			}
+		}).start();
+		String welcomeMsg = "   没有你的日子,总感觉生活少了点什么,终于,可算把你盼来了。\r\n\r\n   回复\"?\"可获取更多帮助,回复\"114\"找客服。^_^,现在可以和我们聪明的公众号机器人聊天啦,最好不要调戏他哦。\r\n\r\n    还有赶快扫描下方二维码加入我们的群吧,小伙伴们都在等你呢。";
 		Document responseDocument = WxXMLHelper.createTextDocument(origionalUserName, toUserName, welcomeMsg);
 		ConfigInfo info = configInfoDao.findOne(1L);
 		if(info != null && info.getGroupQrCodeMaterailId() != null)
@@ -157,7 +167,7 @@ public class EventProcess implements MsgProcess {
 		WxPublicUser user = publicUserDao.getByOpenId(origionalUserName);
 		if (user != null) {
 			user.setUpdateTime(new Date());
-			user.setSubscribe(true);
+			user.setSubscribe(false);
 			publicUserDao.save(user);
 		}
 		return "";

@@ -25,6 +25,7 @@ public class UserManage {
 		int userCountGeted = 0;
 		int total = 1;
 		String nextOpenId = null;
+		wxPublicUserDao.setWxPublicUserUnsubscribe();
 		while (userCountGeted < total) {
 			JSONObject param = WxPublicUtil.getPublicParam();
 			if (nextOpenId != null){
@@ -48,39 +49,50 @@ public class UserManage {
 				{
 					user.setUpdateTime(new Date());
 				}
-				JSONObject userDetailParam = new JSONObject();
-				String userDetail = HttpClientHelper.post("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+WxPublicUtil.getAccessToken()+"&openid="+id, userDetailParam);
-				JSONObject detail = JSONObject.parseObject(userDetail);
-				user.setNickname(detail.getString("nickname"));
-				Integer sex = detail.getInteger("sex");
-				if (sex == 1 ) {
-					user.setSex("男");
-				}else if(sex == 2)
-				{
-					user.setSex("女");
-				}
-				user.setCity(detail.getString("city"));
-				user.setCountry(detail.getString("country"));
-				user.setProvince(detail.getString("province"));
-				user.setHeadImgUrl(detail.getString("headimgurl"));
-				user.setSubscribeTime(new Date(detail.getLong("subscribe_time")));
-				user.setUnionId(detail.getString("unionid"));
-				user.setRemark(detail.getString("remark"));
-				user.setGroupId(detail.getString("groupid"));
-				user.setTagIdList(detail.getString("tagid_list"));
-				Integer subscribe = detail.getInteger("subscribe");
-				if(subscribe == 0)
-				{
-					user.setSubscribe(false);
-				}else{
-					user.setSubscribe(true);
-				}
+				user = getUserDetail(user);
 				wxPublicUserDao.save(user);
 			}
 			nextOpenId = object.getString("next_openid");
 			System.out.println("total :" + total + ",count:" + count + ",nextOpenId:" + nextOpenId);
 		}
 		return null;
+	}
+	public WxPublicUser getUserDetail(String openId)
+	{
+		WxPublicUser user = wxPublicUserDao.getByOpenId(openId);
+		return getUserDetail(user);
+	}
+	
+	public WxPublicUser getUserDetail(WxPublicUser user)
+	{
+		JSONObject userDetailParam = new JSONObject();
+		String userDetail = HttpClientHelper.post("https://api.weixin.qq.com/cgi-bin/user/info?access_token="+WxPublicUtil.getAccessToken()+"&openid="+user.getOpenId(), userDetailParam);
+		JSONObject detail = JSONObject.parseObject(userDetail);
+		user.setNickname(detail.getString("nickname"));
+		Integer sex = detail.getInteger("sex");
+		if (sex == 1 ) {
+			user.setSex("男");
+		}else if(sex == 2)
+		{
+			user.setSex("女");
+		}
+		user.setCity(detail.getString("city"));
+		user.setCountry(detail.getString("country"));
+		user.setProvince(detail.getString("province"));
+		user.setHeadImgUrl(detail.getString("headimgurl"));
+		user.setSubscribeTime(new Date(detail.getLong("subscribe_time")));
+		user.setUnionId(detail.getString("unionid"));
+		user.setRemark(detail.getString("remark"));
+		user.setGroupId(detail.getString("groupid"));
+		user.setTagIdList(detail.getString("tagid_list"));
+		Integer subscribe = detail.getInteger("subscribe");
+		if(subscribe == 0)
+		{
+			user.setSubscribe(false);
+		}else{
+			user.setSubscribe(true);
+		}
+		return user;
 	}
 }
 
