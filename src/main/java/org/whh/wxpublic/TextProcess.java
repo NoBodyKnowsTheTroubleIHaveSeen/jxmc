@@ -187,7 +187,7 @@ public class TextProcess implements MsgProcess {
 				message.setDescription("根据输入码获取内容：" + content);
 				responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, codeMaterail.getTitle(),
 						codeMaterail.getDigest(), codeMaterail.getThumb_url(), codeMaterail.getUrl());
-				Integer action = codeMaterail.getAction();
+				/*Integer action = codeMaterail.getAction();
 				if (action != null && action == Material.ACTION_PUSH_RECOMMEND) {
 					try {
 						SceneObject object = new SceneObject();
@@ -201,7 +201,7 @@ public class TextProcess implements MsgProcess {
 					} catch (Exception ex) {
 						ex.printStackTrace();
 					}
-				}
+				}*/
 			}
 		}
 		if (responseDocument == null) {

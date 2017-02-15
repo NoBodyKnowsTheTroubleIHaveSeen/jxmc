@@ -90,6 +90,7 @@ $(function() {
 				var inputCode = $(this).data("inputCode");
 				var action = $(this).data("action");
 				var keywords = $(this).data("keywords");
+				var type = $(this).data("type");
 				var param = {
 					id : id,
 					menuTitle : menuTitle,
@@ -98,8 +99,8 @@ $(function() {
 					keywords : keywords
 				};
 				generateSetForm("setKeywordForm", "/setKeyword", "配置", param, [
-						"作为菜单时的标题", "回复码", "回复关键词", "动作编号" ], [ "menuTitle",
-						"inputCode", "keywords", "action" ], function() {
+						"作为菜单时的标题", "回复码", "回复关键词", "动作编号","类型" ], [ "menuTitle",
+						"inputCode", "keywords", "action","type" ], function() {
 					$(".ajaxTable").submit();
 				});
 			})

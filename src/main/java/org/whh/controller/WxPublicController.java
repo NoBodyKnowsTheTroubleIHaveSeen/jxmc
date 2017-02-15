@@ -190,12 +190,13 @@ public class WxPublicController extends ControllerBase {
 
 	@RequestMapping("/setKeyword")
 	@ResponseBody
-	public CommonMessage setKeyword(Long id, String menuTitle, String keywords, String inputCode, Integer action) {
+	public CommonMessage setKeyword(Long id, String menuTitle, String keywords, String inputCode, Integer action,Integer type) {
 		Material material = materialDao.findOne(id);
 		material.setMenuTitle(menuTitle);
 		material.setInputCode(inputCode);
 		material.setAction(action);
 		material.setKeywords(keywords);
+		material.setType(type);
 		materialDao.save(material);
 		if (material.getMaterialStatus() != null
 				&& material.getMaterialStatus() == Material.MATERIAL_STATUS_CURRENT_MATERIAL) {

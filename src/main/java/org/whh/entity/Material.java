@@ -42,7 +42,7 @@ public class Material extends EntityBase {
 	private String name;
 	private String thumb_url;
 
-	private Boolean isUsed;// 是否已使用
+	private Boolean isUsed;// 是否已使用/发布
 
 	private int offset;// 素材的偏移量
 

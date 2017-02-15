@@ -14,11 +14,11 @@ public interface MaterialDao extends PagingAndSortingRepository<Material, Long> 
 	@Query("select max(offset) from Material")
 	int getMaxOffset();
 	
-	List<Material> findByType(Integer type);
+	List<Material> findByTypeAndIsUsed(Integer type,Boolean isUsed);
 	
 	List<Material> findByMaterialStatus(Integer materialStatus);
 	
-	@Query("from Material m where m.isUsed = 1 and type != 4")
+	@Query("from Material m where m.isUsed = 1 and type != 4 and type != 5")
 	List<Material> findAllUsed();
 	
 	
