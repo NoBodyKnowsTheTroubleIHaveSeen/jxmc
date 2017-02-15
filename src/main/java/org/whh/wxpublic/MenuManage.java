@@ -50,7 +50,7 @@ public class MenuManage {
 		helpBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2XQIqtnHGvTiIVNZaXCIVOA");
 
 		WxButton contactBtn = new WxButton();
-		contactBtn.setName("关于我们");
+		contactBtn.setName("联系我们");
 		contactBtn.setType("media_id");
 		contactBtn.setMedia_id("90hC4K9jq_d_P3Ywgl9I2YZeXnEtJEHM7dn_HWGD3_o");
 
