@@ -32,6 +32,11 @@ public class TulingUtil {
 			text = "额额，汗啊!客服们一搬完砖就回去睡觉了。就由聪明伶俐的我来陪你聊聊天好了。^_^";
 			responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, text);
 			return responseDocument;
+		}else if(status == WxSubscriberCall.STATUS_KF && isKfOnlie)
+		{
+			text = "正在接入客服，请等待...";
+			responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, text);
+			return responseDocument;
 		}
 		JSONObject result = getResponse(originUser, query);
 		logger.info(query + "请求图灵接口返回：" + result);

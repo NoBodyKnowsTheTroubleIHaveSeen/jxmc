@@ -238,6 +238,7 @@ public class TextProcess implements MsgProcess {
 			}
 			if (content.equals("114")) {
 				call.setStatus(WxSubscriberCall.STATUS_KF);
+				isFirst = false;
 			} else {
 				call.setStatus(WxSubscriberCall.STATUS_JQR);
 			}
