@@ -28,6 +28,25 @@ $(function() {
 			if (data.action) {
 				result = result + "动作编号:" + data.action + "<br>";
 			}
+			if (data.type) {
+				switch (data.type) {
+				case 1:
+					result = result + "类型:笑话<br>";
+					break;
+				case 2:
+					result = result + "类型:文章<br>";
+					break;
+				case 3:
+					result = result + "类型:茶叶相关<br>";
+					break;
+				case 4:
+					result = result + "类型:其他<br>";
+					break;
+				case 5:
+					result = result + "类型:本网站url素材<br>";
+					break;
+				}
+			}
 			return result;
 		},
 		operate : function(data) {
@@ -61,6 +80,9 @@ $(function() {
 			}
 			if (data.menuTitle) {
 				result = result + "data-menu-title='" + data.menuTitle + "' ";
+			}
+			if (data.type) {
+				result = result + "data-type='" + data.type + "' ";
 			}
 			result = result + ">设置</a>";
 			return result;
@@ -96,56 +118,64 @@ $(function() {
 					menuTitle : menuTitle,
 					inputCode : inputCode,
 					action : action,
-					keywords : keywords
+					keywords : keywords,
+					type : type
 				};
 				generateSetForm("setKeywordForm", "/setKeyword", "配置", param, [
-						"作为菜单时的标题", "回复码", "回复关键词", "动作编号","类型" ], [ "menuTitle",
-						"inputCode", "keywords", "action","type" ], function() {
-					$(".ajaxTable").submit();
-				});
+						"作为菜单时的标题", "回复码", "回复关键词", "动作编号", "类型" ],
+						[ "menuTitle", "inputCode", "keywords", "action",
+								"type" ], function() {
+							$(".ajaxTable").submit();
+						});
 			})
-			var image=new Image();
-	function setImageURL(url){
-	    image.src=url;
+	var image = new Image();
+	function setImageURL(url) {
+		image.src = url;
 	}
 	$("#file").on(
 			"change",
 			function() {
-			   var file=this.files[0];
-			   var filePath = $(this).val().split("\\");
-			   var filaName = filePath[filePath.length - 1];
-			   var reader=new FileReader();
-			    reader.onload=function(){
-			        // 通过 reader.result 来访问生成的 DataURL
-			        var url=reader.result;
-			        setImageURL(url);
-			        
-			        var width = 500;
-				    var height=500;
-				    var x = 293;
-				    var y = 285;
-				    var canvas=$('<canvas width="'+width+'" height="'+height+'"></canvas>')[0],
-				    ctx=canvas.getContext('2d');
+				var file = this.files[0];
+				var filePath = $(this).val().split("\\");
+				var filaName = filePath[filePath.length - 1];
+				var reader = new FileReader();
+				reader.onload = function() {
+					// 通过 reader.result 来访问生成的 DataURL
+					var url = reader.result;
+					setImageURL(url);
 
-				    ctx.drawImage(image,x,y,width,height,0,0,width,height);
-				    $("#groupQrcodeDiv").append(canvas)
-					
-					var data=canvas.toDataURL();
+					var width = 500;
+					var height = 500;
+					var x = 293;
+					var y = 285;
+					var canvas = $('<canvas width="' + width + '" height="'
+							+ height + '"></canvas>')[0], ctx = canvas
+							.getContext('2d');
 
-					// dataURL 的格式为 “data:image/png;base64,****”,逗号之前都是一些说明性的文字，我们只需要逗号之后的就行了
-					data=data.split(',')[1];
-					data=window.atob(data);
+					ctx.drawImage(image, x, y, width, height, 0, 0, width,
+							height);
+					$("#groupQrcodeDiv").append(canvas)
+
+					var data = canvas.toDataURL();
+
+					// dataURL 的格式为
+					// “data:image/png;base64,****”,逗号之前都是一些说明性的文字，我们只需要逗号之后的就行了
+					data = data.split(',')[1];
+					data = window.atob(data);
 					var ia = new Uint8Array(data.length);
 					for (var i = 0; i < data.length; i++) {
-					    ia[i] = data.charCodeAt(i);
-					};
-					
-					// canvas.toDataURL 返回的默认格式就是 image/png
-					var blob=new Blob([ia], {type:"image/png"});
-					var formData=new FormData();
+						ia[i] = data.charCodeAt(i);
+					}
+					;
 
-					formData.append('file',blob,filaName);
-					
+					// canvas.toDataURL 返回的默认格式就是 image/png
+					var blob = new Blob([ ia ], {
+						type : "image/png"
+					});
+					var formData = new FormData();
+
+					formData.append('file', blob, filaName);
+
 					$.ajax({
 						url : '/uploadGroupQrcode',
 						type : 'POST',
@@ -162,9 +192,9 @@ $(function() {
 						}
 					});
 					$(".uploadFile")[0].reset();
-			        
-			    };
-			    reader.readAsDataURL(file);
-			  
+
+				};
+				reader.readAsDataURL(file);
+
 			})
 })
