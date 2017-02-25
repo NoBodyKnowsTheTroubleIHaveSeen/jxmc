@@ -39,9 +39,7 @@ $(function() {
 		var url = "/common/getArtical?ticket="+ ticket;
 		$(".preChapter").css("display", "none");
 		$(".nextChapter").attr("href", url);
-		$(".firstChpater").attr("href",
-				"/common/artical?isSubscriber=true&chapter=" + 1 + "&title=" + title+ "&ticket="
-				+ ticket);
+		$(".firstChpater").attr("href",url);
 		$(".lastChapter").attr("href", url);
 		for (var i = 1; i <= chapterSize; i++) {
 			var chapterText = getByNum(i);
