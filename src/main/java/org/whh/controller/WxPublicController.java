@@ -212,7 +212,7 @@ public class WxPublicController extends ControllerBase {
 				map.setMeidaId(material.getMediaId());
 				map.setMsgType(MessageSendService.MSG_TYPE_NEWS);
 				map.setTitle(material.getTitle());
-				map.setDescription(material.getTitle());
+				map.setDescription(material.getDigest());
 				map.setPicUrl(material.getThumb_url());
 				map.setUrl(material.getUrl());
 				map.setKeyword(word);

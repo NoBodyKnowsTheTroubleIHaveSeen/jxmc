@@ -49,11 +49,11 @@ public class TextProcess implements MsgProcess {
 	/**
 	 * 进入首页
 	 */
-	 static final String CODE_INTO_INDEX = "1";
+	static final String CODE_INTO_INDEX = "1";
 	/**
 	 * 本期内容
 	 */
-	 static final String CODE_NOW_CONTENT = "2";
+	static final String CODE_NOW_CONTENT = "2";
 	/**
 	 * 随机文章
 	 */
@@ -61,23 +61,23 @@ public class TextProcess implements MsgProcess {
 	/**
 	 * 推荐
 	 */
-	 static final String CODE_RECOMMEND = "4";
+	static final String CODE_RECOMMEND = "4";
 	/**
 	 * 随机笑话
 	 */
-	 static final String CODE_RANDOM_JOKE = "6";
+	static final String CODE_RANDOM_JOKE = "6";
 
-	 static final String CODE_NOW_JOKE = "5";
-	 
-	 static final String CODE_HISTORY = "7";
-	 
-	 static final String CODE_GROUP_QR_CODE = "11";
+	static final String CODE_NOW_JOKE = "5";
+
+	static final String CODE_HISTORY = "7";
+
+	static final String CODE_GROUP_QR_CODE = "11";
 
 	/**
 	 * 帮助
 	 */
-	 static final String CODE_HELP = "?";
-	 static final String CODE_HELP_CN = "？";
+	static final String CODE_HELP = "?";
+	static final String CODE_HELP_CN = "？";
 
 	private Document getRandomMaterial(List<Material> materials, String fromUserName, String toUserName) {
 		Document responseDocument = null;
@@ -126,7 +126,7 @@ public class TextProcess implements MsgProcess {
 			break;
 		case CODE_RANDOM_JOKE:
 			message.setDescription("输入代码：" + CODE_RANDOM_JOKE);
-			List<Material> jokes = materialDao.findByTypeAndIsUsed(Material.TYPE_JOKE,true);
+			List<Material> jokes = materialDao.findByTypeAndIsUsed(Material.TYPE_JOKE, true);
 			responseDocument = getRandomMaterial(jokes, originUser, toUserName);
 			break;
 		case CODE_NOW_JOKE:
@@ -159,8 +159,7 @@ public class TextProcess implements MsgProcess {
 		case CODE_GROUP_QR_CODE:
 			message.setDescription("输入代码：" + CODE_GROUP_QR_CODE);
 			ConfigInfo configInfo = configInfoDao.findOne(1L);
-			if(configInfo != null && configInfo.getGroupQrCodeMaterailId() != null)
-			{
+			if (configInfo != null && configInfo.getGroupQrCodeMaterailId() != null) {
 				String msg = "加入微信群与小伙伴们谈谈国事家事天下事，扫描二维码即可进入哦";
 				responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, msg);
 				try {
@@ -173,7 +172,8 @@ public class TextProcess implements MsgProcess {
 			break;
 		case CODE_HISTORY:
 			responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, "往期精彩", "公众号发布的历史精彩内容",
-					"https://mmbiz.qlogo.cn/mmbiz_png/S3RO59TkTwgqkD0lndBdfzAUN1VbxQU4fxJopa1QDPznIhN8hX8UW0ZJSEGbic2MtJncZLkZFqJcQfiby9f96jibA/0?wx_fmt=png", "https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwMjk0MDYxNA==&scene=124#wechat_redirect");
+					"https://mmbiz.qlogo.cn/mmbiz_png/S3RO59TkTwgqkD0lndBdfzAUN1VbxQU4fxJopa1QDPznIhN8hX8UW0ZJSEGbic2MtJncZLkZFqJcQfiby9f96jibA/0?wx_fmt=png",
+					"https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzAwMjk0MDYxNA==&scene=124#wechat_redirect");
 			break;
 		default:
 			break;
@@ -185,23 +185,25 @@ public class TextProcess implements MsgProcess {
 			Material codeMaterail = materialDao.findByInputCode(content);
 			if (codeMaterail != null) {
 				message.setDescription("根据输入码获取内容：" + content);
+				if (codeMaterail.getType() == Material.TYPE_LOCAL_URL) {
+					codeMaterail.setUrl(codeMaterail.getUrl() + "&isSubscriber=true");
+				}
 				responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, codeMaterail.getTitle(),
 						codeMaterail.getDigest(), codeMaterail.getThumb_url(), codeMaterail.getUrl());
-				/*Integer action = codeMaterail.getAction();
-				if (action != null && action == Material.ACTION_PUSH_RECOMMEND) {
-					try {
-						SceneObject object = new SceneObject();
-						object.setType(SceneObject.TYPE_RECOMMEND);
-						object.setValue(originUser);
-						QrCodeInfo info = qrcodeInfoService.createAndGetQrCodeInfo(object);
-						messageSend.sendNews(originUser, "分享给小伙伴,推荐有礼啦",
-								"    扫描图文内的二维码或发送二维码,分享给20个好友关注本公众号就能领取奖品啦。\r\n\r\n    完成分享并关注就能获得茶具一套，数量有限，抓紧时间啦！\r\n\r\n   分享后就会感觉自己萌萌哒,不信你试试。",
-								"http://whhwkm.xicp.net/common/getRecommendCode?ticket=" + info.getTicket(),
-								"https://mmbiz.qlogo.cn/mmbiz_jpg/S3RO59TkTwg8ra3Xj4ITk1Ixymibia1HgEIicMFRArfwYic38QCR8MXVU20M1rWI2WiaWSe0JgQCU5QYpHugNY5R3Zg/0?wx_fmt=jpeg");
-					} catch (Exception ex) {
-						ex.printStackTrace();
-					}
-				}*/
+				/*
+				 * Integer action = codeMaterail.getAction(); if (action != null
+				 * && action == Material.ACTION_PUSH_RECOMMEND) { try {
+				 * SceneObject object = new SceneObject();
+				 * object.setType(SceneObject.TYPE_RECOMMEND);
+				 * object.setValue(originUser); QrCodeInfo info =
+				 * qrcodeInfoService.createAndGetQrCodeInfo(object);
+				 * messageSend.sendNews(originUser, "分享给小伙伴,推荐有礼啦",
+				 * "    扫描图文内的二维码或发送二维码,分享给20个好友关注本公众号就能领取奖品啦。\r\n\r\n    完成分享并关注就能获得茶具一套，数量有限，抓紧时间啦！\r\n\r\n   分享后就会感觉自己萌萌哒,不信你试试。"
+				 * , "http://whhwkm.xicp.net/common/getRecommendCode?ticket=" +
+				 * info.getTicket(),
+				 * "https://mmbiz.qlogo.cn/mmbiz_jpg/S3RO59TkTwg8ra3Xj4ITk1Ixymibia1HgEIicMFRArfwYic38QCR8MXVU20M1rWI2WiaWSe0JgQCU5QYpHugNY5R3Zg/0?wx_fmt=jpeg"
+				 * ); } catch (Exception ex) { ex.printStackTrace(); } }
+				 */
 			}
 		}
 		if (responseDocument == null) {
@@ -210,8 +212,10 @@ public class TextProcess implements MsgProcess {
 				message.setDescription("根据关键词找到内容：" + content);
 				String msgType = keywordMap.getMsgType();
 				if ("news".equals(msgType)) {
+					// url后加 "&isSubscriber=true"表示用户已订阅
 					responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, keywordMap.getTitle(),
-							keywordMap.getDescription(), keywordMap.getPicUrl(), keywordMap.getUrl());
+							keywordMap.getDescription(), keywordMap.getPicUrl(),
+							keywordMap.getUrl() + "&isSubscriber=true");
 				} else if ("text".equals(msgType)) {
 					responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, keywordMap.getContent());
 				}
