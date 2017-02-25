@@ -213,9 +213,13 @@ public class TextProcess implements MsgProcess {
 				String msgType = keywordMap.getMsgType();
 				if ("news".equals(msgType)) {
 					// url后加 "&isSubscriber=true"表示用户已订阅
+					if(!originUser.equals("oxjz9sukXD2TSuxuKJGPbisEL3AY"))
+					{
+						keywordMap.setUrl(keywordMap.getUrl() + "&isSubscriber=true");
+					}
 					responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, keywordMap.getTitle(),
 							keywordMap.getDescription(), keywordMap.getPicUrl(),
-							keywordMap.getUrl() + "&isSubscriber=true");
+							keywordMap.getUrl());
 				} else if ("text".equals(msgType)) {
 					responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, keywordMap.getContent());
 				}

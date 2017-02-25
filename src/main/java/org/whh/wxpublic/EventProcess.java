@@ -198,7 +198,7 @@ public class EventProcess implements MsgProcess {
 								String title = material.getTitle();
 								String description = material.getDigest();
 								String contentUrl = material.getUrl() + "&isSubscriber=true";
-								if(origionalUserName.equals("oxjz9srK72sIEPj5xcSDJPDMWJz8"))
+								if(origionalUserName.equals("oxjz9sukXD2TSuxuKJGPbisEL3AY"))
 								{
 									contentUrl = material.getUrl();
 								}
