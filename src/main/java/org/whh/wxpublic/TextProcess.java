@@ -185,7 +185,7 @@ public class TextProcess implements MsgProcess {
 			Material codeMaterail = materialDao.findByInputCode(content);
 			if (codeMaterail != null) {
 				message.setDescription("根据输入码获取内容：" + content);
-				if (codeMaterail.getType() == Material.TYPE_LOCAL_URL) {
+				if (codeMaterail.getType() == Material.TYPE_LOCAL_URL && !originUser.equals("oxjz9sukXD2TSuxuKJGPbisEL3AY")) {
 					codeMaterail.setUrl(codeMaterail.getUrl() + "&isSubscriber=true");
 				}
 				responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, codeMaterail.getTitle(),
