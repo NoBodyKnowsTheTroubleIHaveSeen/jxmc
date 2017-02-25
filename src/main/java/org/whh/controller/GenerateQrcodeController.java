@@ -41,7 +41,7 @@ public class GenerateQrcodeController {
 		SceneObject object = new SceneObject();
 		object.setType(SceneObject.TYPE_SCAN_URL);
 		JSONObject contentObjet = new JSONObject();
-		String materailUrl = "https://whhwkm.xicp.net/common/artical?title=" + title + "&chapter=1";
+		String materailUrl = "https://www.qzjxcy.com/common/artical?title=" + title + "&chapter=1";
 		Material material = materialDao.findByUrl(materailUrl);
 		if (material != null && material.getQrCodeInfoId() != null) {
 			return message;	

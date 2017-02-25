@@ -147,7 +147,7 @@ public class TextProcess implements MsgProcess {
 			responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, "分享给小伙伴,推荐有礼啦",
 					"   分享完成即可获得茶具一套或铁观音密茶一盒!",
 					"https://mmbiz.qlogo.cn/mmbiz_jpg/S3RO59TkTwg8ra3Xj4ITk1Ixymibia1HgEIicMFRArfwYic38QCR8MXVU20M1rWI2WiaWSe0JgQCU5QYpHugNY5R3Zg/0?wx_fmt=jpeg",
-					"http://whhwkm.xicp.net:88/common/getRecommendCode?ticket=" + info.getTicket());
+					"https://www.qzjxcy.com/common/getRecommendCode?ticket=" + info.getTicket());
 			break;
 		case CODE_HELP:
 		case CODE_HELP_CN:
@@ -160,7 +160,7 @@ public class TextProcess implements MsgProcess {
 			message.setDescription("输入代码：" + CODE_GROUP_QR_CODE);
 			ConfigInfo configInfo = configInfoDao.findOne(1L);
 			if (configInfo != null && configInfo.getGroupQrCodeMaterailId() != null) {
-				String msg = "加入微信群与小伙伴们谈谈国事家事天下事，扫描二维码即可进入哦";
+				String msg = "加入微信群与小伙伴们谈天说地，扫描二维码即可进入哦";
 				responseDocument = WxXMLHelper.createTextDocument(originUser, toUserName, msg);
 				try {
 					Thread.sleep(500);
@@ -199,7 +199,7 @@ public class TextProcess implements MsgProcess {
 				 * qrcodeInfoService.createAndGetQrCodeInfo(object);
 				 * messageSend.sendNews(originUser, "分享给小伙伴,推荐有礼啦",
 				 * "    扫描图文内的二维码或发送二维码,分享给20个好友关注本公众号就能领取奖品啦。\r\n\r\n    完成分享并关注就能获得茶具一套，数量有限，抓紧时间啦！\r\n\r\n   分享后就会感觉自己萌萌哒,不信你试试。"
-				 * , "http://whhwkm.xicp.net/common/getRecommendCode?ticket=" +
+				 * , "https://www.qzjxcy.com/common/getRecommendCode?ticket=" +
 				 * info.getTicket(),
 				 * "https://mmbiz.qlogo.cn/mmbiz_jpg/S3RO59TkTwg8ra3Xj4ITk1Ixymibia1HgEIicMFRArfwYic38QCR8MXVU20M1rWI2WiaWSe0JgQCU5QYpHugNY5R3Zg/0?wx_fmt=jpeg"
 				 * ); } catch (Exception ex) { ex.printStackTrace(); } }
