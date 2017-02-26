@@ -185,11 +185,12 @@ public class TextProcess implements MsgProcess {
 			Material codeMaterail = materialDao.findByInputCode(content);
 			if (codeMaterail != null) {
 				message.setDescription("根据输入码获取内容：" + content);
+				String materialUrl = codeMaterail.getUrl();
 				if (codeMaterail.getType() == Material.TYPE_LOCAL_URL && !originUser.equals("oxjz9sukXD2TSuxuKJGPbisEL3AY")) {
-					codeMaterail.setUrl(codeMaterail.getUrl() + "&isSubscriber=true");
+					materialUrl = codeMaterail.getUrl() + "&isSubscriber=true";
 				}
 				responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, codeMaterail.getTitle(),
-						codeMaterail.getDigest(), codeMaterail.getThumb_url(), codeMaterail.getUrl());
+						codeMaterail.getDigest(), codeMaterail.getThumb_url(), materialUrl);
 				/*
 				 * Integer action = codeMaterail.getAction(); if (action != null
 				 * && action == Material.ACTION_PUSH_RECOMMEND) { try {
@@ -213,9 +214,10 @@ public class TextProcess implements MsgProcess {
 				String msgType = keywordMap.getMsgType();
 				if ("news".equals(msgType)) {
 					// url后加 "&isSubscriber=true"表示用户已订阅
+					String url = keywordMap.getUrl();
 					if(!originUser.equals("oxjz9sukXD2TSuxuKJGPbisEL3AY"))
 					{
-						keywordMap.setUrl(keywordMap.getUrl() + "&isSubscriber=true");
+						url = keywordMap.getUrl() + "&isSubscriber=true";
 					}
 					responseDocument = WxXMLHelper.createNewsDocument(originUser, toUserName, keywordMap.getTitle(),
 							keywordMap.getDescription(), keywordMap.getPicUrl(),
