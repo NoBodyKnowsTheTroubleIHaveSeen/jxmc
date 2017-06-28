@@ -252,8 +252,12 @@ public class TextProcess implements MsgProcess {
 			} else {
 				call.setStatus(WxSubscriberCall.STATUS_JQR);
 			}
-			wxSubscribeCallDao.save(call);
 			boolean isKfOnline = KFMananger.isKfOnline();
+			if (isKfOnline) {
+				call.setStatus(WxSubscriberCall.STATUS_KF);
+				isFirst = false;
+			}
+			wxSubscribeCallDao.save(call);
 			/**
 			 * 接入机器人
 			 */
